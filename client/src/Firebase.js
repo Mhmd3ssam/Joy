@@ -1,14 +1,14 @@
 import firebase from 'firebase/compat/app';
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
-
 const firebaseConfig = {
-  apiKey: "AIzaSyCsCz9GNYM3Pb5_u0zPYH7ZyN_ZdvloSpM",
-  authDomain: "auzh-developement.firebaseapp.com",
-  projectId: "auzh-developement",
-  storageBucket: "auzh-developement.appspot.com",
-  messagingSenderId: "816901510848",
-  appId: "1:816901510848:web:56a8f3230620e726163f25"
+  apiKey: "AIzaSyAPlhhe0YQA3jCRVT7fzee7AfT06Hvig74",
+  authDomain: "test-145b9.firebaseapp.com",
+  projectId: "test-145b9",
+  storageBucket: "test-145b9.appspot.com",
+  messagingSenderId: "376795287070",
+  appId: "1:376795287070:web:1729695c7bfbe7d89ba80f"
+
 };
 
 const app = initializeApp(firebaseConfig);
