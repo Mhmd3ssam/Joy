@@ -11,7 +11,8 @@ export default function Signup() {
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const phoneRef = useRef();
-  const { signup, currentUser } = useAuth();
+  const history = useHistory();
+  const { signup, currentUser, login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +24,10 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(auth, emailRef.current.value, passwordRef.current.value);
+      await signup(auth, emailRef.current.value, passwordRef.current.value)
+      await login(auth,emailRef.current.value, passwordRef.current.value)
+      history.push("/dashboard")
+
     } catch (err) {
       console.log(err);
       setError("Failed to create an account");
@@ -32,7 +36,6 @@ export default function Signup() {
   }
   useEffect(() => {
     document.title = "Sign Up";
-    console.log(auth.currentUser);
   });
 
   return (
