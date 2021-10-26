@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../Firebase";
+import { doc, setDoc, getFirestore , getDoc } from "firebase/firestore"; 
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -18,6 +19,10 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const auth = getAuth();
+  const db = getFirestore();
+
+
+
 
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -53,6 +58,30 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
+  async function setUser(collection,id,{englishUserName,arabicUserName,userEmail,userPassword,userPhone}){
+    return await setDoc(doc(db,collection , id), {
+      englishUserName:englishUserName,
+      arabicUserName: arabicUserName,
+      userPassword: userPassword,
+      userEmail: userEmail,
+      userPhone:userPhone
+    })
+  }
+
+  
+async function getUser(collection, id){
+  const docRef = doc(db,collection , id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data()
+  } else {
+
+   return  console.log("No such document!");
+  }
+  
+}
+
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth,(user) => {
       setCurrentUser(user);
@@ -70,7 +99,8 @@ export function AuthProvider({ children }) {
     resetPassword,
     updatedEmail,
     updatePassword,
-
+    setUser,
+    getUser
   };
 
   return (

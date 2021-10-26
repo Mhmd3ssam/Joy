@@ -5,17 +5,18 @@ import { auth } from "../Firebase";
 import { Link, useHistory } from "react-router-dom"
 
 export default function Signup() {
+  const englishUserName = useRef();
+  const arabicUserName = useRef();
+  const phoneRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
-  const phoneRef = useRef();
   const history = useHistory();
-  const { signup, currentUser, login } = useAuth();
+  const { signup, currentUser, login, setUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  
   async function handleSubmit(e) {
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -25,6 +26,13 @@ export default function Signup() {
       setError("");
       setLoading(true);
       await signup(auth, emailRef.current.value, passwordRef.current.value)
+      await setUser('UserProvider',englishUserName.current.value, {
+        englishUserName: englishUserName.current.value,
+        arabicUserName: arabicUserName.current.value,
+        userEmail:emailRef.current.value,
+        userPassword: passwordRef.current.value,
+        userPhone: phoneRef.current.value
+      })
       await login(auth,emailRef.current.value, passwordRef.current.value)
       history.push("/dashboard")
 
@@ -45,7 +53,7 @@ export default function Signup() {
         style={{ minHeight: "100vh" }}
       >
         <div className="w-100 text-center">
-          <span className="display-1  d-block">Be on of us </span>
+          <span className="display-1  d-block">Be one of us </span>
           <span className="  ">let's achieve success together</span>
         </div>
 
@@ -54,6 +62,18 @@ export default function Signup() {
               <h2 className="text-center mb-4"> Sign Up</h2>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
+                <Form.Group id="english-userName">
+                  <Form.Label> User Name in English</Form.Label>
+                  <Form.Control type="text" ref={englishUserName} required />
+                </Form.Group>
+                <Form.Group id="arabic-userName">
+                  <Form.Label> User Name in Arabic</Form.Label>
+                  <Form.Control type="text" ref={arabicUserName} required />
+                </Form.Group>
+                <Form.Group id="phone">
+                  <Form.Label> Phone number</Form.Label>
+                  <Form.Control type="number" ref={phoneRef} required />
+                </Form.Group>
                 <Form.Group id="email">
                   <Form.Label> Email</Form.Label>
                   <Form.Control type="email" ref={emailRef} required />

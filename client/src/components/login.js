@@ -32,7 +32,7 @@ export default function Login() {
         style={{ minHeight: "100vh" }}
       >
         <div className="w-100 text-center">
-          <span className="display-1  d-block">Be on of us </span>
+          <span className="display-1  d-block">Be one of us </span>
           <span className="  ">let's achieve success together</span>
         </div>
 
