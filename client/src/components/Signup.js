@@ -99,8 +99,6 @@ export default function Signup() {
             Already have an account?  <Link to="/login"> Log In </Link>
           </div>
           </Card>
-   
-      
       </Container>
     </>
   );
