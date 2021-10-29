@@ -7,7 +7,7 @@ function ContactUs() {
     function sendEmail(e){
         e.preventDefault();
 
-    emailjs.sendForm('gmail', 'template_oxnqk1g', e.target , 'user_tSfGx6fZb1jLtEzL2nAPk')
+        emailjs.sendForm('gmail', 'template_oxnqk1g', e.target , 'user_tSfGx6fZb1jLtEzL2nAPk')
       .then((result) => {
           console.log(result.text);
       }, (error) => {
