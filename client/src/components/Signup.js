@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Form, Button, Card, Alert ,Container} from "react-bootstrap";
+import { Form, Button, Card, Alert ,Container } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../Firebase";
 import { Link, useHistory } from "react-router-dom"
@@ -26,14 +26,14 @@ export default function Signup() {
       setError("");
       setLoading(true);
       await signup(auth, emailRef.current.value, passwordRef.current.value)
-      await setUser('UserProvider',englishUserName.current.value, {
+      await login(auth,emailRef.current.value, passwordRef.current.value)
+      await setUser('UserProvider',auth.currentUser.email, {
         englishUserName: englishUserName.current.value,
         arabicUserName: arabicUserName.current.value,
         userEmail:emailRef.current.value,
         userPassword: passwordRef.current.value,
         userPhone: phoneRef.current.value
       })
-      await login(auth,emailRef.current.value, passwordRef.current.value)
       history.push("/dashboard")
 
     } catch (err) {

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../Firebase";
-import { doc, setDoc, getFirestore , getDoc } from "firebase/firestore"; 
+import { doc, setDoc, getFirestore , getDoc, addDoc , collection , query, where } from "firebase/firestore"; 
+import app from "../Firebase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -8,7 +9,7 @@ import {
   signOut,
   updateEmail,
   sendPasswordResetEmail ,
-  onAuthStateChanged 
+  onAuthStateChanged,
 } from "firebase/auth";
 
 const AuthContext = React.createContext();
@@ -19,7 +20,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const auth = getAuth();
-  const db = getFirestore();
+  const db = getFirestore(app);
 
 
 
@@ -28,29 +29,24 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   async function signup(auth, email, password) {
-    //return auth.createUserWithEmailAndPassword(email, password);
     return createUserWithEmailAndPassword(auth, email, password)
     
   }
 
   async function login(auth, email, password) {
-    //return auth.signInWithEmailAndPassword(email, password);
     return signInWithEmailAndPassword(auth, email, password)
     
   }
 
   async function logout(auth) {
-    //return auth.signOut();
     return signOut(auth)
   }
 
   async function resetPassword(auth, email) {
-    //return auth.sendPasswordResetEmail(email);
     return sendPasswordResetEmail(auth, email)
   }
 
   async function updatedEmail(auth , email) {
-    //return currentUser.updateEmail(email);
     return updateEmail(auth.currentUser, email)
   }
 
@@ -58,8 +54,9 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  async function setUser(collection,id,{englishUserName,arabicUserName,userEmail,userPassword,userPhone}){
-    return await setDoc(doc(db,collection , id), {
+  
+  async function setUser(Collection,id,{englishUserName,arabicUserName,userEmail,userPassword,userPhone}){
+    return await setDoc(doc(db,Collection , id), {
       englishUserName:englishUserName,
       arabicUserName: arabicUserName,
       userPassword: userPassword,
@@ -68,7 +65,37 @@ export function AuthProvider({ children }) {
     })
   }
 
+  async function getService(collection, id){
+    const docRef = doc(db,collection , id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data()
+    } else {
   
+     return  console.log("No such document!");
+    }
+
+  }
+
+  async function setService(catgory,{serviceName,serviceDescripition,servicePrice,servicePhone}){
+
+    return await addDoc( catgory,{
+      serviceName:serviceName,
+      serviceDescripition:serviceDescripition,
+      servicePrice:servicePrice,
+      servicePhone:servicePhone,
+      createdBy: auth.currentUser.email
+    });
+    
+  }
+
+  async function getAllUserService(){
+    
+  }
+
+
+
+
 async function getUser(collection, id){
   const docRef = doc(db,collection , id);
   const docSnap = await getDoc(docRef);
@@ -100,7 +127,9 @@ async function getUser(collection, id){
     updatedEmail,
     updatePassword,
     setUser,
-    getUser
+    getUser,
+    setService,
+    getService
   };
 
   return (
