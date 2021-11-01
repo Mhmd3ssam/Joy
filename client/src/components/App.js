@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+//import Components
 import Login from "./login"
 import Signup from "./Signup";
 import Dashboard from "./Dashboard";
+import ContactUs from "./ContactUs/ContactUs";
 import ForgotPassword from "./ForgotPassword";
 import Home from "./Home";
+
 import PrivateRoute from "./PrivateRoute";
 import { AuthProvider } from "../context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -20,6 +23,7 @@ function App() {
              <Route path="/signup" component={Signup} />
              <Route path="/login" component={Login} />
              <Route path="/forgot-password" component={ForgotPassword} />
+             <Route path="/contact" component={ContactUs} />
             </Switch>
           </AuthProvider>
           </Router>
