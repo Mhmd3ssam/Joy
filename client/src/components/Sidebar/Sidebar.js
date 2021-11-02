@@ -29,7 +29,8 @@ const  Sidebar = props => {
     return (
         <div className='sidebar'>
             <div className="sidebar__logo">
-                <img src={logo} alt="company logo" />
+                {/* <img src={logo} alt="company logo" /> */}
+                <h2 className="text-center text-info me-5 fs-1">Joy</h2>
             </div>
             {
                 sidebar_items.map((item, index) => (
