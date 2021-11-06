@@ -7,7 +7,7 @@ import Dashboard from "./Dashboard";
 import ContactUs from "./ContactUs/ContactUs";
 import ForgotPassword from "./ForgotPassword";
 import Home from "./Home";
-import Layout from "./Layout/Layout";
+import Layout from "./layout/Layout";
 
 //import style and icons files
 import '../assets/boxicons-2.0.7/css/boxicons.min.css'

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../Firebase";
-import { doc, setDoc, getFirestore , getDoc, addDoc , collection , query, where } from "firebase/firestore"; 
+import { doc, setDoc, getFirestore , getDoc, addDoc , collection , query, where, getDocs } from "firebase/firestore"; 
 import app from "../Firebase";
 import {
   getAuth,
@@ -65,17 +65,7 @@ export function AuthProvider({ children }) {
     })
   }
 
-  async function getService(collection, id){
-    const docRef = doc(db,collection , id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data()
-    } else {
-  
-     return  console.log("No such document!");
-    }
 
-  }
 
   async function setService(catgory,{serviceName,serviceDescripition,servicePrice,servicePhone}){
 
@@ -89,8 +79,12 @@ export function AuthProvider({ children }) {
     
   }
 
-  async function getAllUserService(){
-    
+  async function getAllUserService(serviceCollectionRef){
+    const q =  query(serviceCollectionRef, where("createdBy", "==", auth.currentUser.email));
+    const querySnapshot = await getDocs(q); 
+   const aa =  [querySnapshot]
+   console.log(aa)
+    return querySnapshot.forEach((doc) => {  console.log(doc.id, " => ", doc.data());})
   }
 
 
@@ -129,7 +123,7 @@ async function getUser(collection, id){
     setUser,
     getUser,
     setService,
-    getService
+    getAllUserService
   };
 
   return (

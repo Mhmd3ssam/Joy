@@ -3,13 +3,13 @@ import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import { useAuth } from "../context/AuthContext";
 import { Link, useHistory } from "react-router-dom"
 import { auth } from "../Firebase";
-import { doc, setDoc, getFirestore , getDoc, addDoc , collection } from "firebase/firestore"; 
+import { doc, setDoc, getFirestore , getDocs, addDoc , collection , where, query , updateDoc , deleteDoc} from "firebase/firestore"; 
 import app from "../Firebase";
 
 
 export default function Dashboard() {
   const [error, setError] = useState("")
-  const { currentUser, logout, setService, getService } = useAuth()
+  const { currentUser, logout, setService, getAllUserService } = useAuth()
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const serviceNameRef = useRef();
@@ -19,9 +19,36 @@ export default function Dashboard() {
   const serviceCatgRef = useRef();
 
 
-  console.log(serviceCatgRef.current)
+
+
+
   const db = getFirestore(app);
   const serviceCollectionRef = collection(db, "service");
+
+
+  // retrev 
+  (async (serviceCollectionRef)=>{
+    await console.log(getAllUserService(serviceCollectionRef)) 
+  })(serviceCollectionRef)
+  const alyDocRef = doc(db, "service", "7755pDJQy3rSZg4pIFEi");
+
+  // edite
+  // (async()=>{
+  //   console.log("dd")
+  //   await updateDoc(alyDocRef, { "createdBy": "ahmad@gmai", "servicePrice": "50000","serviceName":"GGg"});
+  //   console.log("SsS")
+
+  // })()
+  
+//delete 
+  (async ()=>{
+    console.log("ddd")
+    await deleteDoc(doc(db, "service", "7755pDJQy3rSZg4pIFEi"));
+    console.log("gg")
+  })()
+
+
+ 
 
 
   async function handelSubmit(e) {
@@ -36,8 +63,6 @@ export default function Dashboard() {
         servicePhone: servicePhoneRef.current.value
       })
 
-      const data = await getService('service', auth.currentUser.email)
-      console.log(data)
       history.push("/dashboard")
       console.log('done')
     } catch (error) {
