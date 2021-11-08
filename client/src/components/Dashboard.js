@@ -20,8 +20,6 @@ export default function Dashboard() {
 
 
 
-
-
   const db = getFirestore(app);
   const serviceCollectionRef = collection(db, "service");
 
@@ -32,20 +30,9 @@ export default function Dashboard() {
   })(serviceCollectionRef)
   const alyDocRef = doc(db, "service", "7755pDJQy3rSZg4pIFEi");
 
-  // edite
-  // (async()=>{
-  //   console.log("dd")
-  //   await updateDoc(alyDocRef, { "createdBy": "ahmad@gmai", "servicePrice": "50000","serviceName":"GGg"});
-  //   console.log("SsS")
 
-  // })()
   
-//delete 
-  (async ()=>{
-    console.log("ddd")
-    await deleteDoc(doc(db, "service", "7755pDJQy3rSZg4pIFEi"));
-    console.log("gg")
-  })()
+
 
 
  
@@ -97,8 +84,6 @@ export default function Dashboard() {
         className="d-flex align-items-center   justify-content-between"
         style={{ minHeight: "100vh" }}
       >
-
-
         <Card className="w-100" style={{ maxWidth: "400px" }}>
           <Card.Body>
             <h2 className="text-center mb-4"> Make Service</h2>
@@ -108,10 +93,6 @@ export default function Dashboard() {
                 <Form.Label> Service name </Form.Label>
                 <Form.Control type="text" ref={serviceNameRef} required />
               </Form.Group>
-          
-    
-           
-
               <Form.Group id="Service_Descripition">
                 <Form.Label> Service Descripition </Form.Label>
                 <Form.Control type="text" ref={serviceDescripitionRef} required />
@@ -129,7 +110,6 @@ export default function Dashboard() {
               </Button>
             </Form>
           </Card.Body>
-
         </Card>
       </Container>
       <Card>
@@ -146,8 +126,6 @@ export default function Dashboard() {
           </Link>
         </Card.Body>
       </Card>
-
-
       <div className="w-100 text-center mt-2">
         <Button variant="link" onClick={handleLogout}> Log Out</Button>
       </div>
