@@ -1,7 +1,7 @@
 [
     {
-        "display_name": "Dashboard",
-        "route": "/",
+        "display_name": "Your Services",
+        "route": "/layout/services",
         "icon": "bx bx-category-alt"
     },
     {

@@ -31,13 +31,6 @@ export default function Dashboard() {
   const alyDocRef = doc(db, "service", "7755pDJQy3rSZg4pIFEi");
 
 
-  
-
-
-
- 
-
-
   async function handelSubmit(e) {
     e.preventDefault();
     try {

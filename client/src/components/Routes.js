@@ -6,7 +6,7 @@ import Users from '../pages/Users';
 function Routes() {
     return (
         <Switch>
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/layout/services" component={Dashboard} />
             <Route exact path="/users" component={Users} />
 
         </Switch>
