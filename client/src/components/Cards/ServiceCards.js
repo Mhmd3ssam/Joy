@@ -1,6 +1,6 @@
 import React from 'react';
 import ServiceCard from './CardUi';
-import './card-style.css'
+import './card-style.css';
 
 
 const ServiceCards = () => {

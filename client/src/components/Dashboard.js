@@ -24,7 +24,7 @@ export default function Dashboard() {
   const serviceCollectionRef = collection(db, "service");
 
 
-  // retrev 
+  // Retrieve Service Documents 
   (async (serviceCollectionRef)=>{
     await console.log(getAllUserService(serviceCollectionRef)) 
   })(serviceCollectionRef)

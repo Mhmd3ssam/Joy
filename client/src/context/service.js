@@ -1,9 +1,11 @@
 import { addDoc,query,where,getDocs, updateDoc, doc, getFirestore, deleteDoc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import app from "../Firebase";
+import { useState } from "react";
 
 const auth = getAuth();
 const db = getFirestore(app);
+//const[services, setServices]=useState([])
 
 
 async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone }) {
@@ -23,9 +25,14 @@ async function getAllUserService(serviceCollectionRef) {
         where("createdBy", "==", auth.currentUser.email)
     );
     const querySnapshot = await getDocs(userServices);
-    return querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-    });
+  //  console.log(querySnapshot)
+  //  console.log(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+   return (querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+    // return querySnapshot.forEach((doc) => {
+    //     console.log(doc)
+    //     console.log(doc.id, " => ", doc.data());
+    // });
 }
 
 async function editAllservices(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice}){
