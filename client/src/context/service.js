@@ -8,13 +8,16 @@ const db = getFirestore(app);
 //const[services, setServices]=useState([])
 
 
-async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone }) {
+async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath , offerd , offerRatio}) {
     return await addDoc(catgory, {
         serviceName: serviceName,
         serviceDescripition: serviceDescripition,
         servicePrice: servicePrice,
         servicePhone: servicePhone,
+        imagePath:imagePath,
         createdBy: auth.currentUser.email,
+        offerd:false,
+        offerRatio:null,
         createdAt: new Date(),
     });
 }
