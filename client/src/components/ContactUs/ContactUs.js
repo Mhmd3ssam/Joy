@@ -121,14 +121,14 @@ function ContactUs() {
                       <br />
                       ITI - Joy
                     </p>
-                    <h5 class="text-white fw-bold mt-5">
+                    {/* <h5 class="text-white fw-bold mt-5">
                       CALL US
                     </h5>
                     <p class="text-primary fw-bold fs-5">
                       010 1214 3511
                       <br />
                       010 2971 8897
-                    </p>
+                    </p> */}
                     <div class="round-social light">
                       <a
                         href="#"
