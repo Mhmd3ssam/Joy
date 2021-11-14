@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
 import HomePage from '../pages/HomePage';
-import CreateService from '../pages/CreateService';
+import CreateService from '../pages/CreateService/CreateService';
 
 
 function Routes() {

@@ -1,0 +1,17 @@
+.btn-upload-gradiant {
+    background: #3074cc;
+    background: -webkit-linear-gradient(legacy-direction(to right), #3074cc 0%, #27a7e2 100%);
+    background: -webkit-gradient(linear, left top, right top, from(#3074cc), to(#27a7e2));
+    background: -webkit-linear-gradient(left, #3074cc 0%, #7e8183 100%);
+    background: -o-linear-gradient(left, #3074cc 0%, #27a7e2 100%);
+    background: linear-gradient(to right, #3074cc 0%, #27a7e2 100%);
+  }
+  
+.btn-upload-gradiant:hover {
+    background: #27a7e2;
+    background: -webkit-linear-gradient(legacy-direction(to right), #27a7e2 0%, #3074cc 100%);
+    background: -webkit-gradient(linear, left top, right top, from(#27a7e2), to(#3074cc));
+    background: -webkit-linear-gradient(left, #27a7e2 0%, #3074cc 100%);
+    background: -o-linear-gradient(left, #27a7e2 0%, #3074cc 100%);
+    background: linear-gradient(to right, #27a7e2 0%, #3074cc 100%);
+  }
