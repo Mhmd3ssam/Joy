@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import { auth } from "../../Firebase";
+import { auth } from "../Firebase";
 import { doc, getFirestore, collection } from "firebase/firestore";
-import app from "../../Firebase";
+import app from "../Firebase";
 import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
-import "./CreateService.css";
-import "../../components/ContactUs/ContactUs.css";
+import "../components/ContactUs/ContactUs.css";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBBtn } from 'mdbreact';
 
 
