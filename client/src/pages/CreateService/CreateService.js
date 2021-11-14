@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../Firebase";
 import { doc, getFirestore, collection } from "firebase/firestore";
 import app from "../../Firebase";
-import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import "../../components/ContactUs/ContactUs.css";
 import "./CreateService.css";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBBtn } from 'mdbreact';
@@ -27,20 +27,42 @@ function CreateService() {
   const serviceCollectionRef = collection(db, "service");
 
 
+  function handelChange(e) {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+      console.log(image)
+    }
+    
+  }
+
+  async function handelUpload(){
+    const storage = getStorage(app);
+    const storageReff = storageRef(storage);
+    const imagesRef = storageRef(storageReff,`images/${image.name}`);
+    uploadBytes(imagesRef,image )
+    let result = getDownloadURL(imagesRef).then((downloadURL) => {
+      console.log("File available at", downloadURL);
+      return downloadURL;
+    });
+    return result;
+  }
+
   async function handelSubmit(e) {
     e.preventDefault();
     try {
       setError("");
       setLoading(true);
+      let path = await handelUpload();
       await setService(serviceCollectionRef, {
         serviceName: serviceNameRef.current.value,
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
         servicePhone: servicePhoneRef.current.value,
-      });
+        imagePath:path
+      })
 
-      history.push("/dashboard");
-      console.log("done");
+      history.push("/dashboard")
+      console.log('done')
     } catch (error) {
       console.log(error);
       setError("Failed to create an service");
@@ -119,8 +141,8 @@ function CreateService() {
                   <MDBInput 
                     type="file"
                     required
+                    onChange={handelChange}
                   />
-                <Button  className="btn-upload-gradiant">Upload</Button>         
                 </Form.Group>
                          
                 <Button  type="submit" className="w-100 btn-upload-gradiant mt-5">
