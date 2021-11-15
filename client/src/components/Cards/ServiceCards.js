@@ -10,7 +10,6 @@ const ServiceCards = () => {
                 <div className="col-md-4"><ServiceCard /></div>
                 <div className="col-md-4"><ServiceCard /></div>
                 <div className="col-md-4"><ServiceCard /></div>
-
             </div>
             
         </div>

@@ -163,9 +163,9 @@ function CreateService() {
                     Service Category
                   </Form.Label>                     
                   <option> choose your service catgory </option>
-                  <option value="service">service</option>
-                  <option value="hotel">hotel</option>
-                  <option value="places">places</option>
+                  <option value="Rent">Rent</option>
+                  <option value="Hotels">Hotels</option>
+                  <option value="Restaurants">Restaurants</option>
                 </Form.Control>
             
                                          

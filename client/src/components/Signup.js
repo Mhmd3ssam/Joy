@@ -34,7 +34,7 @@ export default function Signup() {
         userPassword: passwordRef.current.value,
         userPhone: phoneRef.current.value
       })
-      history.push("/dashboard")
+      history.push("/layout")
 
     } catch (err) {
       console.log(err);

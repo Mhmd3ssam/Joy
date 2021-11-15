@@ -27,6 +27,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home}/>
               <PrivateRoute exact path="/layout" component={Layout} />
+              
              <Route path="/signup" component={Signup} />
              <Route path="/login" component={Login} />
              <Route path="/forgot-password" component={ForgotPassword} />
