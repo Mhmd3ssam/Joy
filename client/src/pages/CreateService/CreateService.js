@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../Firebase";
 import { doc, getFirestore, collection } from "firebase/firestore";
 import app from "../../Firebase";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "../../components/ContactUs/ContactUs.css";
 import "./CreateService.css";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBBtn } from 'mdbreact';
@@ -19,39 +19,71 @@ function CreateService() {
   const serviceImage = useRef();
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [url, setUrl] = useState('')
+  const [catagory, setCatagory] = useState('default');
   const { currentUser, logout, setService, getAllUserService } = useAuth();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
   const db = getFirestore(app);
-  const serviceCollectionRef = collection(db, "service");
-
-
+  const serviceCollectionRef = collection(db, catagory);
   function handelChange(e) {
+
     if (e.target.files[0]) {
       Object.defineProperty(e.target.files[0], 'name', {
         writable: true,
-        value: "updatedFileName"
-      });
+        value: new Date()
+
+      })
       setImage(e.target.files[0])
-      console.log(image)
+
     }
-    
   }
 
-  async function handelUpload(){
+  function handelCatgory(e) {
+    setCatagory(e.target.value)
+  }
+
+  console.log(catagory)
+
+  function clearValues() {
+    serviceNameRef.current.value = "";
+    serviceDescripitionRef.current.value = "";
+    servicePriceRef.current.value = '';
+    servicePhoneRef.current.value = '';
+    setProgress(0)
+  }
+
+  async function handelUpload() {
     const storage = getStorage(app);
     const storageReff = storageRef(storage);
-    const imagesRef = storageRef(storageReff,`images/${image.name}`);
-    uploadBytes(imagesRef,image )
-    let result = getDownloadURL(imagesRef).then((downloadURL) => {
-      console.log("File available at", downloadURL);
-      return downloadURL;
-    });
-    return result;
+    const imagesRef = storageRef(storageReff, `images/${image.name}`);
+    const uploadTask = uploadBytesResumable(imagesRef, image)
+    console.log(uploadTask)
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setUrl(downloadURL)
+        });
+      }
+    )
   }
 
+  console.log(url)
+
+
   async function handelSubmit(e) {
+    console.log(url)
     e.preventDefault();
     try {
       setError("");
@@ -61,17 +93,30 @@ function CreateService() {
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
         servicePhone: servicePhoneRef.current.value,
-      //  imagePath:path
+        imagePath: url
       })
 
-      history.push("/dashboard")
+      history.push("/layout/create")
       console.log('done')
     } catch (error) {
       console.log(error);
       setError("Failed to create an service");
     }
     setLoading(false);
+    clearValues()
   }
+
+
+  async function handleLogout() {
+    setError("");
+    try {
+      await logout(auth)
+      history.push("/login")
+    } catch {
+      setError("Failed to log out")
+    }
+  }
+
 
   return (
     <Container className="mt-5">
@@ -111,6 +156,18 @@ function CreateService() {
                     placeholder="Enter Your Service Name"
                   />                       
                 </Form.Group>
+
+                
+                <Form.Control as="select"aria-label="Floating label select example" className="mt-3 mb-3" onChange={(e)=>handelCatgory(e)}>
+                <Form.Label className="text-primary font-weight-bold">
+                    Service Category
+                  </Form.Label>                     
+                  <option> choose your service catgory </option>
+                  <option value="service">service</option>
+                  <option value="hotel">hotel</option>
+                  <option value="places">places</option>
+                </Form.Control>
+            
                                          
                 <Form.Group id="Service_Descripition">
                   <Form.Label className="text-primary font-weight-bold">
@@ -146,7 +203,7 @@ function CreateService() {
                     required
                     onChange={handelChange}
                   />
-                  <Button onChange={handelUpload} type="submit" className="btn-upload-gradiant mt-5">Upload</Button>
+                  <Button onClick={handelUpload} className="btn-upload-gradiant mt-5">Upload</Button>
 
                 </Form.Group>
                          
@@ -159,7 +216,13 @@ function CreateService() {
             </div>
           </Card>
         </div>
+
+        
+      <div className="w-100 text-center mt-2">
+        <Button variant="link" onClick={handleLogout}> Log Out</Button>
       </div>
+      </div>
+
     </Container>
   );
 }

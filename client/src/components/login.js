@@ -18,7 +18,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(auth, emailRef.current.value, passwordRef.current.value);
-      history.push("/dashboard");
+      history.push("/layout");
     } catch {
       setError("Failed to log in");
     }

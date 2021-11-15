@@ -12,7 +12,6 @@ export default function Home() {
             <Navbar.Text>
              <Link to="/login" className="mx-5"> Login </Link>
              <Link to="/signup"> Sign Up </Link>
-             <Link to="/layout" className="ms-5"> Layout </Link>
              <Link to="/contact"  className="mx-5"> Contact Us </Link>
             </Navbar.Text>
           </Navbar.Collapse>
