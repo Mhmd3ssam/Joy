@@ -29,6 +29,10 @@ function CreateService() {
 
   function handelChange(e) {
     if (e.target.files[0]) {
+      Object.defineProperty(e.target.files[0], 'name', {
+        writable: true,
+        value: "updatedFileName"
+      });
       setImage(e.target.files[0])
       console.log(image)
     }
@@ -52,13 +56,12 @@ function CreateService() {
     try {
       setError("");
       setLoading(true);
-      let path = await handelUpload();
       await setService(serviceCollectionRef, {
         serviceName: serviceNameRef.current.value,
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
         servicePhone: servicePhoneRef.current.value,
-        imagePath:path
+      //  imagePath:path
       })
 
       history.push("/dashboard")
@@ -143,6 +146,8 @@ function CreateService() {
                     required
                     onChange={handelChange}
                   />
+                  <Button onChange={handelUpload} type="submit" className="btn-upload-gradiant mt-5">Upload</Button>
+
                 </Form.Group>
                          
                 <Button  type="submit" className="w-100 btn-upload-gradiant mt-5">
