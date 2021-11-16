@@ -8,7 +8,7 @@ import app from '../../Firebase';
 
 const ServiceCard = props => {
     const [rent, setRent] = useState([]);
-    const[load,setLoad] = useState(true);
+    const [load, setLoad] = useState(true);
     const { getAllUserService } = useAuth();
     const db = getFirestore(app);
     const serviceCollectionRef = collection(db, 'Rent');
@@ -36,40 +36,31 @@ const ServiceCard = props => {
      */
     console.log(rent)
     let comp = rent.map((res) => {
-        const{imagePath,serviceName, servicePhone} = res;
-        return(
+        const { imagePath, serviceName, servicePhone, offerd , offerRatio , id , createdBy, serviceDescripition} = res;
+        return (
             <>
-                <img src={imagePath}/>
-                <h1>{servicePhone}</h1>
-                <h3>{serviceName}</h3>
-            
+                <div className="card text-center me-3 " key={id}>
+                    <div className="overflow">
+                        <img src={imagePath} alt="Cataract" className="card-img-top" />
+                    </div>
+                    <div className="card-body text-dark">
+                        <h4 className="card-title">{serviceName}</h4>
+                        <p className="card-text text-secondary">
+                           {serviceDescripition}
+                        </p>
+                        <a href="#"><button className="btn btn-outline-info">Know more</button></a>
+                    </div>
+                </div>
+
             </>
         )
 
     })
-    
+
     return (
         <>
-        <div className="card text-center me-3 ">
-            <div className="overflow">
-                <img src="https://www.ahstatic.com/photos/1666_ho_00_p_1024x768.jpg" alt="Cataract" className="card-img-top" />
-            </div>
-
-            <div className="card-body text-dark">
-                <h4 className="card-title">Service Name</h4>
-                <p className="card-text text-secondary">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br />
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure <br />
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,<br />
-                    sunt in culpa qui officia deserunt mollit anim id est laborum
-                </p>
-                <a href="#"><button className="btn btn-outline-info">Know more</button></a>
-            </div>
-        </div>
-        {load ? null : comp}
-
+            {load?<h1>Loading...</h1> :(rent.length==0)?<h1>you don't have any services yet</h1>: comp}
         </>
-
     )
 }
 

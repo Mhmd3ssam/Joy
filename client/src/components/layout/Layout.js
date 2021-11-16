@@ -5,12 +5,10 @@ import Routes from '../Routes';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './layout.css'
 
-
 const Layout = () => {
     return (
         <Router>
             <Route render={(props) => (
-
                 <div className="layout">
                     <Sidebar {...props} />
                     <div className="layout__content">
@@ -19,10 +17,8 @@ const Layout = () => {
                         <Routes/>
                         </div>
                     </div>
-                </div>
-                
+                </div> 
             )}/>
-
         </Router>
     )
 }
