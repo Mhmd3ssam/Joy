@@ -14,16 +14,6 @@ const Layout = () => {
                     <Sidebar {...props} />
                     <div className="layout__content">
                         <TopNav />
-                        <Navbar bg="dark" variant="dark">
-                            <Container>
-                                <Link to="/layout">Navbar</Link>
-                                <Nav className="me-auto">
-                                    <Link to="/services" className="mx-5"> Rent</Link>
-                                    <Link to="/hotels" className="mx-5">Hotels</Link>
-                                    <Link to="/restaurants" className="mx-5">Restaurants</Link>
-                                </Nav>
-                            </Container>
-                        </Navbar>
                         <div className="layout__content__main">
                             <Routes />
                         </div>

@@ -15,7 +15,7 @@ function Routes() {
             <Route exact path="/layout/create" component={CreateService} /> 
             <Route  exact path="/hotels" component={Hotels} />
             <Route exact path="/restaurants" component={Restaurants} />
-            <Route exact path="/Service" component={ServiceCards}/>
+            <Route exact path="/rent" component={ServiceCards}/>
         </Switch>
     )
 }

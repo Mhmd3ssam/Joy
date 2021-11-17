@@ -3,6 +3,8 @@ import './card-style.css'
 import { useAuth } from '../../context/AuthContext';
 import { collection, getFirestore , doc, deleteDoc} from '@firebase/firestore';
 import app from '../../Firebase';
+import { Container } from 'react-bootstrap';
+
 
 
 
@@ -30,7 +32,9 @@ const ServiceCard = ({handelClick}) => {
             })}
     ,[])
     
-    
+    const handelDelete = ()=>{
+        deletService('Rent', 'cHvvACaqWGuxMtQgMiYm');
+    }
 
 
     /**
@@ -50,7 +54,10 @@ const ServiceCard = ({handelClick}) => {
         const { imagePath, serviceName, servicePhone, offerd , offerRatio , id , createdBy, serviceDescripition} = res;
         console.log(id)
         return (
-            <>
+            <Container>
+                <div className="row">
+                <div className="col-md-12">
+
                 <div className="card text-center me-3 " key={id}>
                     <div className="overflow">
                         <img src={imagePath} alt="Cataract" className="card-img-top" />
@@ -60,10 +67,13 @@ const ServiceCard = ({handelClick}) => {
                         <p className="card-text text-secondary">
                            {serviceDescripition}
                         </p>
-                    <button className="btn btn-outline-info" onClick={(catgory,id)=>{handelClick(id)}}>Delete item</button>
+                    <button className="btn btn-outline-info" onClick={(catgory,id)=>{handelDelete(id)}}>Delete item</button>
                     </div>
                 </div>
-            </>
+                </div>
+                </div>
+
+            </Container>
         )
 
     })

@@ -10,10 +10,21 @@
         "icon": "bx bxs-hand-up"
     },
     {
-        "display_name": "Your Services",
-        "route": "/layout/services",
+        "display_name": "Hotels",
+        "route": "/hotels",
+        "icon": "bx bx-package"
+    },
+    {
+        "display_name": "Rent",
+        "route": "/rent",
+        "icon": "bx bx-package"
+    },
+    {
+        "display_name": "Restaurants",
+        "route": "/restaurants",
         "icon": "bx bx-package"
     }
+   
    
 ]
 
