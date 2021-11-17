@@ -5,19 +5,18 @@ import {Navbar,Container, Nav} from 'react-bootstrap'
 import { Link , BrowserRouter as Router , Route , Switch} from 'react-router-dom';
 import Hotels from './Hotels';
 import Restaurants from './Restaurants';
+import { useAuth } from '../../context/AuthContext';
 
 const ServiceCards = () => {
+    const { deletService } = useAuth();
+    const handelDelete = ()=>{
+        deletService('Rent', 'cHvvACaqWGuxMtQgMiYm');
+    }
+
     return (
-            <Navbar bg="dark" variant="dark">
-                <Container>
-                    <Link to="/layout">Navbar</Link>
-                    <Nav className="me-auto">
-                        <Link to="/services" className="mx-5"> Rent</Link>
-                        <Link to="/hotels" className="mx-5">Hotels</Link>
-                        <Link to="/restaurants" className="mx-5">Restaurants</Link>
-                    </Nav>
-                </Container>
-            </Navbar>
+        <>
+            <ServiceCard  handelClick={handelDelete}/>
+        </>    
     )
 }
 

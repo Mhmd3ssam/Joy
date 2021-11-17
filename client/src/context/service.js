@@ -53,7 +53,11 @@ async function editservice(collectionName, documentId,inputTitle){
 }
 
 async function deletService(collectionName, documentId){
-    await deleteDoc(doc(db, collectionName, documentId));
+    console.log(documentId)
+    console.log(collectionName)
+    console.log(db)
+    const alyDocRef = doc(db, collectionName, documentId);
+   return await deleteDoc(alyDocRef);
 }
 
 export {getAllUserService};

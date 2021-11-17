@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import './card-style.css'
 import { useAuth } from '../../context/AuthContext';
-import { collection, getFirestore } from '@firebase/firestore';
+import { collection, getFirestore , doc, deleteDoc} from '@firebase/firestore';
 import app from '../../Firebase';
 
 
 
-const ServiceCard = props => {
+
+const ServiceCard = ({handelClick}) => {
     const [rent, setRent] = useState([]);
     const [load, setLoad] = useState(true);
-    const { getAllUserService } = useAuth();
+    const { getAllUserService ,  } = useAuth();
     const db = getFirestore(app);
     const serviceCollectionRef = collection(db, 'Rent');
+   
+    async function deletService(db,collectionName, documentId){
+        console.log(documentId)
+        const alyDocRef = doc(db, collectionName, documentId);
+        await deleteDoc(alyDocRef);
+    }
+
 
     useEffect(() => {
         getAllUserService(serviceCollectionRef)
@@ -19,8 +27,11 @@ const ServiceCard = props => {
                 setRent(res)
                 setLoad(false)
                 console.log(res)
-            })
-    }, [])
+            })}
+    ,[])
+    
+    
+
 
     /**
         createdBy: "ana@gmail.com"
@@ -37,6 +48,7 @@ const ServiceCard = props => {
     console.log(rent)
     let comp = rent.map((res) => {
         const { imagePath, serviceName, servicePhone, offerd , offerRatio , id , createdBy, serviceDescripition} = res;
+        console.log(id)
         return (
             <>
                 <div className="card text-center me-3 " key={id}>
@@ -48,10 +60,9 @@ const ServiceCard = props => {
                         <p className="card-text text-secondary">
                            {serviceDescripition}
                         </p>
-                        <a href="#"><button className="btn btn-outline-info">Know more</button></a>
+                    <button className="btn btn-outline-info" onClick={(catgory,id)=>{handelClick(id)}}>Delete item</button>
                     </div>
                 </div>
-
             </>
         )
 
