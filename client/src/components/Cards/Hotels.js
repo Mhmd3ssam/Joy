@@ -10,7 +10,8 @@ const RentService = () => {
     const [rent, setRent] = useState([]);
     const [load, setLoad] = useState(true);
     const[counter,setCounter] = useState(0)
-    const { getAllUserService } = useAuth();
+    const { getAllUserService, editAllServicesFields } = useAuth();
+
     const db = getFirestore(app);
     const serviceCollectionRef = collection(db, 'Hotels');
    
@@ -22,7 +23,20 @@ const RentService = () => {
 
     }
 
-    
+    function editeService(id){
+        console.log('ggg')
+        editAllServicesFields('Hotels',id,{ serviceName: "Reham ", serviceDescripition:"Mohamed Essam", 
+        servicePhone:"",
+        servicePrice: "",
+        offerd:"",
+        offerRatio:"offerRatio",
+        createdAt: new Date(),
+        createdBy: "auth.currentUser.email",
+        imagePath: ""})
+        setCounter(counter + 1)
+    }
+
+  
     function getData(){
         getAllUserService(serviceCollectionRef)
         .then((res) => {
@@ -68,13 +82,13 @@ const RentService = () => {
                         <p className="card-text text-secondary">
                            {serviceDescripition}
                         </p>
-                    <button className="btn btn-outline-info" onClick={()=>{deletService(id)}}>Delete item</button>
-                    <button className="btn btn-outline-info" onClick={()=>{deletService(id)}}> Edite item</button>
+                    <button className="btn btn-outline-info  mx-5" onClick={()=>{deletService(id)}}>Delete item</button>
                     </div>
-                </div>
-                </div>
-                </div>
+                    <button className="btn btn-outline-info" onClick={()=>{editeService(id)}}> Edite item</button>
 
+                </div>
+                </div>
+                </div>
             </Container>
         )
 

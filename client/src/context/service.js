@@ -7,21 +7,6 @@ const auth = getAuth();
 const db = getFirestore(app);
 //const[services, setServices]=useState([])
 
-
-async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath , offerd , offerRatio}) {
-    return await addDoc(catgory, {
-        serviceName: serviceName,
-        serviceDescripition: serviceDescripition,
-        servicePrice: servicePrice,
-        servicePhone: servicePhone,
-        imagePath:imagePath,
-        createdBy: auth.currentUser.email,
-        offerd:false,
-        offerRatio:null,
-        createdAt: new Date(),
-    });
-}
-
 async function getAllUserService(serviceCollectionRef) {
     const userServices = query(
         serviceCollectionRef,
@@ -38,16 +23,37 @@ async function getAllUserService(serviceCollectionRef) {
     // });
 }
 
-async function editAllservices(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice}){
-    const alyDocRef = doc(db, collectionName, documentId);
-    await updateDoc(alyDocRef, { serviceDescripition: serviceDescripition,
-         serviceName: serviceName,
-         servicePhone:servicePhone,
-         servicePrice: servicePrice
+async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath }) {
+    return await addDoc(catgory, {
+        serviceName: serviceName,
+        serviceDescripition: serviceDescripition,
+        servicePrice: servicePrice,
+        servicePhone: servicePhone,
+        imagePath:imagePath,
+        createdBy: auth.currentUser.email,
+        offerd:false,
+        offerRatio:null,
+        createdAt: new Date(),
     });
 }
 
-async function editservice(collectionName, documentId,inputTitle){
+async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath}){
+    const alyDocRef = doc(db, collectionName, documentId);
+    await updateDoc(alyDocRef, { 
+        serviceDescripition: serviceDescripition,
+        serviceName: serviceName,
+        servicePhone:servicePhone,
+        servicePrice: servicePrice,
+        offerd:offerd,
+        offerRatio:offerRatio,
+        createdAt: new Date(),
+        createdBy: auth.currentUser.email,
+        imagePath: imagePath
+
+    });
+}
+
+async function editServiceField(collectionName, documentId,inputTitle){
     const alyDocRef = doc(db, collectionName, documentId);
     await updateDoc(alyDocRef,{...{inputTitle:inputTitle}});
 }
@@ -61,8 +67,8 @@ const alyDocRef = doc(db, collectionName, documentId);
 }
 
 export {getAllUserService};
-export { editAllservices };
-export { editservice };
+export { editAllServicesFields };
+export { editServiceField };
 export { setService };
 export { deletService };
 

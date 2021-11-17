@@ -11,7 +11,7 @@ import {
   sendPasswordResetEmail ,
   onAuthStateChanged,
 } from "firebase/auth";
-import { setService , getAllUserService , editservice, deletService, editAllservices} from "./service";
+import { setService , getAllUserService , editServiceField, deletService, editAllServicesFields} from "./service";
 import { setUser, updatedEmail, resetPassword, logout, login,signup , getUser} from "./user";
 
 const AuthContext = React.createContext();
@@ -117,9 +117,9 @@ function updatePassword(password) {
     getUser,
     setService,
     getAllUserService,
-    editservice, 
+    editAllServicesFields, 
     deletService,
-    editAllservices
+    editServiceField
   };
 
   return (
