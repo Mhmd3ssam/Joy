@@ -18,7 +18,6 @@ import '../assets/css/index.css'
 import PrivateRoute from "./PrivateRoute";
 import { AuthProvider } from "../context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ServiceCards from "./Cards/ServiceCards";
 function App() {
 
   return (
@@ -27,7 +26,6 @@ function App() {
           <AuthProvider>
             <Switch>
             <Route exact path="/" component={Home}/>
-            <Route  path="/services" component={ServiceCards}/>
             <PrivateRoute exact path="/layout" component={Layout}/>
              <Route path="/signup" component={Signup} />
              <Route path="/login" component={Login}/>

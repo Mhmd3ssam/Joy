@@ -5,15 +5,12 @@ import { collection, getFirestore , doc, deleteDoc} from '@firebase/firestore';
 import app from '../../Firebase';
 import { Container } from 'react-bootstrap';
 
-
-
-
-
 const RentService = () => {
 
     const [rent, setRent] = useState([]);
     const [load, setLoad] = useState(true);
-    const { getAllUserService ,  } = useAuth();
+    const[counter,setCounter] = useState(0)
+    const { getAllUserService } = useAuth();
     const db = getFirestore(app);
     const serviceCollectionRef = collection(db, 'Rent');
    
@@ -21,20 +18,25 @@ const RentService = () => {
         console.log(documentId)
         const alyDocRef = doc(db, 'Rent', documentId);
         await deleteDoc(alyDocRef);
+        setCounter(counter + 1)
+
     }
 
-
-    useEffect(() => {
+    function getData(){
         getAllUserService(serviceCollectionRef)
-            .then((res) => {
-                setRent(res)
-                setLoad(false)
-                console.log(res)
-            })}
-    ,[])
+        .then((res) => {
+            setRent(res)
+            setLoad(false)
+            console.log(res)
+        })
+    }
     
+    useEffect(() => {
+        getData()
+    }
+    ,[counter])
 
-
+    
     /**
         createdBy: "ana@gmail.com"
         id: "9xECUjDe5cV2uMYn5sHQ"
