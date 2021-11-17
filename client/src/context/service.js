@@ -1,4 +1,4 @@
-import { addDoc,query,where,getDocs, updateDoc, doc, getFirestore, deleteDoc} from "firebase/firestore";
+import { addDoc,query,where,getDocs, updateDoc, doc, getFirestore, deleteDoc, getDoc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import app from "../Firebase";
 import { useState } from "react";
@@ -22,6 +22,18 @@ async function getAllUserService(serviceCollectionRef) {
     //     console.log(doc.id, " => ", doc.data());
     // });
 }
+
+
+async function getSingleService(collection, id){
+    const docRef = doc(db,collection , id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data()
+    } else {
+     return  console.log("No such document!");
+    }
+  
+  }
 
 async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath }) {
     return await addDoc(catgory, {
@@ -71,5 +83,6 @@ export { editAllServicesFields };
 export { editServiceField };
 export { setService };
 export { deletService };
+export { getSingleService };
 
 
