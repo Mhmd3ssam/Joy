@@ -1,5 +1,5 @@
 import React from 'react';
-import ServiceCard from './CardUi';
+import ServiceCard from './RentService';
 import './card-style.css';
 import {Navbar,Container, Nav} from 'react-bootstrap'
 import { Link , BrowserRouter as Router , Route , Switch} from 'react-router-dom';

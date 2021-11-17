@@ -5,8 +5,7 @@ import HomePage from '../pages/HomePage';
 import CreateService from '../pages/CreateService/CreateService';
 import Hotels from './Cards/Hotels';
 import Restaurants from './Cards/Restaurants';
-import ServiceCards from './Cards/ServiceCards';
-
+import RentService from './Cards/RentService';
 function Routes() {
     return (
         <Switch>
@@ -15,7 +14,7 @@ function Routes() {
             <Route exact path="/layout/create" component={CreateService} /> 
             <Route  exact path="/hotels" component={Hotels} />
             <Route exact path="/restaurants" component={Restaurants} />
-            <Route exact path="/rent" component={ServiceCards}/>
+            <Route exact path="/rent" component={RentService}/>
         </Switch>
     )
 }

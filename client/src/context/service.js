@@ -56,7 +56,7 @@ async function deletService(collectionName, documentId){
     console.log(documentId)
     console.log(collectionName)
     console.log(db)
-    const alyDocRef = doc(db, collectionName, documentId);
+const alyDocRef = doc(db, collectionName, documentId);
    return await deleteDoc(alyDocRef);
 }
 

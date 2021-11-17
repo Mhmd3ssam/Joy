@@ -9,16 +9,17 @@ import { Container } from 'react-bootstrap';
 
 
 
-const ServiceCard = ({handelClick}) => {
+const RentService = () => {
+
     const [rent, setRent] = useState([]);
     const [load, setLoad] = useState(true);
     const { getAllUserService ,  } = useAuth();
     const db = getFirestore(app);
     const serviceCollectionRef = collection(db, 'Rent');
    
-    async function deletService(db,collectionName, documentId){
+    async function deletService(documentId){
         console.log(documentId)
-        const alyDocRef = doc(db, collectionName, documentId);
+        const alyDocRef = doc(db, 'Rent', documentId);
         await deleteDoc(alyDocRef);
     }
 
@@ -32,9 +33,6 @@ const ServiceCard = ({handelClick}) => {
             })}
     ,[])
     
-    const handelDelete = ()=>{
-        deletService('Rent', 'cHvvACaqWGuxMtQgMiYm');
-    }
 
 
     /**
@@ -67,7 +65,7 @@ const ServiceCard = ({handelClick}) => {
                         <p className="card-text text-secondary">
                            {serviceDescripition}
                         </p>
-                    <button className="btn btn-outline-info" onClick={(catgory,id)=>{handelDelete(id)}}>Delete item</button>
+                    <button className="btn btn-outline-info" onClick={()=>{deletService(id)}}>Delete item</button>
                     </div>
                 </div>
                 </div>
@@ -85,4 +83,4 @@ const ServiceCard = ({handelClick}) => {
     )
 }
 
-export default ServiceCard;
+export default RentService;
