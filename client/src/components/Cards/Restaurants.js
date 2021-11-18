@@ -13,11 +13,11 @@ const RentService = () => {
   const [rent, setRent] = useState([]);
   const [load, setLoad] = useState(true);
   const [counter, setCounter] = useState(0);
-  const[imagePath,setImagePath] = useState("");
-  const[serviceDescripition,setServiceDescripition] = useState("");
-  const[serviceNamee,setServiceName] = useState("");
-  const[servicePhone,setservicePhone] = useState("");
-  const[servicePrice,setServicePrice] = useState("");
+  const[imgPath,setImgPath] = useState("");
+  const[descripition,setDescripition] = useState("");
+  const[Name,setName] = useState("");
+  const[phone,setPhone] = useState("");
+  const[price,setPrice] = useState("");
 
 
   const { getAllUserService, editAllServicesFields , getSingleService} = useAuth();
@@ -35,21 +35,14 @@ const RentService = () => {
     getSingleService("Restaurants", id)
     .then((data)=>{
       const{imagePath,serviceDescripition,serviceName,servicePhone,servicePrice}= data;
-      setImagePath(imagePath)
-      setServiceDescripition(serviceDescripition)
-      setServiceName(serviceName)
-      setservicePhone(servicePhone)
-      setServicePrice(servicePrice)
+      setImgPath(imagePath)
+      setDescripition(serviceDescripition)
+      setName(serviceName)
+      setPhone(servicePhone)
+      setPrice(servicePrice)
     })
-    console.log(imagePath)
   };
 
-
-
-
-
-  
-  
 
   function editeService(id) {
     console.log("ggg");
@@ -164,7 +157,7 @@ const RentService = () => {
                         </h3>
                       </div>
                       {error && <Alert variant="danger">{error}</Alert>}
-                      
+
                       <form >
                         <Form.Group id="Service_Name">
                           <Form.Label className="text-primary font-weight-bold">
@@ -176,8 +169,8 @@ const RentService = () => {
                             type="text"
                             required
                             placeholder="Enter Your Service Name"
-                            value={serviceNamee}
-                            onChange={(e)=>{setServiceName(e.target.value)}}
+                            value={Name}
+                            onChange={(e)=>{setName(e.target.value)}}
                           />
                         </Form.Group>
 
@@ -188,6 +181,7 @@ const RentService = () => {
                           <Form.Control
                             type="text"
                             required
+                            value={descripition}
                             style={{ height: "8rem" }}
                             placeholder="Enter Your Service description"
                           />
@@ -197,14 +191,14 @@ const RentService = () => {
                           <Form.Label className="text-primary font-weight-bold">
                             Service Price
                           </Form.Label>
-                          <Form.Control type="number"  required className="col-md-2" placeholder="Enter Your Service Price" style={{ height: "2rem" }} />
+                          <Form.Control type="number" value={price} required className="col-md-2" placeholder="Enter Your Service Price" style={{ height: "2rem" }} />
                         </Form.Group>
 
                         <Form.Group id="Phone_Number">
                           <Form.Label className="text-primary font-weight-bold">
                             Phone Number
                           </Form.Label>
-                          <Form.Control type="number"  required placeholder="Enter Your Phone Number" />
+                          <Form.Control type="number" value={phone}required placeholder="Enter Your Phone Number" />
 
                         </Form.Group>
                         <Form.Group id="Service_Image">

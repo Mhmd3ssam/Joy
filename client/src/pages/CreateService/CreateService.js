@@ -21,6 +21,7 @@ function CreateService() {
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState('')
+  const[filImage, setFileImage] =useState({})
   const [catagory, setCatagory] = useState('default');
   const { currentUser, logout, setService, getAllUserService } = useAuth();
   const history = useHistory();
@@ -37,7 +38,8 @@ function CreateService() {
 
       })
       setImage(e.target.files[0])
-
+      setFileImage(e.target.files)
+      console.log(image)
     }
   }
 
@@ -81,7 +83,6 @@ function CreateService() {
 
   console.log(url)
 
-
   async function handelSubmit(e) {
     console.log(url)
     e.preventDefault();
@@ -93,9 +94,12 @@ function CreateService() {
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
         servicePhone: servicePhoneRef.current.value,
-        imagePath: url
+        imagePath: url,
+        imageFile:image
+        
       })
 
+      console.log("ko")
       history.push("/layout/create")
       console.log('done')
     } catch (error) {
