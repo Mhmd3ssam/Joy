@@ -35,12 +35,12 @@ const RentService = () => {
 
   const { getAllUserService, editAllServicesFields } = useAuth();
   const db = getFirestore(app);
-  const serviceCollectionRef = collection(db, "Restaurants");
+  const serviceCollectionRef = collection(db, "Rent");
 
 
   function editeService(id) {
     console.log("ggg");
-    editAllServicesFields("Restaurants", id, {
+    editAllServicesFields("Rent", id, {
       serviceName: Name,
       serviceDescripition: descripition,
       servicePhone: phone,
@@ -56,7 +56,7 @@ const RentService = () => {
 
   async function deletService(documentId) {
     console.log(documentId);
-    const alyDocRef = doc(db, "Restaurants", documentId);
+    const alyDocRef = doc(db, "Rent", documentId);
     await deleteDoc(alyDocRef);
     setCounter(counter + 1);
   }
@@ -99,7 +99,7 @@ const RentService = () => {
                 >
                   Delete item
                 </button>
-                <Link className="btn btn-outline-info" to={`/editItem?id=${id}&name=Restaurants`}>
+                <Link className="btn btn-outline-info" to={`/editItem?id=${id}&name=Rent`}>
                 
                   Edite item
                 </Link>

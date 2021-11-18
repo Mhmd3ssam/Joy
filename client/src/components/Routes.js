@@ -3,10 +3,10 @@ import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
 import HomePage from '../pages/HomePage';
 import CreateService from '../pages/CreateService/CreateService';
-import Hotels from './Cards/Hotels';
-import Restaurants from './Cards/Restaurants';
-import RentService from './Cards/RentService';
-import EditeItem from './Cards/EditeItem';
+import Hotels from './ServicesCards/Hotels';
+import Restaurants from './ServicesCards/Restaurants';
+import RentService from './ServicesCards/RentService';
+import EditeItem from './ServicesCards/EditeItem';
 function Routes() {
     return (
         <Switch>
