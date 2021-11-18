@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import "./topnav.css";
 import Dropdown from '../Dropdown/Dropdown';
 import notifications from '../../assets/JsonData/notification.json';
 import { Link } from "react-router-dom";
 import user_image from '../../assets/images/girlavatar.jpg'
+import { useAuth } from "../../context/AuthContext";
+import { auth } from "../../Firebase";
+import {useHistory } from "react-router-dom";
 
 import user_menu from '../../assets/JsonData/user_menus.json'
 
@@ -34,15 +37,37 @@ const renderUserToggle = (user) => (
 )
 
 
-const renderUserMenu =(item, index) => (
+
+
+
+
+function TopNav() {
+  const [error, setError] = useState("");
+  const {logout} = useAuth();
+  const history = useHistory();
+
+
+  const renderUserMenu =(item, index) => (
     <Link to='/' key={index}>
-        <div className="notification-item">
+        <div className="notification-item" onClick={() => handleLogout()}>
             <i className={item.icon}></i>
-            <span>{item.content}</span>
+            <span >{item.content}</span>
         </div>
     </Link>
 )
-function TopNav() {
+
+
+  async function handleLogout() {
+    setError("");
+    try {
+      await logout(auth)
+      history.push("/login")
+    } catch {
+      setError("Failed to log out")
+    }
+  }
+  
+
   return (
     <div className="topnav">
       <div className="topnav__search">
@@ -57,17 +82,6 @@ function TopNav() {
             contentData={user_menu}
             renderItems={(item, index) => renderUserMenu(item, index)}
           />
-        </div>
-        <div className="topnav__right-item">
-          { <Dropdown
-            icon='bx bx-bell'
-            badge='12'
-            contentData={notifications}
-            renderItems={(item, index) => renderNotificationItem(item, index)}
-            renderFooter={() => <Link to='/'>View All</Link>}
-          />
-          }                   
-          <div className="topnav__right-item">{/* <ThemeMenu/> */}</div>{" "}
         </div>
       </div>
     </div>
