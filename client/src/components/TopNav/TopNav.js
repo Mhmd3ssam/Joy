@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./topnav.css";
 import Dropdown from '../Dropdown/Dropdown';
 import notifications from '../../assets/JsonData/notification.json';
@@ -12,17 +12,7 @@ import user_menu from '../../assets/JsonData/user_menus.json'
 
 
 
-const curr_user = {
-    display_name: 'Reham Muhammad',
-    image: user_image
-}
 
-const renderNotificationItem = (item, index) => (
-    <div className="notification-item" key={index}>
-        <i className={item.icon}></i>
-        <span>{item.content}</span>
-    </div>
-)
 
 
 const renderUserToggle = (user) => (
@@ -40,24 +30,15 @@ const renderUserToggle = (user) => (
 
 
 
-
 function TopNav() {
-  const [error, setError] = useState("");
-  const {logout} = useAuth();
-  const history = useHistory();
+
+const [error, setError] = useState("");
+const[user,setUser] = useState(null)
+const {logout, getUser} = useAuth();
+const history = useHistory();
 
 
-  const renderUserMenu =(item, index) => (
-    <Link to='/' key={index}>
-        <div className="notification-item" onClick={() => handleLogout()}>
-            <i className={item.icon}></i>
-            <span >{item.content}</span>
-        </div>
-    </Link>
-)
-
-
-  async function handleLogout() {
+async function handleLogout() {
     setError("");
     try {
       await logout(auth)
@@ -66,7 +47,38 @@ function TopNav() {
       setError("Failed to log out")
     }
   }
-  
+
+useEffect(() => {
+  getUser('UserProvider',auth.currentUser.email)
+  .then((data)=>{
+    setUser(data)
+    
+  })
+}, [])
+
+console.log(user)
+
+
+const renderUserMenu =(item, index) => (
+    <Link to='/' key={index}>
+        <div className="notification-item" onClick={() => handleLogout()}>
+            <i className={item.icon}></i>
+            <span >{item.content}</span>
+        </div>
+    </Link>
+)
+
+const renderNotificationItem = (item, index) => (
+  <div className="notification-item" key={index}>
+      <i className={item.icon}></i>
+      <span>{item.content}</span>
+  </div>
+)
+
+const curr_user = {
+  display_name: user ?user.englishUserName:"" ,
+  image: user_image
+}
 
   return (
     <div className="topnav">
