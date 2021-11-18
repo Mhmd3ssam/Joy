@@ -29,8 +29,8 @@ function CreateService() {
 
   const db = getFirestore(app);
   const serviceCollectionRef = collection(db, catagory);
-  function handelChange(e) {
 
+  function handelChange(e) {
     if (e.target.files[0]) {
       Object.defineProperty(e.target.files[0], 'name', {
         writable: true,
@@ -206,7 +206,7 @@ function CreateService() {
                     type="file"
                     required
                     onChange={handelChange}
-                  />
+                />
                   <Button onClick={handelUpload} className="btn-upload-gradiant mt-5">Upload</Button>
 
                 </Form.Group>

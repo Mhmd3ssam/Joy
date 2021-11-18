@@ -35,14 +35,13 @@ async function getSingleService(collection, id){
   
   }
 
-async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath,imageFile }) {
+async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath }) {
     return await addDoc(catgory, {
         serviceName: serviceName,
         serviceDescripition: serviceDescripition,
         servicePrice: servicePrice,
         servicePhone: servicePhone,
         imagePath:imagePath,
-        imageFile:imageFile,
         createdBy: auth.currentUser.email,
         offerd:false,
         offerRatio:null,
