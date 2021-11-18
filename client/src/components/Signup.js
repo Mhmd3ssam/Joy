@@ -3,10 +3,13 @@ import { Form, Button, Card, Alert ,Container } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../Firebase";
 import { Link, useHistory } from "react-router-dom"
+import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {  MDBInput } from 'mdbreact';
+
+import app from "../Firebase";
 
 export default function Signup() {
   const englishUserName = useRef();
-  const arabicUserName = useRef();
   const phoneRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -15,8 +18,45 @@ export default function Signup() {
   const { signup, currentUser, login, setUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [url, setUrl] = useState('');
 
-  
+  async function handelUpload() {
+    const storage = getStorage(app);
+    const storageReff = storageRef(storage);
+    const imagesRef = storageRef(storageReff, `images/${image.name}`);
+    const uploadTask = uploadBytesResumable(imagesRef, image)
+    console.log(uploadTask)
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setUrl(downloadURL)
+        });
+      }
+    )
+  }
+
+  function handelChange(e) {
+    if (e.target.files[0]) {
+      Object.defineProperty(e.target.files[0], 'name', {
+        writable: true,
+        value: new Date()
+
+      })
+      setImage(e.target.files[0])
+      console.log(image)
+    }
+  }
   async function handleSubmit(e) {
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -29,10 +69,10 @@ export default function Signup() {
       await login(auth,emailRef.current.value, passwordRef.current.value)
       await setUser('UserProvider',auth.currentUser.email, {
         englishUserName: englishUserName.current.value,
-        arabicUserName: arabicUserName.current.value,
         userEmail:emailRef.current.value,
         userPassword: passwordRef.current.value,
-        userPhone: phoneRef.current.value
+        userPhone: phoneRef.current.value,
+        imagePath:url
       })
       history.push("/layout")
 
@@ -66,17 +106,22 @@ export default function Signup() {
                   <Form.Label> User Name in English</Form.Label>
                   <Form.Control type="text" ref={englishUserName} required />
                 </Form.Group>
-                <Form.Group id="arabic-userName">
-                  <Form.Label> User Name in Arabic</Form.Label>
-                  <Form.Control type="text" ref={arabicUserName} required />
+                <Form.Group id="email">
+                  <Form.Label> Email</Form.Label>
+                  <Form.Control type="email" ref={emailRef} required />
                 </Form.Group>
                 <Form.Group id="phone">
                   <Form.Label> Phone number</Form.Label>
                   <Form.Control type="number" ref={phoneRef} required />
                 </Form.Group>
-                <Form.Group id="email">
-                  <Form.Label> Email</Form.Label>
-                  <Form.Control type="email" ref={emailRef} required />
+                <Form.Group id="Service_Image">   
+                <label className="text-primary font-weight-bold mb-2">Service Image </label>          
+                  <MDBInput 
+                    type="file"
+                    required
+                    onChange={handelChange}
+                />
+                  <Button onClick={handelUpload} className="btn-upload-gradiant mt-5">Upload</Button>
                 </Form.Group>
                 <Form.Group id="password">
                   <Form.Label> Password</Form.Label>

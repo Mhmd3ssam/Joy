@@ -33,13 +33,13 @@ async function updatedEmail(auth , email) {
   return updateEmail(auth.currentUser, email)
 }
 
-async function setUser(Collection,id,{englishUserName,arabicUserName,userEmail,userPassword,userPhone}){
+async function setUser(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath}){
     return await setDoc(doc(db,Collection , id), {
       englishUserName:englishUserName,
-      arabicUserName: arabicUserName,
       userPassword: userPassword,
       userEmail: userEmail,
-      userPhone:userPhone
+      userPhone:userPhone,
+      imagePath:imagePath
     })
 }
 

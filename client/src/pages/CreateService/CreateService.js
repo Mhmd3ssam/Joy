@@ -21,7 +21,6 @@ function CreateService() {
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState('')
-  const[filImage, setFileImage] =useState({})
   const [catagory, setCatagory] = useState('default');
   const { currentUser, logout, setService, getAllUserService } = useAuth();
   const history = useHistory();
@@ -38,7 +37,6 @@ function CreateService() {
 
       })
       setImage(e.target.files[0])
-      setFileImage(e.target.files)
       console.log(image)
     }
   }
@@ -208,7 +206,6 @@ function CreateService() {
                     onChange={handelChange}
                 />
                   <Button onClick={handelUpload} className="btn-upload-gradiant mt-5">Upload</Button>
-
                 </Form.Group>
                          
                 <Button  type="submit" className="w-100 btn-upload-gradiant mt-5">

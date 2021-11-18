@@ -37,7 +37,6 @@ const[user,setUser] = useState(null)
 const {logout, getUser} = useAuth();
 const history = useHistory();
 
-
 async function handleLogout() {
     setError("");
     try {
@@ -52,7 +51,7 @@ useEffect(() => {
   getUser('UserProvider',auth.currentUser.email)
   .then((data)=>{
     setUser(data)
-    
+
   })
 }, [])
 
@@ -77,7 +76,7 @@ const renderNotificationItem = (item, index) => (
 
 const curr_user = {
   display_name: user ?user.englishUserName:"" ,
-  image: user_image
+  image:user? user.imagePath:''
 }
 
   return (
