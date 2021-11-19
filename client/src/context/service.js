@@ -44,11 +44,10 @@ async function setService(catgory,{ serviceName, serviceDescripition, servicePri
         imagePath:imagePath,
         createdBy: auth.currentUser.email,
         offerd:false,
-        offerRatio:null,
+        offerRatio:"",
         createdAt: new Date(),
     });
 }
-
 async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath}){
     const alyDocRef = doc(db, collectionName, documentId);
     await updateDoc(alyDocRef, { 
