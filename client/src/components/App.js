@@ -8,7 +8,7 @@ import ContactUs from "./ContactUs/ContactUs";
 import ForgotPassword from "./ForgotPassword";
 import Home from "./Home";
 import Layout from "./layout/Layout";
-
+import Adman from "./Adman/Adman";
 //import style and icons files
 import '../assets/boxicons-2.0.7/css/boxicons.min.css'
 import '../assets/css/grid.css'
@@ -31,6 +31,7 @@ function App() {
              <Route path="/login" component={Login}/>
              <Route path="/forgot-password" component={ForgotPassword} />
              <Route path="/contact" component={ContactUs} />
+             <Route path="/adman" component={Adman} />
             </Switch>
           </AuthProvider>
           </Router>

@@ -74,6 +74,8 @@ const Hotels = () => {
   
   useEffect(() => {
     getData();
+    document.title = "Hotels"
+
   }, [counter]);
 
   let comp = rent.map((res) => {

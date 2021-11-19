@@ -39,6 +39,7 @@ export default function Profile() {
             setHotels(res);
             console.log(res);
         });
+        document.title = "Profile"
         setLoad(false)  
     }, [])
 

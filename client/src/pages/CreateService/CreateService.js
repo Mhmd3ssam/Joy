@@ -109,7 +109,10 @@ function CreateService() {
   }
 
 
+  useEffect(()=>{
+    document.title = "Create Services"
 
+  })
 
 
   return (

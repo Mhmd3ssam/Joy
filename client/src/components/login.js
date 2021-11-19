@@ -17,8 +17,13 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
-      await login(auth, emailRef.current.value, passwordRef.current.value);
-      history.push("/layout");
+      if(emailRef.current.value === "adman@joy.com"){
+        await login(auth, emailRef.current.value, passwordRef.current.value);
+        history.push("/adman");
+      }else{
+        await login(auth, emailRef.current.value, passwordRef.current.value);
+        history.push("/layout");
+      }
     } catch {
       setError("Failed to log in");
     }

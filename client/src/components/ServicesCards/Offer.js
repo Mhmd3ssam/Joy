@@ -65,6 +65,8 @@ export default function EditeItem() {
     useEffect(()=>{
       getData()
       setLoad(false)
+      document.title = "Offer"
+
     },[])
     console.log(catgory)
     console.log(itemId)
