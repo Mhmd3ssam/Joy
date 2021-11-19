@@ -59,13 +59,13 @@ export default function Profile() {
                     <Link class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded" data-abc="true" to={`/editeprofile?uerEmail=${user?user.userEmail:""}`}>Edite</Link>
                     <div class="row text-center m-t-20">
                         <div class="col-lg-4 col-md-4 m-t-20">
-                            <h3 class="m-b-0 font-light">{load?"":restaurants.length}</h3><small>Restaurants</small>
+                            <h3 class="m-b-0 font-light">{load?"":restaurants.length}</h3><small> <Link to="/restaurants">Restaurants</Link></small>
                         </div>
                         <div class="col-lg-4 col-md-4 m-t-20">
-                            <h3 class="m-b-0 font-light">{load?"":rent.length}</h3><small>Rent</small>
+                            <h3 class="m-b-0 font-light">{load?"":rent.length}</h3><small> <Link to="/rent">Rent</Link></small>
                         </div>
                         <div class="col-lg-4 col-md-4 m-t-20">
-                            <h3 class="m-b-0 font-light">{load?"":hotels.length}</h3><small>Hotels</small>
+                            <h3 class="m-b-0 font-light">{load?"":hotels.length}</h3><small> <Link to="/hotels">Hotels</Link></small>
                         </div>
                     </div>
                 </div>

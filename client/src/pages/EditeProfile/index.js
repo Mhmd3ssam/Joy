@@ -31,7 +31,7 @@ export default function EditeItem() {
     //our functions 
     function editeService() {
       console.log("ggg");
-      updatedEmail(auth,email)
+      //updatedEmail(auth,email)
       editeUserData("UserProvider", userEmail, {
         englishUserName: userName,
         userEmail: email,
@@ -143,20 +143,6 @@ export default function EditeItem() {
                     placeholder="Enter Your Service Name"
                     value={userName}
                     onChange={(e)=>{setUserName(e.target.value)}}
-                  />
-                  </Form.Group>
-                <Form.Group id="Service_Name">
-                  <Form.Label className="text-primary font-weight-bold">
-                    User Email
-                  </Form.Label>
-                  <Form.Control
-                    validate
-                    labelClass="white-text"
-                    type="text"
-                    required
-                    placeholder="Enter Your Service Name"
-                    value={email}
-                    onChange={(e)=>{setEmail(e.target.value)}}
                   />
                   </Form.Group>
                       <Form.Group id="Phone_Number">
