@@ -25,7 +25,7 @@ export default function Signup() {
   async function handelUpload() {
     const storage = getStorage(app);
     const storageReff = storageRef(storage);
-    const imagesRef = storageRef(storageReff, `images/${image.name}`);
+    const imagesRef = storageRef(storageReff, `Images/${image.name}`);
     const uploadTask = uploadBytesResumable(imagesRef, image)
     console.log(uploadTask)
     uploadTask.on(

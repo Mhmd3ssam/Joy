@@ -2,11 +2,9 @@ import React, {useState, useEffect} from "react";
 import './styles.css'
 import { collection, getFirestore } from "@firebase/firestore";
 import app from "../../Firebase";
-
 import { useAuth } from "../../context/AuthContext";
 import {useHistory ,Link} from "react-router-dom";
 import { auth } from "../../Firebase";
-
 export default function Profile() {
     const[user,setUser] = useState(null)
     const {getUser , getAllUserService} = useAuth();
@@ -49,9 +47,13 @@ export default function Profile() {
     return (
         <div class="padding">
         <div class="col-md-8">
-            <div class="card"> <img class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="Card image cap"/>
+            <div class="card"> 
+                <img class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="Card image cap"/>
                 <div class="card-body little-profile text-center">
-                    <div class="pro-img"><img src={user ? user.imagePath : ""} alt="user"/></div>
+                    <div class="pro-img">
+                        <img src={user ? user.imagePath : ""} alt="user"/>
+
+                    </div>
                     <h3 class="m-b-0">{user ? user.englishUserName : ""}</h3>
                     <p>{user ? user.userEmail : ""}</p> 
                     <Link class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded" data-abc="true" to={`/editeprofile?uerEmail=${user?user.userEmail:""}`}>Edite</Link>

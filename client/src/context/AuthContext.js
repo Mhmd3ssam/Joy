@@ -12,7 +12,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { setService , getAllUserService , editServiceField, deletService, editAllServicesFields, getSingleService} from "./service";
-import { setUser, updatedEmail, resetPassword, logout, login,signup , getUser} from "./user";
+import { setUser, updatedEmail, resetPassword, logout, login,signup , getUser, editeUserData} from "./user";
 
 const AuthContext = React.createContext();
 
@@ -120,7 +120,8 @@ function updatePassword(password) {
     editAllServicesFields, 
     deletService,
     editServiceField,
-    getSingleService
+    getSingleService,
+    editeUserData
   };
 
   return (

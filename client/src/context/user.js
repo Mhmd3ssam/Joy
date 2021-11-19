@@ -1,4 +1,4 @@
-import { doc, setDoc, getFirestore , getDoc } from "firebase/firestore"; 
+import { doc, setDoc, getFirestore , getDoc, updateDoc } from "firebase/firestore"; 
 import app from "../Firebase";
 import {
   getAuth,
@@ -32,7 +32,16 @@ async function resetPassword(auth, email) {
 async function updatedEmail(auth , email) {
   return updateEmail(auth.currentUser, email)
 }
-
+async function editeUserData(collectionName, userEmailId,{englishUserName,userEmail,userPassword,userPhone,imagePath}){
+  const alyDocRef = doc(db, collectionName, userEmailId);
+  await updateDoc(alyDocRef, { 
+      englishUserName:englishUserName,
+      userPassword: userPassword,
+      userEmail: userEmail,
+      userPhone:userPhone,
+      imagePath:imagePath  
+  });
+}
 async function setUser(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath}){
     return await setDoc(doc(db,Collection , id), {
       englishUserName:englishUserName,
@@ -62,3 +71,4 @@ export {resetPassword}
 export {updatedEmail}
 export {setUser}
 export {getUser}
+export {editeUserData}

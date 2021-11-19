@@ -100,8 +100,10 @@ const RentService = () => {
                   Delete item
                 </button>
                 <Link className="btn btn-outline-info" to={`/editItem?id=${id}&name=Rent`}>
-                
                   Edite item
+                </Link>
+                <Link className="btn btn-outline-info" to={`/offer?id=${id}&name=Rent`}>
+                  Make Offer
                 </Link>
               </div>
             </div>

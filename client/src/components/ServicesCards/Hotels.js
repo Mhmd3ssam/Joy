@@ -100,8 +100,10 @@ const Hotels = () => {
                   Delete item
                 </button>
                 <Link className="btn btn-outline-info" to={`/editItem?id=${id}&name=Hotels`}>
-                
                   Edite item
+                </Link>
+                <Link className="btn btn-outline-info" to={`/offer?id=${id}&name=Hotels`}>
+                Make Offer
                 </Link>
               </div>
             </div>

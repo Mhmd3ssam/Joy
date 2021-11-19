@@ -92,9 +92,7 @@ function CreateService() {
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
         servicePhone: servicePhoneRef.current.value,
-        imagePath: url,
-        imageFile:image
-        
+        imagePath: url,        
       })
 
       console.log("ko")

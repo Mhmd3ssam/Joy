@@ -1,59 +1,78 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-import { useAuth } from "../../context/AuthContext";
-import { Link, useHistory } from "react-router-dom";
-import { auth } from "../../Firebase";
-import { doc, getFirestore, collection } from "firebase/firestore";
-import app from "../../Firebase";
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import "../../components/ContactUs/ContactUs.css";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBBtn } from 'mdbreact';
+import app from "../../Firebase";
+import {  MDBInput } from 'mdbreact';
+import {BrowserRouter as Router,Link,useLocation , useHistory} from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { auth } from "../../Firebase";
+export default function EditeItem() {
+  //our state
+    const [error, setError] = useState("");
+    const [load, setLoad] = useState(true);
+    const [image, setImage] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const history = useHistory();
 
+    const { search } = useLocation();
+    const {  editeUserData, getSingleService, updatedEmail } = useAuth();
 
-function EditeProfile() {
-  const serviceNameRef = useRef();
-  const serviceDescripitionRef = useRef();
-  const servicePriceRef = useRef();
-  const servicePhoneRef = useRef();
-  const serviceImage = useRef();
-  const [image, setImage] = useState(null);
-  const [error, setError] = useState("");
-  const [progress, setProgress] = useState(0);
-  const [url, setUrl] = useState('')
-  const [catagory, setCatagory] = useState('default');
-  const { currentUser, logout, setService, getAllUserService } = useAuth();
-  const history = useHistory();
-  const [loading, setLoading] = useState(false);
+    const[userImage,setUserImage] = useState("");
+    const[userName,setUserName] = useState("");
+    const[userPhone,setUserPhone] = useState("");
+    const[email,setEmail] = useState("");
+    const[password,setUsrPassword] = useState("");
+  
+    console.log(editeUserData)
 
-  const db = getFirestore(app);
-  const serviceCollectionRef = collection(db, catagory);
+    let userEmail = search.split('=')[1];
+    console.log(userEmail)
 
-  function handelChange(e) {
-    if (e.target.files[0]) {
-      Object.defineProperty(e.target.files[0], 'name', {
-        writable: true,
-        value: new Date()
-
-      })
-      setImage(e.target.files[0])
-      console.log(image)
+    //our functions 
+    function editeService() {
+      console.log("ggg");
+      updatedEmail(auth,email)
+      editeUserData("UserProvider", userEmail, {
+        englishUserName: userName,
+        userEmail: email,
+        imagePath: userImage,
+        userPhone:userPhone,
+        userPassword:password
+      });
+      history.push("/profile")
     }
-  }
 
-  function handelCatgory(e) {
-    setCatagory(e.target.value)
-  }
+    function getData(){
+      getSingleService("UserProvider", userEmail)
+      .then((data)=>{
+        console.log(data)
+        const{imagePath,englishUserName,userPhone,userEmail, userPassword}= data;
+        setUserImage(imagePath)
+        setUserPhone(userPhone)
+        setUserName(englishUserName)
+        setEmail(userEmail)
+        setUsrPassword(userPassword)
+      })
+    }
+    /*
+    englishUserName: "Mohamed "
+    imagePath: "https://firebasestorage.googleapis.com/v0/b/jooy-dadba.appspot.com/o/images%2FThu%20Nov%2018%202021%2022%3A51%3A25%20GMT%2B0200%20(Eastern%20European%20Standard%20Time)?alt=media&token=c65d3324-72e3-4d65-ba7f-1e4a8719102c"
+    userEmail: "mohamed@gmail.com"
+    userPhone: "01012143511"
+    
+    */
 
-  console.log(catagory)
+    function handelChange(e) {
+      if (e.target.files[0]) {
+        Object.defineProperty(e.target.files[0], 'name', {
+          writable: true,
+          value: new Date()
+        })
+        setImage(e.target.files[0])
+      }
+    }
 
-  function clearValues() {
-    serviceNameRef.current.value = "";
-    serviceDescripitionRef.current.value = "";
-    servicePriceRef.current.value = '';
-    servicePhoneRef.current.value = '';
-    setProgress(0)
-  }
-
+    
   async function handelUpload() {
     const storage = getStorage(app);
     const storageReff = storageRef(storage);
@@ -72,124 +91,103 @@ function EditeProfile() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          setUrl(downloadURL)
+          setUserImage(downloadURL)
         });
       }
     )
   }
+    useEffect(()=>{
+      getData()
+      setLoad(false)
+    },[])
+ 
+  console.log(userName)
+  console.log(userPhone)
+  console.log(password)
+  console.log(email)
 
-  console.log(url)
-
-  async function handelSubmit(e) {
-    console.log(url)
-    e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      await setService(serviceCollectionRef, {
-        serviceName: serviceNameRef.current.value,
-        serviceDescripition: serviceDescripitionRef.current.value,
-        servicePrice: servicePriceRef.current.value,
-        servicePhone: servicePhoneRef.current.value,
-        imagePath: url,
-        imageFile:image
-        
-      })
-
-      console.log("ko")
-     
-      console.log('done')
-    } catch (error) {
-      console.log(error);
-      setError("Failed to create an service");
-    }
-    setLoading(false);
-    clearValues();
-    history.push(`/${catagory.toLowerCase()}`)
-
-  }
-
-
-
-
-
-  return (
-    <Container className="mt-5">
-      <div className="row">
-        <div className="col-md-12">
-          <Card
-            className="card-image"
-            style={
-              {
-              backgroundImage:"url(https://i.pinimg.com/564x/0d/17/83/0d178380d5b058a37584d1804820c589.jpg)",
-             //   backgroundRepeat: "no-repeat"
-              }
-            }
-          >
-            <div className="rgba-stylish-strong py-5 px-5 z-depth-4">
-              <div className="text-center">
-                <h3 className="font-weight-bold">
-                  <strong>Create Your </strong>
-                  <a href="#!" className="text-primary font-weight-bold">
-                    <strong>Service</strong>
-                  </a>
-                </h3>
-              </div>
-              {error && <Alert variant="danger">{error}</Alert>}       
-              <form onSubmit={handelSubmit}>                                     
-                <Form.Group id="Service_Descripition">
+    return ( 
+      <>
+      {load ? <h1>Loading...</h1>:       
+      <Container className="mt-5">
+        <div className="row">
+          <div className="col-md-12">
+              <Card className="card-image"
+                  style={
+                    {
+                      backgroundImage: "url(https://i.pinimg.com/564x/0d/17/83/0d178380d5b058a37584d1804820c589.jpg)",
+                      //   backgroundRepeat: "no-repeat"
+                    }
+                  }
+              >
+              <div className="rgba-stylish-strong py-5 px-5 z-depth-4">
+                <div className="text-center">
+                  <h3 className="font-weight-bold">
+                    <strong>Edite Your </strong>
+                     <a href="#!" className="text-primary font-weight-bold">
+                        <strong>Service</strong>
+                     </a>
+                  </h3>
+                </div>
+                {error && <Alert variant="danger">{error}</Alert>}
+              <form >
+                <Form.Group id="Service_Name">
+                  <Form.Label className="text-primary font-weight-bold">
+                    User Name
+                  </Form.Label>
+                  <Form.Control
+                    validate
+                    labelClass="white-text"
+                    type="text"
+                    required
+                    placeholder="Enter Your Service Name"
+                    value={userName}
+                    onChange={(e)=>{setUserName(e.target.value)}}
+                  />
+                  </Form.Group>
+                <Form.Group id="Service_Name">
                   <Form.Label className="text-primary font-weight-bold">
                     User Email
-                  </Form.Label>               
+                  </Form.Label>
                   <Form.Control
+                    validate
+                    labelClass="white-text"
                     type="text"
-                    ref={serviceDescripitionRef}
                     required
-                    style={{height:"8rem"}}
-                    placeholder="Enter Your Service description"
+                    placeholder="Enter Your Service Name"
+                    value={email}
+                    onChange={(e)=>{setEmail(e.target.value)}}
                   />
-                </Form.Group>
-                         
-                <Form.Group id="Service_Price">
-                  <Form.Label className="text-primary font-weight-bold">
-                    User Name 
-                  </Form.Label>   
-                <Form.Control type="number" ref={servicePriceRef} required className="col-md-2" placeholder="Enter Your Service Price" style={{height:"2rem"}}/>      
-                </Form.Group>
-                         
-                <Form.Group id="Phone_Number">
-                  <Form.Label className="text-primary font-weight-bold">
-                    Phone Number
-                  </Form.Label>                     
-                  <Form.Control type="number" ref={servicePhoneRef} required placeholder="Enter Your Phone Number"/>          
-                </Form.Group>
-
-                <Form.Group id="Service_Image">   
-                <label className="text-primary font-weight-bold mb-2">Service Image </label>          
-                  <MDBInput 
-                    type="file"
-                    required
-                    onChange={handelChange}
-                />
-                  <Button onClick={handelUpload} className="btn-upload-gradiant mt-5">Upload</Button>
-                </Form.Group>
-                         
-                <Button  type="submit" className="w-100 btn-upload-gradiant mt-5">
-                 Let's Create your Service
-                </Button>
-                       
-              </form>
-                   
+                  </Form.Group>
+                      <Form.Group id="Phone_Number">
+                        <Form.Label className="text-primary font-weight-bold">
+                          Phone Number
+                        </Form.Label>
+                        <Form.Control
+                        type="number" 
+                        value={userPhone}
+                        onChange={(e)=>{setUserPhone(e.target.value)}}
+                        required 
+                        placeholder="Enter Your Phone Number"/>
+                      </Form.Group>
+                      <Form.Group id="Service_Image">
+                        <label className="text-primary font-weight-bold mb-2">UserImage </label>
+                        <MDBInput
+                          type="file"
+                          onChange={handelChange}
+                        />
+                        <Button className="btn-upload-gradiant mt-5" onClick={handelUpload}>Upload</Button>
+                      </Form.Group>
+                      <Button  className="w-100 btn-upload-gradiant mt-5" onClick={editeService}>
+                        Confirm Edite
+                      </Button>
+                    </form>
+                  </div>
+                </Card>
+              </div>
             </div>
-          </Card>
-        </div>
-
-        
+          </Container>}
+      </>
   
-      </div>
-
-    </Container>
-  );
+    )
 }
-
-export default EditeProfile;
