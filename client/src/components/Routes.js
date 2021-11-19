@@ -7,6 +7,7 @@ import Hotels from './ServicesCards/Hotels';
 import Restaurants from './ServicesCards/Restaurants';
 import RentService from './ServicesCards/RentService';
 import EditeItem from './ServicesCards/EditeItem';
+import Offer from './ServicesCards/Offer';
 function Routes() {
     return (
         <Switch>
@@ -17,6 +18,7 @@ function Routes() {
             <Route exact path="/restaurants" component={Restaurants} />
             <Route exact path="/rent" component={RentService}/>
             <Route exact path="/editItem" component={EditeItem}/>
+            <Route exact path="/offer" component={Offer}/>
         </Switch>
     )
 }

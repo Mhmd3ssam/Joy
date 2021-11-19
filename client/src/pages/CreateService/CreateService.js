@@ -98,26 +98,20 @@ function CreateService() {
       })
 
       console.log("ko")
-      history.push("/layout/create")
+     
       console.log('done')
     } catch (error) {
       console.log(error);
       setError("Failed to create an service");
     }
     setLoading(false);
-    clearValues()
+    clearValues();
+    history.push(`/${catagory.toLowerCase()}`)
+
   }
 
 
-  async function handleLogout() {
-    setError("");
-    try {
-      await logout(auth)
-      history.push("/login")
-    } catch {
-      setError("Failed to log out")
-    }
-  }
+
 
 
   return (
@@ -219,9 +213,7 @@ function CreateService() {
         </div>
 
         
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}> Log Out</Button>
-      </div>
+  
       </div>
 
     </Container>

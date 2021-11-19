@@ -7,7 +7,7 @@ import user_image from '../../assets/images/girlavatar.jpg'
 import { useAuth } from "../../context/AuthContext";
 import { auth } from "../../Firebase";
 import {useHistory } from "react-router-dom";
-
+//import Dropdown from 'react-bootstrap/Dropdown'
 import user_menu from '../../assets/JsonData/user_menus.json'
 
 
@@ -93,6 +93,7 @@ const curr_user = {
             contentData={user_menu}
             renderItems={(item, index) => renderUserMenu(item, index)}
           />
+    
         </div>
       </div>
     </div>

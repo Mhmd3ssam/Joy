@@ -3,7 +3,7 @@ import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from "../../Firebase";
 import {  MDBInput } from 'mdbreact';
-import {BrowserRouter as Router,Link,useLocation} from "react-router-dom";
+import {BrowserRouter as Router,Link,useLocation , useHistory} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function EditeItem() {
@@ -12,6 +12,7 @@ export default function EditeItem() {
     const [load, setLoad] = useState(true);
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
+    const history = useHistory();
 
     const { search } = useLocation();
     const {  editAllServicesFields, getSingleService } = useAuth();
@@ -43,6 +44,8 @@ export default function EditeItem() {
         createdBy: created,
         imagePath: imgPath,
       });
+      history.push(`/${catgory.toLowerCase()}`)
+
     }
 
     function getData(){
