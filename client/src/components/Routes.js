@@ -8,6 +8,7 @@ import Restaurants from './ServicesCards/Restaurants';
 import RentService from './ServicesCards/RentService';
 import EditeItem from './ServicesCards/EditeItem';
 import Offer from './ServicesCards/Offer';
+import Profile from '../pages/Profile';
 function Routes() {
     return (
         <Switch>
@@ -19,6 +20,7 @@ function Routes() {
             <Route exact path="/rent" component={RentService}/>
             <Route exact path="/editItem" component={EditeItem}/>
             <Route exact path="/offer" component={Offer}/>
+            <Route exact path="/profile" component={Profile}/>
         </Switch>
     )
 }
