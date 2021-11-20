@@ -57,7 +57,7 @@ export default function Profile() {
                     </div>
                     <h3 class="m-b-0">{user ? user.englishUserName : ""}</h3>
                     <p>{user ? user.userEmail : ""}</p> 
-                    <Link class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded" data-abc="true" to={`/editeprofile?uerEmail=${user?user.userEmail:""}`}>Edite</Link>
+                    <Link class="m-t-10 waves-effect waves-dark btn btn-primary edit-profile btn-md btn-rounded" data-abc="true" to={`/editeprofile?uerEmail=${user?user.userEmail:""}`}>Update your Profile</Link>
                     <div class="row text-center m-t-20">
                         <div class="col-lg-4 col-md-4 m-t-20">
                             <h3 class="m-b-0 font-light">{load?"":restaurants.length}</h3><small> <Link to="/restaurants">Restaurants</Link></small>

@@ -3,10 +3,17 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
- import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBBtn } from 'mdbreact';
-
-
+import { Form, Button, Card, Alert, Container } from "react-bootstrap";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBIcon,
+  MDBBtn,
+} from "mdbreact";
 
 const Hotels = () => {
   const [rent, setRent] = useState([]);
@@ -16,25 +23,23 @@ const Hotels = () => {
   const [counter, setCounter] = useState(0);
   const history = useHistory();
 
-  const[imgPath,setImgPath] = useState("");
-  const[descripition,setDescripition] = useState("");
-  const[Name,setName] = useState("");
-  const[phone,setPhone] = useState("");
-  const[price,setPrice] = useState("");
-  const[theOfferRatio,setTheOfferRatio] = useState("");
-  const[offer,setOffer] = useState("");
-  const[created,setCreated] = useState("");
+  const [imgPath, setImgPath] = useState("");
+  const [descripition, setDescripition] = useState("");
+  const [Name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [price, setPrice] = useState("");
+  const [theOfferRatio, setTheOfferRatio] = useState("");
+  const [offer, setOffer] = useState("");
+  const [created, setCreated] = useState("");
 
-  console.log(Name)
-  console.log(phone)
-  console.log(price)
-  console.log(descripition)
-
+  console.log(Name);
+  console.log(phone);
+  console.log(price);
+  console.log(descripition);
 
   const { getAllUserService, editAllServicesFields } = useAuth();
   const db = getFirestore(app);
   const serviceCollectionRef = collection(db, "Hotels");
-
 
   function editeService(id) {
     console.log("ggg");
@@ -42,7 +47,7 @@ const Hotels = () => {
       serviceName: Name,
       serviceDescripition: descripition,
       servicePhone: phone,
-      servicePrice:price,
+      servicePrice: price,
       offerd: offer,
       offerRatio: theOfferRatio,
       createdAt: new Date(),
@@ -59,8 +64,6 @@ const Hotels = () => {
     setCounter(counter + 1);
   }
 
-
-
   function getData() {
     getAllUserService(serviceCollectionRef).then((res) => {
       setRent(res);
@@ -69,21 +72,28 @@ const Hotels = () => {
     });
   }
 
-  
   useEffect(() => {
     getData();
-    document.title = "Hotels"
-
+    document.title = "Hotels";
   }, [counter]);
 
   let comp = rent.map((res) => {
-    const {imagePath, serviceName, servicePhone, servicePrice, offerd, offerRatio, id, createdBy, serviceDescripition, createdAt } = res;
-    const creationTime = new Date(createdAt.seconds)
+    const {
+      imagePath,
+      serviceName,
+      servicePhone,
+      servicePrice,
+      offerd,
+      offerRatio,
+      id,
+      createdBy,
+      serviceDescripition,
+      createdAt,
+    } = res;
+    const creationTime = new Date(createdAt.seconds);
     return (
-      <Container>
-        <div className="row">
-          <div className="col-md-4 col-sm-6">
-            {/* <div className="card text-center me-3 " key={id} >
+      <div className="col-md-4 col-sm-6">
+        {/* <div className="card text-center me-3 " key={id} >
               <div className="overflow">
                 <img src={imagePath} alt="Cataract" className="card-img-top" />
               </div>
@@ -108,8 +118,8 @@ const Hotels = () => {
                 </Link>
               </div>
             </div> */}
-        
-		{/* <article class="postcard light green">
+
+        {/* <article class="postcard light green">
 
         <a class="postcard__img_link">
 				<img class="postcard__img" src={imagePath} alt="Image Title" />
@@ -148,26 +158,31 @@ const Hotels = () => {
 		</article>
         </div>
         </div> */}
-<div class="card bg-light">
-
-  <div class="view zoom overlay">
-    <img class="img-fluid w-100" src={imagePath} alt="Sample" />
-    <h4 class="mb-0 pb-0">
-    {offerd?<span class="badge badge-primary badge-pill badge-news">Offered</span> : "" }</h4>
-    <a>
-      <div class="mask">
-        {/* <img class="img-fluid w-100"
+        <div class="card bg-light">
+          <div class="view zoom overlay">
+            <img class="img-fluid w-100" src={imagePath} alt="Sample" />
+            <h4 class="mb-0 pb-0">
+              {offerd ? (
+                <span class="badge badge-primary badge-pill badge-news">
+                  Offered
+                </span>
+              ) : (
+                ""
+              )}
+            </h4>
+            <a>
+              <div class="mask">
+                {/* <img class="img-fluid w-100"
          src={imagePath}/> */}
-        <div class="mask rgba-black-slight"></div>
-      </div>
-    </a>
-  </div>
+                <div class="mask rgba-black-slight"></div>
+              </div>
+            </a>
+          </div>
 
-  <div class="card-body text-center">
-
-    <h5>{serviceName}</h5>
-    <p class="small text-muted text-uppercase mb-1">{servicePhone}</p>
-    {/* <ul class="rating">
+          <div class="card-body text-center">
+            <h5>{serviceName}</h5>
+            <p class="small text-muted text-uppercase mb-1">{servicePhone}</p>
+            {/* <ul class="rating">
       <li>
         <i class="fas fa-star fa-sm text-primary"></i>
       </li>
@@ -184,46 +199,53 @@ const Hotels = () => {
         <i class="far fa-star fa-sm text-primary"></i>
       </li>
     </ul> */}
-    <hr/>
-    <h6 class="mb-3">
-      <span class="text-danger mr-1">{`${servicePrice} EGP`}</span><br/>
-      <span class="text-grey"><s>{`${offerRatio} 95% discount`}</s></span>
-    </h6>
+            <hr />
+            <h6 class="mb-3">
+              <span class="text-danger mr-1">{`${servicePrice} EGP`}</span>
+              <br />
+              <span class="text-grey">
+                <s>{`${offerRatio} 95% discount`}</s>
+              </span>
+            </h6>
 
-    {/* <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
+            {/* <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
       <i class="fas fa-shopping-cart pr-2"></i>Add to cart
     </button> */}
-    <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
-      <i class="fas fa-info-circle pr-2"></i>
-      <Link to={`/details?id=${id}&name=Hotels`}>
-      See more details
-      </Link>
-    </button>
-    <button type="button" class="btn btn-danger btn-sm px-3 mb-2 ms-1 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add to wishlist">
-      {/* <i class="far fa-heart"></i> */}
-      <Link to={`/editItem?id=${id}&name=Hotels`}>
-      Delete
-      </Link>
-    </button>
-
-  </div>
-</div>
-</div>
-</div>
-      </Container>
+            <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
+              <i class="fas fa-info-circle pr-2"></i>
+              <Link to={`/details?id=${id}&name=Hotels`}>See more details</Link>
+            </button>
+            <button
+              onClick={() => {
+                deletService(id);
+              }}
+              type="button"
+              class="btn btn-danger btn-sm px-3 mb-2 ms-1 material-tooltip-main"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Add to wishlist"
+            >
+              {/* <i class="far fa-heart"></i> */}
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
     );
   });
 
   return (
-    <>
-      {load ? (
-        <h1>Loading...</h1>
-      ) : rent.length == 0 ? (
-        <h1>you don't have any services yet</h1>
-      ) : (
-        comp
-      )}
-    </>
+    <Container>
+      <div className="row">
+        {load ? (
+          <h1>Loading...</h1>
+        ) : rent.length == 0 ? (
+          <h1>you don't have any services yet</h1>
+        ) : (
+          comp
+        )}
+      </div>
+    </Container>
   );
 };
 
