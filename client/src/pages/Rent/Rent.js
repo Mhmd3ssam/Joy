@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
-import "./hotels.css"
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import {
   MDBContainer,
@@ -16,7 +15,7 @@ import {
   MDBBtn,
 } from "mdbreact";
 
-const Hotels = () => {
+const Rent = () => {
   const [rent, setRent] = useState([]);
   const [load, setLoad] = useState(true);
   const [error, setError] = useState("");
@@ -40,11 +39,11 @@ const Hotels = () => {
 
   const { getAllUserService, editAllServicesFields } = useAuth();
   const db = getFirestore(app);
-  const serviceCollectionRef = collection(db, "Hotels");
+  const serviceCollectionRef = collection(db, "Rent");
 
   function editeService(id) {
     console.log("ggg");
-    editAllServicesFields("Hotels", id, {
+    editAllServicesFields("Rent", id, {
       serviceName: Name,
       serviceDescripition: descripition,
       servicePhone: phone,
@@ -60,7 +59,7 @@ const Hotels = () => {
 
   async function deletService(documentId) {
     console.log(documentId);
-    const alyDocRef = doc(db, "Hotels", documentId);
+    const alyDocRef = doc(db, "Rent", documentId);
     await deleteDoc(alyDocRef);
     setCounter(counter + 1);
   }
@@ -75,7 +74,7 @@ const Hotels = () => {
 
   useEffect(() => {
     getData();
-    document.title = "Hotels";
+    document.title = "Rent";
   }, [counter]);
 
   let comp = rent.map((res) => {
@@ -132,7 +131,7 @@ const Hotels = () => {
             </h6>
             <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
               <i class="fas fa-info-circle pr-2"></i>
-              <Link to={`/details?id=${id}&name=Hotels`}>See More </Link>
+              <Link to={`/details?id=${id}&name=Rent`}>See More </Link>
             </button>
             <button
               onClick={() => {
@@ -168,4 +167,4 @@ const Hotels = () => {
   );
 };
 
-export default Hotels;
+export default Rent;
