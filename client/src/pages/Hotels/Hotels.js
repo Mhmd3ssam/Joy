@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
+import "./hotels.css"
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import {
   MDBContainer,
@@ -90,6 +91,10 @@ const Hotels = () => {
       serviceDescripition,
       createdAt,
     } = res;
+    let sale = (Number(servicePrice) * Number(offerRatio)) / 100
+    let newprice = Number(servicePrice) - sale
+
+    console.log(newprice)
     const creationTime = new Date(createdAt.seconds);
     return (
       <div className="col-md-4 col-sm-6">
@@ -157,23 +162,25 @@ const Hotels = () => {
 			</div>
 		</article>
         </div>
-        </div> */}
-        <div class="card bg-light">
-          <div class="view zoom overlay">
-            <img class="img-fluid w-100" src={imagePath} alt="Sample" />
-            <h4 class="mb-0 pb-0">
+        </div> 
+        
+
+
+        */}
+        <div class="card bg-light position-relative p-0">
+          <div>
+            <img class="img-fluid w-100 hotel-img " src={imagePath} alt="Sample" />
+            <div class="mb-0 pb-0 position-absolute top-0 start-0 ms-1 mt-1 ">
               {offerd ? (
-                <span class="badge badge-primary badge-pill badge-news">
-                  Offered
+                <span class="badge bg-warning rounded-pill">
+                  Sale {offerRatio}%
                 </span>
               ) : (
                 ""
               )}
-            </h4>
+            </div>
             <a>
               <div class="mask">
-                {/* <img class="img-fluid w-100"
-         src={imagePath}/> */}
                 <div class="mask rgba-black-slight"></div>
               </div>
             </a>
@@ -181,36 +188,18 @@ const Hotels = () => {
 
           <div class="card-body text-center">
             <h5>{serviceName}</h5>
-            <p class="small text-muted text-uppercase mb-1">{servicePhone}</p>
-            {/* <ul class="rating">
-      <li>
-        <i class="fas fa-star fa-sm text-primary"></i>
-      </li>
-      <li>
-        <i class="fas fa-star fa-sm text-primary"></i>
-      </li>
-      <li>
-        <i class="fas fa-star fa-sm text-primary"></i>
-      </li>
-      <li>
-        <i class="fas fa-star fa-sm text-primary"></i>
-      </li>
-      <li>
-        <i class="far fa-star fa-sm text-primary"></i>
-      </li>
-    </ul> */}
+            <p class="small text-muted text-uppercase mb-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2 bi bi-telephone-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" /></svg>
+
+              {servicePhone}
+            </p>
             <hr />
             <h6 class="mb-3">
-              <span class="text-danger mr-1">{`${servicePrice} EGP`}</span>
-              <br />
-              <span class="text-grey">
-                <s>{`${offerRatio} 95% discount`}</s>
+              <span class="text-danger mr-1">{offerRatio ? `${parseInt(newprice)} EGP` : `${servicePrice} EGP`}</span>
+              <span class="text-grey ms-2">
+                <s>{offerRatio ? `${servicePrice} EGP` : ""}</s>
               </span>
             </h6>
-
-            {/* <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
-      <i class="fas fa-shopping-cart pr-2"></i>Add to cart
-    </button> */}
             <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
               <i class="fas fa-info-circle pr-2"></i>
               <Link to={`/details?id=${id}&name=Hotels`}>See more details</Link>
