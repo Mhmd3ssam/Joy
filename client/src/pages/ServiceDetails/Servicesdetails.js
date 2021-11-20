@@ -17,6 +17,7 @@ export default function Servicesdetails() {
     const [theOfferRatio, setTheOfferRatio] = useState("");
     const [offer, setOffer] = useState("");
     const [created, setCreated] = useState("");
+    const [time, setTime] = useState(null);
     const [deleteItem, setDeleteItem] = useState(false);
 
     let catgory = search.split('=')[2];
@@ -25,15 +26,13 @@ export default function Servicesdetails() {
 
     const history = useHistory();
 
-    console.log(catgory)
-    console.log(itemId)
 
     //our functions 
     function getData() {
         getSingleService(catgory, itemId)
             .then((data) => {
                 console.log(data)
-                const { imagePath, serviceDescripition, serviceName, servicePhone, servicePrice, createdBy, offerRatio, offerd } = data;
+                const { imagePath, serviceDescripition, serviceName, servicePhone, servicePrice, createdBy, offerRatio, offerd, createdAt } = data;
                 setImgPath(imagePath)
                 setDescripition(serviceDescripition)
                 setName(serviceName)
@@ -42,7 +41,10 @@ export default function Servicesdetails() {
                 setTheOfferRatio(offerRatio)
                 setOffer(offerd)
                 setCreated(createdBy)
-            })
+                setTime(new Date(createdAt.seconds * 1000).toISOString().split('T')[0])
+        
+        })
+     
     }
     async function deletService(itemId) {
         const alyDocRef = doc(db, catgory, itemId);
@@ -77,10 +79,10 @@ export default function Servicesdetails() {
                         </div>
                         <div class="col-md-6">
                             <h2>
-                             {Name}
-                             <span class="badge bg-warning rounded-pill d-inline-block ms-3 fs-6">
-                               <Link to={`/${catgory.toLowerCase()} `}> {catgory} </Link> 
-                            </span>
+                                {Name}
+                                <span class="badge bg-warning rounded-pill d-inline-block ms-3 fs-6">
+                                    <Link to={`/${catgory.toLowerCase()} `}> {catgory} </Link>
+                                </span>
                             </h2>
                             <p class="mb-2 text-muted text-uppercase small">{phone}</p>
                             <p><span class="mr-1"><strong>{price} <span className="d-inline-block ms-1 fs-6">EGP</span> </strong></span></p>
@@ -89,26 +91,32 @@ export default function Servicesdetails() {
                             </p>
                             <div class="table-responsive">
                                 <table class="table table-sm table-borderless mb-0">
-                                <tbody>
-                                    <tr>
-                                    <th class="pl-0 w-25" scope="row"><strong>Created At</strong></th>
-                                    <td>Shirt 5407X</td>
-                                    </tr>
-                                    <tr>
-                                    <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
-                                    <td>Black</td>
-                                    </tr>
-                                    <tr>
-                                    <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
-                                    <td>USA, Europe</td>
-                                    </tr>
-                                </tbody>
+                                    <tbody>
+                                        <tr>
+                                            <th class="pl-0 w-25" scope="row"><strong>Created At</strong></th>
+                                            <td>{time}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="pl-0 w-25" scope="row"><strong>Offerd</strong></th>
+                                            <td>
+                                                {offer ? <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" /></svg>: <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                </svg>}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="pl-0 w-25" scope="row"><strong>Offer Ratio</strong></th>
+                                            <td>{offer ? `${theOfferRatio}%` : <Link to={`/offer?id=${itemId}&name=${catgory}`} className="text-primary"> Make Offer</Link>}</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                             <hr />
+                            { offer?
                             <button type="button" class="btn btn-warning btn-md mr-1 mb-2 me-4">
-                                <Link to={`/offer?id=${itemId}&name=${catgory}`}>  Make Offer</Link>
-                            </button>
+                                <Link to={`/offer?id=${itemId}&name=${catgory}`} className="text-light"> Edite Offer</Link> 
+                            </button>: ""}
+                           
                             <button type="button" class="btn btn-primary btn-md mr-1 mb-2 me-4">
                                 <Link to={`/editItem?id=${itemId}&name=${catgory}`}> Edit Service</Link>
                             </button>
