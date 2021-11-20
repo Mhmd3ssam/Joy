@@ -5,7 +5,6 @@ import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
  import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBBtn } from 'mdbreact';
-import "./hotels.scss";
 
 
 
@@ -78,12 +77,12 @@ const Hotels = () => {
   }, [counter]);
 
   let comp = rent.map((res) => {
-    const {imagePath, serviceName, servicePhone, offerd, offerRatio, id, createdBy, serviceDescripition, createdAt } = res;
+    const {imagePath, serviceName, servicePhone, servicePrice, offerd, offerRatio, id, createdBy, serviceDescripition, createdAt } = res;
     const creationTime = new Date(createdAt.seconds)
     return (
       <Container>
         <div className="row">
-          <div className="col-12">
+          <div className="col-md-4 col-sm-6">
             {/* <div className="card text-center me-3 " key={id} >
               <div className="overflow">
                 <img src={imagePath} alt="Cataract" className="card-img-top" />
@@ -110,7 +109,7 @@ const Hotels = () => {
               </div>
             </div> */}
         
-		<article class="postcard light green">
+		{/* <article class="postcard light green">
 
         <a class="postcard__img_link">
 				<img class="postcard__img" src={imagePath} alt="Image Title" />
@@ -148,17 +147,72 @@ const Hotels = () => {
 			</div>
 		</article>
         </div>
-        </div>
+        </div> */}
+<div class="card bg-light">
+
+  <div class="view zoom overlay">
+    <img class="img-fluid w-100" src={imagePath} alt="Sample" />
+    <h4 class="mb-0 pb-0">
+    {offerd?<span class="badge badge-primary badge-pill badge-news">Offered</span> : "" }</h4>
+    <a>
+      <div class="mask">
+        {/* <img class="img-fluid w-100"
+         src={imagePath}/> */}
+        <div class="mask rgba-black-slight"></div>
+      </div>
+    </a>
+  </div>
+
+  <div class="card-body text-center">
+
+    <h5>{serviceName}</h5>
+    <p class="small text-muted text-uppercase mb-1">{servicePhone}</p>
+    {/* <ul class="rating">
+      <li>
+        <i class="fas fa-star fa-sm text-primary"></i>
+      </li>
+      <li>
+        <i class="fas fa-star fa-sm text-primary"></i>
+      </li>
+      <li>
+        <i class="fas fa-star fa-sm text-primary"></i>
+      </li>
+      <li>
+        <i class="fas fa-star fa-sm text-primary"></i>
+      </li>
+      <li>
+        <i class="far fa-star fa-sm text-primary"></i>
+      </li>
+    </ul> */}
+    <hr/>
+    <h6 class="mb-3">
+      <span class="text-danger mr-1">{`${servicePrice} EGP`}</span><br/>
+      <span class="text-grey"><s>{`${offerRatio} 95% discount`}</s></span>
+    </h6>
+
+    {/* <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
+      <i class="fas fa-shopping-cart pr-2"></i>Add to cart
+    </button> */}
+    <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
+      <i class="fas fa-info-circle pr-2"></i>
+      <Link to={`/details?id=${id}&name=Hotels`}>
+      See more details
+      </Link>
+    </button>
+    <button type="button" class="btn btn-danger btn-sm px-3 mb-2 ms-1 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add to wishlist">
+      {/* <i class="far fa-heart"></i> */}
+      <Link to={`/editItem?id=${id}&name=Hotels`}>
+      Delete
+      </Link>
+    </button>
+
+  </div>
+</div>
+</div>
+</div>
       </Container>
     );
   });
-
-
-
-
-
-
-
 
   return (
     <>
