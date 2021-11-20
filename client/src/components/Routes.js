@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
 import HomePage from '../pages/HomePage';
 import CreateService from '../pages/CreateService/CreateService';
-import Hotels from './ServicesCards/Hotels';
+import Hotels from '../pages/Hotels/Hotels';
 import Restaurants from './ServicesCards/Restaurants';
 import RentService from './ServicesCards/RentService';
 import EditeItem from './ServicesCards/EditeItem';
