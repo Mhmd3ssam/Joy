@@ -25,6 +25,7 @@ export default function EditeItem() {
     const[theOfferRatio,setTheOfferRatio] = useState("");
     const[offer,setOffer] = useState("");
     const[created,setCreated] = useState("");
+    const[brand,setbrand] = useState("");
 
     let catgory = search.split('=')[2];
     let itemId = search.split('&')[0].split('=')[1];
@@ -43,6 +44,7 @@ export default function EditeItem() {
         createdAt: new Date(),
         createdBy: created,
         imagePath: imgPath,
+        brandName:brand
       });
       history.push(`/${catgory.toLowerCase()}`)
 
@@ -51,7 +53,7 @@ export default function EditeItem() {
     function getData(){
       getSingleService(catgory, itemId)
       .then((data)=>{
-        const{imagePath,serviceDescripition,serviceName,servicePhone,servicePrice , createdBy , offerRatio , offerd}= data;
+        const{imagePath,serviceDescripition,serviceName,servicePhone,servicePrice , createdBy , offerRatio , offerd ,brandName}= data;
         setImgPath(imagePath)
         setDescripition(serviceDescripition)
         setName(serviceName)
@@ -60,6 +62,7 @@ export default function EditeItem() {
         setTheOfferRatio(offerRatio)
         setOffer(offerd)
         setCreated(createdBy)
+        setbrand(brandName)
       })
     }
 

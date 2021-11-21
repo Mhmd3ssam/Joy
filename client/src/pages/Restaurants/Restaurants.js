@@ -15,6 +15,7 @@ import {
   MDBBtn,
 } from "mdbreact";
 import "../Hotels/hotels.css"
+import Loader from "../../components/Loader/Loader";
 
 const Restaurants = () => {
   const [rent, setRent] = useState([]);
@@ -157,7 +158,9 @@ const Restaurants = () => {
     <Container>
       <div className="row">
         {load ? (
-          <h1>Loading...</h1>
+          <div className="row d-flex justify-content-center align-items-center min-vh-100">
+              <Loader/>
+          </div>
         ) : rent.length == 0 ? (
           <h1>you don't have any services yet</h1>
         ) : (

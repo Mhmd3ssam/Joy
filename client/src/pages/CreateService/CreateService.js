@@ -5,14 +5,29 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../Firebase";
 import { doc, getFirestore, collection } from "firebase/firestore";
 import app from "../../Firebase";
-import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import "../../components/ContactUs/ContactUs.css";
 import "./CreateService.css";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBBtn } from 'mdbreact';
-
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBIcon,
+  MDBBtn,
+} from "mdbreact";
+import Loader from "../../components/Loader/Loader";
 
 function CreateService() {
   const serviceNameRef = useRef();
+  const brandeNameRef = useRef();
   const serviceDescripitionRef = useRef();
   const servicePriceRef = useRef();
   const servicePhoneRef = useRef();
@@ -20,8 +35,8 @@ function CreateService() {
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
-  const [url, setUrl] = useState('')
-  const [catagory, setCatagory] = useState('default');
+  const [url, setUrl] = useState("");
+  const [catagory, setCatagory] = useState("default");
   const { currentUser, logout, setService, getAllUserService } = useAuth();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
@@ -30,37 +45,34 @@ function CreateService() {
   const serviceCollectionRef = collection(db, catagory);
 
   function handelChange(e) {
+    setProgress(0)
     if (e.target.files[0]) {
-      Object.defineProperty(e.target.files[0], 'name', {
+      Object.defineProperty(e.target.files[0], "name", {
         writable: true,
-        value: new Date()
-
-      })
-      setImage(e.target.files[0])
-      console.log(image)
+        value: new Date(),
+      });
+      setImage(e.target.files[0]);
+      console.log(image);
     }
   }
 
   function handelCatgory(e) {
-    setCatagory(e.target.value)
+    setCatagory(e.target.value);
   }
 
-  console.log(catagory)
+  console.log(catagory);
 
-  function clearValues() {
-    serviceNameRef.current.value = "";
-    serviceDescripitionRef.current.value = "";
-    servicePriceRef.current.value = '';
-    servicePhoneRef.current.value = '';
-    setProgress(0)
-  }
 
-  async function handelUpload() {
+
+  async function handelUpload(e) {
+    e.preventDefault();
+    try{
+    setError("");
     const storage = getStorage(app);
     const storageReff = storageRef(storage);
     const imagesRef = storageRef(storageReff, `images/${image.name}`);
-    const uploadTask = uploadBytesResumable(imagesRef, image)
-    console.log(uploadTask)
+    const uploadTask = uploadBytesResumable(imagesRef, image);
+    console.log(uploadTask);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -68,21 +80,28 @@ function CreateService() {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         setProgress(prog);
+        console.log(prog)
       },
       (error) => console.log(error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          setUrl(downloadURL)
+          setUrl(downloadURL);
         });
       }
-    )
+    );
+    }catch(error){
+      console.log(error.message)
+      setError("Upload Image First")
+    }
+  
+    
   }
 
-  console.log(url)
+  console.log(url);
 
   async function handelSubmit(e) {
-    console.log(url)
+    console.log(url);
     e.preventDefault();
     try {
       setError("");
@@ -92,29 +111,38 @@ function CreateService() {
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
         servicePhone: servicePhoneRef.current.value,
-        imagePath: url,        
-      })
+        brandName:brandeNameRef.current.value,
+        imagePath: url,
+      });
 
-      console.log("ko")
-     
-      console.log('done')
+      console.log("ko");
+
+      console.log("done");
     } catch (error) {
       console.log(error);
       setError("Failed to create an service");
     }
     setLoading(false);
-    clearValues();
-    history.push(`/${catagory.toLowerCase()}`)
-
+    history.push(`/${catagory.toLowerCase()}`);
   }
-
-
-  useEffect(()=>{
-    document.title = "Create Services"
-
-  })
-
-
+  
+  useEffect(() => {
+    document.title = "Create Services";
+  });
+  let progressComp = ()=>{
+    return(
+      <div class="progress">
+      <div
+        class="progress-bar progress-bar-striped progress-bar-animated"
+        role="progressbar"
+        aria-valuenow={progress}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style={{width:`${progress}%`}}
+      ></div>
+    </div>
+    )
+  }
   return (
     <Container className="mt-5">
       {/* <div className="row">
@@ -214,78 +242,114 @@ function CreateService() {
         </div>
       </div> */}
 
-  <section class="h-100 h-custom" style={{backgroundColor: "#8fc4b7"}}>
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-8 col-xl-6">
-        <div class="card rounded-3">
-          <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-registration/img3.jpg" class="w-100" style={{borderTopLeftRadius: ".3rem", borderTopRightRadius: ".3rem"}} alt="Sample photo"/>
-          <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2"> Create Your Service</h3>
+      <section className="h-100 h-custom">
+        <div className="container  h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-md-8 ">
+              <div className="card rounded-3">
+                <img
+                  src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-registration/img3.jpg"
+                  className="w-100"
+                  style={{
+                    borderTopLeftRadius: ".3rem",
+                    borderTopRightRadius: ".3rem",
+                  }}
+                  alt="Sample photo"
+                />
+                <div className="card-body  ">
+                  <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
+                    Create Your Service.
+                  </h3>
+                  <form className="px-md-2">
+                    <div className=" mb-4">
+                      <input
+                        type="text"
+                        id="brand"
+                        className="form-control"
+                        placeholder="Brand Name"
+                        ref={brandeNameRef}
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <input
+                        type="text"
+                        id="service"
+                        className="form-control"
+                        placeholder="Service Name"
+                        ref={serviceNameRef}
 
-            <form class="px-md-2">
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <select className="form-select" onChange={(e)=>handelCatgory(e)}>
+                        <option disabled selected>
+                          choose your service catgory
+                        </option>
+                        <option value="Rent">Rent</option>
+                        <option value="Hotels">Hotels</option>
+                        <option value="Restaurants">Restaurants</option>
+                      </select>
+                    </div>
+                    <div className=" mb-4">
+                      <textarea
+                        id=""
+                        className="form-control"
+                        placeholder="Service Details"
+                        rows="5"
+                        ref={serviceDescripitionRef}
+                      />
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 mb-4">
+                        <div className=" datepicker">
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="Price"
+                            placeholder="Price"
+                            ref={servicePriceRef}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 mb-4">
+                        <div className=" datepicker">
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="Phone_Number"
+                            placeholder="Phone Number"
+                            ref={servicePhoneRef}
 
-              <div class="form-outline mb-4">
-                <input type="text" id="form3Example1q" class="form-control" />
-                <label class="form-label" for="form3Example1q">Name</label>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6 mb-4">
-
-                  <div class="form-outline datepicker">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleDatepicker1"
-                    />
-                    <label for="exampleDatepicker1" class="form-label">Select a date</label>
-                  </div>
-
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="Image"
+                        placeholder="Upload Image"
+                        onChange={handelChange}
+                      />
+                      <button className="btn btn-primary "onClick={handelUpload} disabled={(progress === 100)?true:false}>{(progress === 100)?"Uploaded":"Upload"}</button>
+                    </div>
+                    <span className="text-danger">{error}</span>
+                    {progress === 0 ? null : (progress > 0 && progress <100) ? progressComp():(progress === 100)?<>Image Uploaded <img src="https://img.icons8.com/nolan/96/photoshoot-completed.png" width="20"/></> : null }
+                    <button
+                      type="submit"
+                      className="btn btn-primary w-100 btn-lg mb-1 mt-4"
+                      onClick={handelSubmit}
+                    >
+                      create
+                    </button>
+                  </form>
                 </div>
-                <div class="col-md-6 mb-4">
-                  <select class="select">
-                    <option value="1" disabled>Gender</option>
-                    <option value="2">Female</option>
-                    <option value="3">Male</option>
-                    <option value="4">Other</option>
-                  </select>
-                </div>
               </div>
-
-              <div class="mb-4">
-
-                <select class="select">
-                  <option value="1" disabled>Class</option>
-                  <option value="2">Class 1</option>
-                  <option value="3">Class 2</option>
-                  <option value="4">Class 3</option>
-                </select>
-
-              </div>
-
-              <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
-                <div class="col-md-6">
-
-                  <div class="form-outline">
-                    <input type="text" id="form3Example1w" class="form-control" />
-                    <label class="form-label" for="form3Example1w">Registration code</label>
-                  </div>
-
-                </div>
-              </div>
-
-              <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
-
-            </form>
-
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+      </section>
     </Container>
   );
 }

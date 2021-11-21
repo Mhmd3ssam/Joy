@@ -35,11 +35,12 @@ async function getSingleService(collection, id){
   
   }
 
-async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath }) {
+async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName }) {
     return await addDoc(catgory, {
         serviceName: serviceName,
         serviceDescripition: serviceDescripition,
         servicePrice: servicePrice,
+        brandName:brandName,
         servicePhone: servicePhone,
         imagePath:imagePath,
         createdBy: auth.currentUser.email,
@@ -48,7 +49,7 @@ async function setService(catgory,{ serviceName, serviceDescripition, servicePri
         createdAt: new Date(),
     });
 }
-async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath}){
+async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName}){
     const alyDocRef = doc(db, collectionName, documentId);
     await updateDoc(alyDocRef, { 
         serviceDescripition: serviceDescripition,
@@ -56,6 +57,7 @@ async function editAllServicesFields(collectionName, documentId,{serviceDescripi
         servicePhone:servicePhone,
         servicePrice: servicePrice,
         offerd:offerd,
+        brandName:brandName,
         offerRatio:offerRatio,
         createdAt: new Date(),
         createdBy: auth.currentUser.email,

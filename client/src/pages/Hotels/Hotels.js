@@ -15,6 +15,7 @@ import {
   MDBIcon,
   MDBBtn,
 } from "mdbreact";
+import Loader from "../../components/Loader/Loader";
 const Hotels = () => {
   const [rent, setRent] = useState([]);
   const [load, setLoad] = useState(true);
@@ -89,6 +90,7 @@ const Hotels = () => {
       createdBy,
       serviceDescripition,
       createdAt,
+      brandName
     } = res;
     let sale = (Number(servicePrice) * Number(offerRatio)) / 100
     let newprice = Number(servicePrice) - sale
@@ -154,15 +156,17 @@ const Hotels = () => {
 
   return (
     <Container>
-      <div className="row">
         {load ? (
-          <h1>Loading...</h1>
+          <div className="row d-flex justify-content-center align-items-center min-vh-100">
+             <Loader/>
+          </div>
         ) : rent.length == 0 ? (
           <h1>you don't have any services yet</h1>
         ) : (
-          comp
+          <div className="row d-flex justify-content-start align-items-center"> 
+            {comp}
+          </div>
         )}
-      </div>
     </Container>
   );
 };
