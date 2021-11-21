@@ -4,7 +4,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    background-color: var(--main-bg);
+    background-color: 	#4285e5;
     box-shadow: var(--box-shadow);
 }
 
@@ -38,18 +38,15 @@
 
 .sidebar__item-inner > span {
     text-transform: capitalize;
+    color: white;
 }
 
 .sidebar__item-inner:hover {
-    color: var(--main-color);
+    color: orange;
 }
 
 .sidebar__item-inner.active {
     border-radius: var(--border-radius);
-    background-image: linear-gradient(
-        to right,
-        var(--main-color),
-        var(--second-color)
-    );
-    color: var(--txt-white);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, .1), rgba(255,255,255,.1));
+    color: orange;
 }

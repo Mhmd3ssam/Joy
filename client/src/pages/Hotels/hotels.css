@@ -3,3 +3,7 @@
     height: 30vh;
     object-fit: cover;     
 }
+.card-round{
+    border-top-right-radius: .25rem !important;
+    border-top-left-radius: .25rem !important;
+}
