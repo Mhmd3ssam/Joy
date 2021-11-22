@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import app from "../../Firebase";
-import { MDBInput } from 'mdbreact';
+import React, { useState, useEffect } from "react";
+import {  Container } from "react-bootstrap";
 import { BrowserRouter as Router, Link, useLocation, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import OfferImage from "../../pages/CreateService/images/offer.jpeg"
@@ -31,21 +28,35 @@ export default function EditeItem() {
 
 
   //our functions 
-  function Offer() {
-    console.log("ggg");
-    editAllServicesFields(catgory, itemId, {
-      serviceName: Name,
-      serviceDescripition: descripition,
-      servicePhone: phone,
-      servicePrice: price,
-      offerd: true,
-      offerRatio: theOfferRatio,
-      createdAt: new Date(),
-      createdBy: created,
-      imagePath: imgPath,
-      brandName: brand
-    });
-    history.push(`/${catgory.toLowerCase()}`)
+  function Offer(e) {
+    setError("");
+    e.preventDefault();
+    try {
+      if(Number(theOfferRatio) === 0 ){
+        throw "Offer must be more than 0"
+      }else if(theOfferRatio > 100 ){
+        throw "Offer must be less than 100"
+      }
+      else{
+        editAllServicesFields(catgory, itemId, {
+          serviceName: Name,
+          serviceDescripition: descripition,
+          servicePhone: phone,
+          servicePrice: price,
+          offerd: true,
+          offerRatio: theOfferRatio,
+          createdAt: new Date(),
+          createdBy: created,
+          imagePath: imgPath,
+          brandName: brand
+        });
+        console.log("hhh")
+        history.push(`/${catgory.toLowerCase()}`)
+      }
+      
+    } catch (error) {
+      setError(error)
+    }
 
   }
 
@@ -100,7 +111,7 @@ export default function EditeItem() {
                     <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
                       Make Offer
                     </h3>
-                    <form className="px-md-2" >
+                    <form className="px-md-2" onSubmit={Offer}>
                       <div className="row">
                         <div className="col-md-12 mb-4">
                           <div className=" datepicker">
@@ -110,20 +121,16 @@ export default function EditeItem() {
                               placeholder="Offer Ratio"
                               value={theOfferRatio}
                               onChange={(e) => { setTheOfferRatio(e.target.value) }}
-                              name="servicePhone"
+                              name="Offer_Ratio"
                             />
-                            {/* {errors.servicePhone ? (
                             <small className="text-danger ms-1">
-                              {errors.servicePhone}
+                              {error}
                             </small>
-                          ) : null} */}
                           </div>
                         </div>
                       </div>
                       <button
-                        type="submit"
                         className="btn btn-primary w-100 btn-lg mb-1 mt-4"
-                        onClick={Offer}
                       >
                         Confirm Offer
                       </button>
