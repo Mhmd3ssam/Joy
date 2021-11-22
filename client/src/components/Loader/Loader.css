@@ -59,8 +59,8 @@
     border-radius:100%;
     
     display:inline-block;
-    width:10px;
-    height:10px;
+    width:25px;
+    height:25px;
     margin:3px 2px;
     -webkit-animation:loader1 0.8s linear infinite alternate;
     animation:loader1 0.8s linear infinite alternate;
@@ -68,28 +68,28 @@
     .loader1 span:nth-child(1) {
     -webkit-animation-delay:-1s;
     animation-delay:-1s;
-    background:rgba(245, 103, 115,0.6);
+    background:rgba(199, 173, 27, 0.6);
     }
     .loader1 span:nth-child(2) {
     -webkit-animation-delay:-0.8s;
     animation-delay:-0.8s;
-    background:rgba(245, 103, 115,0.8);
+    background:rgba(61, 118, 243, 0.8);
     }
     .loader1 span:nth-child(3) {
     -webkit-animation-delay:-0.26666s;
     animation-delay:-0.26666s;
-    background:rgba(245, 103, 115,1);
+    background:rgba(199, 173, 27, 0.6);
     }
     .loader1 span:nth-child(4) {
     -webkit-animation-delay:-0.8s;
     animation-delay:-0.8s;
-    background:rgba(245, 103, 115,0.8);
+    background:rgba(61, 118, 243, 0.8);
     
     }
     .loader1 span:nth-child(5) {
     -webkit-animation-delay:-1s;
     animation-delay:-1s;
-    background:rgba(245, 103, 115,0.4);
+    background:rgba(199, 173, 27, 0.6);
     }
     
     
