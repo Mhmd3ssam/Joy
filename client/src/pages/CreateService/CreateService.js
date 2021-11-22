@@ -41,6 +41,17 @@ function CreateService() {
 
   console.log(serviceName);
 
+  let mobileCode = servicePhone.substring(0, 3);
+  console.log(mobileCode);
+  let validMobileCode =
+    mobileCode == "010" ||
+    mobileCode == "011" ||
+    mobileCode == "012" ||
+    mobileCode == "015"
+      ? true
+      : false;
+  console.log(validMobileCode);
+
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
@@ -101,6 +112,34 @@ function CreateService() {
   async function handelSubmit(e) {
     console.log(url);
     e.preventDefault();
+    setErrors({
+      ...errors,
+      brandName:
+        e.target.value.length === 0 ? "Brand name is required" : null,
+      serviceName:
+        e.target.value.length === 0 ? "Service name is required" : null,
+      catagory:
+        e.target.value.length === 0 ? "Please Specifiy a category" : null,
+      serviceDescripition:
+        e.target.value.length === 0
+          ? "Service description is required"
+          : null,
+      servicePrice:
+          e.target.value.length === 0
+            ? "Service price is required"
+            : e.target.value == 0
+            ? "Price must be more than 0"
+            : null,
+      servicePhone:
+            e.target.value.length === 0
+              ? "Service phone Number is required"
+              : e.target.value.length !== 11
+              ? "Service phone Number must be 11 Number"
+              : !validMobileCode
+              ? "Phone Number must start with a valid code"
+              : null,
+            
+    });
     try {
       setError("");
       setLoading(true);
@@ -130,6 +169,7 @@ function CreateService() {
         ...errors,
         serviceName:
           e.target.value.length === 0 ? "Service name is required" : null,
+          
       });
     }
 
@@ -177,16 +217,6 @@ function CreateService() {
 
     if (e.target.name === "servicePhone") {
       setServicePhone(e.target.value);
-      let mobileCode = servicePhone.substring(0, 3);
-      console.log(mobileCode);
-      let validMobileCode =
-        mobileCode == "010" ||
-        mobileCode == "011" ||
-        mobileCode == "012" ||
-        mobileCode == "015"
-          ? true
-          : false;
-      console.log(validMobileCode);
       setErrors({
         ...errors,
         servicePhone:
