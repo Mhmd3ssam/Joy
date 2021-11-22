@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Form, Button, Card, Alert, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
-import { Link, useHistory } from "react-router-dom";
-import { auth } from "../../Firebase";
-import { doc, getFirestore, collection } from "firebase/firestore";
+import { useHistory } from "react-router-dom";
+import { getFirestore, collection } from "firebase/firestore";
 import app from "../../Firebase";
 import {
   getStorage,
@@ -13,31 +12,41 @@ import {
 } from "firebase/storage";
 import "../../components/ContactUs/ContactUs.css";
 import "./CreateService.css";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBIcon,
-  MDBBtn,
-} from "mdbreact";
-import Loader from "../../components/Loader/Loader";
+
 
 function CreateService() {
+  //Inputs Refs
   const serviceNameRef = useRef();
   const brandeNameRef = useRef();
   const serviceDescripitionRef = useRef();
   const servicePriceRef = useRef();
   const servicePhoneRef = useRef();
   const serviceImage = useRef();
+
+  //Input States
+  const[serviceName, setServiceName] = useState("");
+  const[brandeName, setServiceBrandeName] = useState("");
+  const[serviceDescripition, setServiceDescripition] = useState("");
+  const[servicePrice, setServicePrice] = useState("");
+  const[servicePhone, setServicePhone] = useState("");
+  const [catagory, setCatagory] = useState("default");
+  
+  const [errors, setErrors] = useState({
+    serviceName: "",
+    brandeName: "",
+    serviceDescripition: "",
+    servicePrice: "",
+    servicePhone: "",
+    catagory:""
+  });
+
+  console.log(serviceName)
+
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
-  const [catagory, setCatagory] = useState("default");
-  const { currentUser, logout, setService, getAllUserService } = useAuth();
+  const { setService } = useAuth();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
@@ -55,14 +64,6 @@ function CreateService() {
       console.log(image);
     }
   }
-
-  function handelCatgory(e) {
-    setCatagory(e.target.value);
-  }
-
-  console.log(catagory);
-
-
 
   async function handelUpload(e) {
     e.preventDefault();
@@ -125,7 +126,16 @@ function CreateService() {
     setLoading(false);
     history.push(`/${catagory.toLowerCase()}`);
   }
-  
+  const handleInputChange = (e)=>{
+    if (e.target.name === "serviceName") {
+      setServiceName(e.target.value )
+    }
+    setErrors({
+      ...errors,
+      serviceName: e.target.value.length === 0 ? "Service name is required" : null,
+    });
+    
+  }
   useEffect(() => {
     document.title = "Create Services";
   });
@@ -145,103 +155,6 @@ function CreateService() {
   }
   return (
     <Container className="mt-5">
-      {/* <div className="row">
-        <div className="col-md-12">
-          <Card
-            className="card-image"
-            style={
-              {
-              backgroundImage:"url(https://i.pinimg.com/564x/0d/17/83/0d178380d5b058a37584d1804820c589.jpg)",
-             //   backgroundRepeat: "no-repeat"
-              }
-            }
-          >
-            <div className="rgba-stylish-strong py-5 px-5 z-depth-4">
-              <div className="text-center">
-                <h3 className="font-weight-bold">
-                  <strong>Create Your </strong>
-                  <a href="#!" className="text-primary font-weight-bold">
-                    <strong>Service</strong>
-                  </a>
-                </h3>
-              </div>
-              {error && <Alert variant="danger">{error}</Alert>}       
-              <form onSubmit={handelSubmit}>
-                         
-                <Form.Group id="Service_Name">
-                  <Form.Label className="text-primary font-weight-bold">
-                    Service name
-                  </Form.Label>                       
-                  <Form.Control
-                    validate
-                    labelClass="white-text"
-                    type="text"
-                    ref={serviceNameRef}
-                    required
-                    placeholder="Enter Your Service Name"
-                  />                       
-                </Form.Group>
-
-                
-                <Form.Control as="select"aria-label="Floating label select example" className="mt-3 mb-3" onChange={(e)=>handelCatgory(e)}>
-                <Form.Label className="text-primary font-weight-bold">
-                    Service Category
-                  </Form.Label>                     
-                  <option> choose your service catgory </option>
-                  <option value="Rent">Rent</option>
-                  <option value="Hotels">Hotels</option>
-                  <option value="Restaurants">Restaurants</option>
-                </Form.Control>
-            
-                                         
-                <Form.Group id="Service_Descripition">
-                  <Form.Label className="text-primary font-weight-bold">
-                    Service Descripition
-                  </Form.Label>               
-                  <Form.Control
-                    type="text"
-                    ref={serviceDescripitionRef}
-                    required
-                    style={{height:"8rem"}}
-                    placeholder="Enter Your Service description"
-                  />
-                </Form.Group>
-                         
-                <Form.Group id="Service_Price">
-                  <Form.Label className="text-primary font-weight-bold">
-                    Service Price
-                  </Form.Label>   
-                <Form.Control type="number" ref={servicePriceRef} required className="col-md-2" placeholder="Enter Your Service Price" style={{height:"2rem"}}/>      
-                </Form.Group>
-                         
-                <Form.Group id="Phone_Number">
-                  <Form.Label className="text-primary font-weight-bold">
-                    Phone Number
-                  </Form.Label>                     
-                  <Form.Control type="number" ref={servicePhoneRef} required placeholder="Enter Your Phone Number"/> 
-                         
-                </Form.Group>
-                <Form.Group id="Service_Image">   
-                <label className="text-primary font-weight-bold mb-2">Service Image </label>          
-                  <MDBInput 
-                    type="file"
-                    required
-                    onChange={handelChange}
-                />
-                  <Button onClick={handelUpload} className="btn-upload-gradiant mt-5">Upload</Button>
-                </Form.Group>
-                         
-                <Button  type="submit" className="w-100 btn-upload-gradiant mt-5">
-                 Let's Create your Service
-                </Button>
-                       
-              </form>
-                   
-            </div>
-          </Card>
-        </div>
-      </div> */}
-
       <section className="h-100 h-custom">
         <div className="container  h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
@@ -268,6 +181,10 @@ function CreateService() {
                         className="form-control"
                         placeholder="Brand Name"
                         ref={brandeNameRef}
+                        onChange={(e)=>{setServiceBrandeName(e.target.value)}}
+                        value={brandeName}
+                        name="brandeName"
+
                       />
                     </div>
                     <div className="mb-4">
@@ -277,11 +194,15 @@ function CreateService() {
                         className="form-control"
                         placeholder="Service Name"
                         ref={serviceNameRef}
-
+                        onChange={(e)=>{handleInputChange(e)}}
+                        onBlur={(e)=>{handleInputChange(e)}}
+                        value={serviceName}
+                        name="serviceName"
                       />
+                      {errors.serviceName ? errors.serviceName : null }
                     </div>
                     <div className="mb-4">
-                      <select className="form-select" onChange={(e)=>handelCatgory(e)}>
+                      <select className="form-select" onChange={(e)=>setCatagory(e.target.value)} name="catgoryName">
                         <option disabled selected>
                           choose your service catgory
                         </option>
@@ -297,6 +218,10 @@ function CreateService() {
                         placeholder="Service Details"
                         rows="5"
                         ref={serviceDescripitionRef}
+                        onChange={(e)=>setServiceDescripition(e.target.value)}
+                        value={serviceDescripition}
+                        name="serviceDescripition"
+
                       />
                     </div>
                     <div className="row">
@@ -308,6 +233,8 @@ function CreateService() {
                             id="Price"
                             placeholder="Price"
                             ref={servicePriceRef}
+                            value={servicePrice}
+                            name="servicePrice"
                           />
                         </div>
                       </div>
@@ -319,7 +246,9 @@ function CreateService() {
                             id="Phone_Number"
                             placeholder="Phone Number"
                             ref={servicePhoneRef}
-
+                            onChange={(e)=>setServicePhone(e.target.value)}
+                            value={servicePhone}
+                            name="servicePhone"
                           />
                         </div>
                       </div>
@@ -354,4 +283,4 @@ function CreateService() {
   );
 }
 
-export default CreateService;
+export default CreateService ;

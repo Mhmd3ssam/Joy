@@ -114,8 +114,8 @@ export default function Signup() {
                   <Form.Label> Phone number</Form.Label>
                   <Form.Control type="number" ref={phoneRef} required />
                 </Form.Group>
-                <Form.Group id="Service_Image">   
-                <label className="text-primary font-weight-bold mb-2">Service Image </label>          
+                <Form.Group id="User_Image">   
+                <label className="text-primary font-weight-bold mb-2">User Image </label>          
                   <MDBInput 
                     type="file"
                     required
