@@ -3,7 +3,7 @@ import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../Firebase";
-
+import LoginImage from "../pages/CreateService/images/login.jpeg"
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -17,10 +17,10 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
-      if(emailRef.current.value === "adman@joy.com"){
+      if (emailRef.current.value === "adman@joy.com") {
         await login(auth, emailRef.current.value, passwordRef.current.value);
         history.push("/adman");
-      }else{
+      } else {
         await login(auth, emailRef.current.value, passwordRef.current.value);
         history.push("/layout");
       }
@@ -29,43 +29,95 @@ export default function Login() {
     }
     setLoading(false);
   }
-
+  const showPass = ()=>{
+    return(
+      <button>
+        h
+      </button>
+    )
+  }
   return (
     <>
-      <Container
-        className="d-flex align-items-center   justify-content-between"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="w-100 text-center">
-          <span className="display-1  d-block">Be one of us </span>
-          <span className="  ">let's achieve success together</span>
-        </div>
+      <Container className="mt-5">
+        <section className="h-100 h-custom">
+          <div className="container  h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-md-8 ">
+                <div className="card rounded-3">
+                  <img
+                    src={LoginImage}
+                    className="w-100"
+                    style={{
+                      borderTopLeftRadius: ".3rem",
+                      borderTopRightRadius: ".3rem",
+                      width: "709px",
+                      height: "261px",
+                      objectFit: "cover"
+                    }}
+                    alt="Sample photo"
+                  />
+                  {error && <Alert variant="danger" className="mt-4">{error}</Alert>}
+                  <div className="card-body  ">
+                    <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
+                      Welcom Back
+                    </h3>
+                    <form className="px-md-2" onSubmit={handleSubmit}>
+                      <div className=" mb-4">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="User Email"
+                          type="email"
+                          ref={emailRef}
+                          required
+                         onChange={(e) => {
+                            // handleInputChange(e);
+                          }}
+                        />
+                        {/* {errors.brandName ? (
+                        <small className="text-danger ms-1">
+                          {errors.brandName}
+                        </small>
+                      ) : null} */}
+                      </div>
+                      <div className="mb-4">
+                        <input
+                          type="password"
+                          className="form-control "
+                          placeholder="User Password"
+                          ref={passwordRef}
+                          required
+                          onChange={(e) => {
+                            //handleInputChange(e);
 
-        <Card className="w-100" style={{ maxWidth: "400px" }}>
-          <Card.Body>
-            <h2 className="text-center mb-4"> log In</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
-                <Form.Label> Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label> Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} required />
-              </Form.Group>
-              <Button disabled={loading} type="submit" className="w-100 mt-4">
-                Log In
-              </Button>
-            </Form>
-            <div className="w-100 text-center mt-3">
-              <Link to="/forgot-password">Forgot Password?</Link>
+                          }}
+                        />
+                        
+                        {/* {errors.serviceName ? (
+                        <small className="text-danger ms-1">
+                          {errors.serviceName}
+                        </small>
+                      ) : null}{" "} */}
+                      </div>
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100 btn-lg mb-1 mt-4"
+                      >
+                        login
+                      </button>
+                    </form>
+                    <div className="w-100 text-center mt-3">
+                      <Link to="/forgot-password">Forgot Password?</Link>
+                    </div>
+                    <div className="w-100 text-center mt-2">
+                      Need an account? <Link to="/signup"> Sign Up </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </Card.Body>
-          <div className="w-100 text-center mt-2">
-            Need an account? <Link to="/signup"> Sign Up </Link>
           </div>
-        </Card>
+        </section>
       </Container>
     </>
   );
