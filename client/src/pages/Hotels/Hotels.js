@@ -24,6 +24,8 @@ const Hotels = () => {
   const [counter, setCounter] = useState(0);
   const history = useHistory();
 
+
+
   const [imgPath, setImgPath] = useState("");
   const [descripition, setDescripition] = useState("");
   const [Name, setName] = useState("");
@@ -161,7 +163,14 @@ const Hotels = () => {
              <Loader/>
           </div>
         ) : rent.length == 0 ? (
-          <h1>you don't have any services yet</h1>
+          <>
+            <h4 className="row d-flex justify-content-center align-items-center min-vh-100 text-center bosition">
+              You don't have any services yet !! 
+            </h4>
+            <h6 className=" text-center bosition_1">
+              <Link to={`/layout/create?name=hotels`}>Creat One</Link>
+            </h6>
+          </>
         ) : (
           <div className="row d-flex justify-content-start align-items-center"> 
             {comp}

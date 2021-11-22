@@ -7,3 +7,11 @@
     border-top-right-radius: .25rem !important;
     border-top-left-radius: .25rem !important;
 }
+
+.bosition{
+    transform: translate(10px, -136px);
+}
+.bosition_1{
+    transform: translate(10px, -476px);
+
+}
