@@ -2,57 +2,57 @@ import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from "../../Firebase";
-import {  MDBInput } from 'mdbreact';
-import {BrowserRouter as Router,Link,useLocation , useHistory} from "react-router-dom";
+import { MDBInput } from 'mdbreact';
+import { BrowserRouter as Router, Link, useLocation, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
+import OfferImage from "../../pages/CreateService/images/offer.jpeg"
 export default function EditeItem() {
   //our state
-    const [error, setError] = useState("");
-    const [load, setLoad] = useState(true);
-    const [image, setImage] = useState(null);
-    const [progress, setProgress] = useState(0);
-    const history = useHistory();
+  const [error, setError] = useState("");
+  const [load, setLoad] = useState(true);
+  const [image, setImage] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const history = useHistory();
 
-    const { search } = useLocation();
-    const {  editAllServicesFields, getSingleService } = useAuth();
+  const { search } = useLocation();
+  const { editAllServicesFields, getSingleService } = useAuth();
 
-    const[imgPath,setImgPath] = useState("");
-    const[descripition,setDescripition] = useState("");
-    const[Name,setName] = useState("");
-    const[phone,setPhone] = useState("");
-    const[price,setPrice] = useState("");
-    const[theOfferRatio,setTheOfferRatio] = useState("");
-    const[created,setCreated] = useState("");
-    const[brand,setbrand] = useState("");
+  const [imgPath, setImgPath] = useState("");
+  const [descripition, setDescripition] = useState("");
+  const [Name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [price, setPrice] = useState("");
+  const [theOfferRatio, setTheOfferRatio] = useState("");
+  const [created, setCreated] = useState("");
+  const [brand, setbrand] = useState("");
 
-    let catgory = search.split('=')[2];
-    let itemId = search.split('&')[0].split('=')[1];
+  let catgory = search.split('=')[2];
+  let itemId = search.split('&')[0].split('=')[1];
 
 
-    //our functions 
-    function Offer() {
-      console.log("ggg");
-      editAllServicesFields(catgory, itemId, {
-        serviceName: Name,
-        serviceDescripition: descripition,
-        servicePhone: phone,
-        servicePrice:price,
-        offerd: true,
-        offerRatio: theOfferRatio,
-        createdAt: new Date(),
-        createdBy: created,
-        imagePath: imgPath,
-        brandName:brand
-      });
-      history.push(`/${catgory.toLowerCase()}`)
+  //our functions 
+  function Offer() {
+    console.log("ggg");
+    editAllServicesFields(catgory, itemId, {
+      serviceName: Name,
+      serviceDescripition: descripition,
+      servicePhone: phone,
+      servicePrice: price,
+      offerd: true,
+      offerRatio: theOfferRatio,
+      createdAt: new Date(),
+      createdBy: created,
+      imagePath: imgPath,
+      brandName: brand
+    });
+    history.push(`/${catgory.toLowerCase()}`)
 
-    }
+  }
 
-    function getData(){
-      getSingleService(catgory, itemId)
-      .then((data)=>{
-        const{imagePath,serviceDescripition,serviceName,servicePhone,servicePrice , createdBy , offerRatio , offerd , brandName}= data;
+  function getData() {
+    getSingleService(catgory, itemId)
+      .then((data) => {
+        const { imagePath, serviceDescripition, serviceName, servicePhone, servicePrice, createdBy, offerRatio, offerd, brandName } = data;
         setImgPath(imagePath)
         setDescripition(serviceDescripition)
         setName(serviceName)
@@ -62,67 +62,81 @@ export default function EditeItem() {
         setCreated(createdBy)
         setbrand(brandName)
       })
-    }
+  }
 
 
-    useEffect(()=>{
-      getData()
-      setLoad(false)
-      document.title = "Offer"
+  useEffect(() => {
+    getData()
+    setLoad(false)
+    document.title = "Offer"
 
-    },[])
-    console.log(catgory)
-    console.log(itemId)
-    console.log(theOfferRatio)
-  
+  }, [])
+  console.log(catgory)
+  console.log(itemId)
+  console.log(theOfferRatio)
 
-    return ( 
-      <>
-      {load ? <h1>Loading...</h1>:       
+
+  return (
+    <>
       <Container className="mt-5">
-        <div className="row">
-          <div className="col-md-12">
-              <Card className="card-image"
-                  style={
-                    {
-                      backgroundImage: "url(https://i.pinimg.com/564x/0d/17/83/0d178380d5b058a37584d1804820c589.jpg)",
-                      //   backgroundRepeat: "no-repeat"
-                    }
-                  }
-              >
-              <div className="rgba-stylish-strong py-5 px-5 z-depth-4">
-                <div className="text-center">
-                  <h3 className="font-weight-bold">
-                    <strong>Make  Your </strong>
-                     <a href="#!" className="text-primary font-weight-bold">
-                        <strong>Offer</strong>
-                     </a>
-                  </h3>
-                </div>
-                {error && <Alert variant="danger">{error}</Alert>}
-              <form >
-
-                <Form.Group id="Service_Price">
-                    <Form.Label className="text-primary font-weight-bold">
-                          Offer Ratio
-                        </Form.Label>
-                        <Form.Control type="number" 
-                        value={theOfferRatio} required 
-                        className="col-md-2" placeholder="Enter Your Service Price"
-                        style={{ height: "2rem" }}
-                        onChange={(e)=>{setTheOfferRatio(e.target.value)}}
-                        />
-                      </Form.Group>
-                      <Button  className="w-100 btn-upload-gradiant mt-5" onClick={Offer}>
+        <section className="h-100 h-custom">
+          <div className="container  h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-md-8 ">
+                <div className="card rounded-3">
+                  <img
+                    src={OfferImage}
+                    className="w-100"
+                    style={{
+                      borderTopLeftRadius: ".3rem",
+                      borderTopRightRadius: ".3rem",
+                      width: "709px",
+                      height: "261px",
+                      objectFit: "cover"
+                    }}
+                    alt="Sample photo"
+                  />
+                  <div className="card-body  ">
+                    <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
+                      Make Offer
+                    </h3>
+                    <form className="px-md-2" >
+                      <div className="row">
+                        <div className="col-md-12 mb-4">
+                          <div className=" datepicker">
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Offer Ratio"
+                              value={theOfferRatio}
+                              onChange={(e) => { setTheOfferRatio(e.target.value) }}
+                              name="servicePhone"
+                            />
+                            {/* {errors.servicePhone ? (
+                            <small className="text-danger ms-1">
+                              {errors.servicePhone}
+                            </small>
+                          ) : null} */}
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100 btn-lg mb-1 mt-4"
+                        onClick={Offer}
+                      >
                         Confirm Offer
-                      </Button>
+                      </button>
                     </form>
                   </div>
-                </Card>
+                </div>
               </div>
             </div>
-          </Container>}
-      </>
-  
-    )
+          </div>
+        </section>
+      </Container>
+
+    </>
+
+  )
 }
