@@ -70,15 +70,7 @@ export default function Login() {
                           type="email"
                           ref={emailRef}
                           required
-                         onChange={(e) => {
-                            // handleInputChange(e);
-                          }}
                         />
-                        {/* {errors.brandName ? (
-                        <small className="text-danger ms-1">
-                          {errors.brandName}
-                        </small>
-                      ) : null} */}
                       </div>
                       <div className="mb-4">
                         <input
@@ -87,17 +79,7 @@ export default function Login() {
                           placeholder="User Password"
                           ref={passwordRef}
                           required
-                          onChange={(e) => {
-                            //handleInputChange(e);
-
-                          }}
                         />
-                        
-                        {/* {errors.serviceName ? (
-                        <small className="text-danger ms-1">
-                          {errors.serviceName}
-                        </small>
-                      ) : null}{" "} */}
                       </div>
                       <button
                         type="submit"

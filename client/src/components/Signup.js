@@ -5,7 +5,7 @@ import { auth } from "../Firebase";
 import { Link, useHistory } from "react-router-dom"
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {  MDBInput } from 'mdbreact';
-
+import RegisterImage from "../pages/CreateService/images/register.jpeg"
 import app from "../Firebase";
 
 export default function Signup() {
@@ -145,6 +145,191 @@ export default function Signup() {
           </div>
           </Card>
       </Container>
+      <Container className="mt-5">
+      <section className="h-100 h-custom">
+        <div className="container  h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-md-8 ">
+              <div className="card rounded-3">
+            
+                <img
+                src={RegisterImage}
+                className="w-100"
+                style={{
+                  borderTopLeftRadius: ".3rem",
+                  borderTopRightRadius: ".3rem",
+                  height: "261px",
+                  objectFit: "cover"
+                }}
+                alt="Sample photo"
+              />
+               
+                <div className="card-body  ">
+                  <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
+                    
+                  </h3>
+                  <form className="px-md-2" >
+                    <div className=" mb-4">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Brand Name"
+                        //ref={brandNameRef}
+                        onChange={(e) => {
+                        //  handleInputChange(e);
+                        }}
+                       // value={brandName}
+                        name="brandName"
+                      />
+                      {/* {errors.brandName ? (
+                        <small className="text-danger ms-1">
+                          {errors.brandName}
+                        </small>
+                      ) : null} */}
+                    </div>
+
+                    <div className="mb-4">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Service Name"
+                        //ref={serviceNameRef}
+                        onChange={(e) => {
+                         // handleInputChange(e);
+                        }}
+                        //value={serviceName}
+                        name="serviceName"
+                      />
+                      {/* {errors.serviceName ? (
+                        <small className="text-danger ms-1">
+                          {errors.serviceName}
+                        </small>
+                      ) : null}{" "} */}
+                    </div>
+                    <div className="mb-4">
+                      <select
+                        className="form-select"
+                        onChange={(e) => {
+                          //handleInputChange(e);
+                        }}
+                        name="catgoryName"
+                        required
+                      >
+                        <option disabled selected>
+                          choose your service catgory
+                        </option>
+                        <option value="Rent">Rent</option>
+                        <option value="Hotels">Hotels</option>
+                        <option value="Restaurants">Restaurants</option>
+                      </select>
+                      {/* {errors.catagory ? (
+                        <small className="text-danger ms-1">{errors.catagory}</small>
+                      ) : null} */}
+                    </div>
+
+                    <div className=" mb-4">
+                      <textarea
+                        className="form-control"
+                        placeholder="Service Details"
+                        rows="5"
+                        //ref={serviceDescripitionRef}
+                        onChange={(e) => {
+                          //handleInputChange(e);
+                        }}
+                        //value={serviceDescripition}
+                        name="serviceDescripition"
+                      />
+                      {/* {errors.serviceDescripition ? (
+                        <small className="text-danger ms-1">
+                          {errors.serviceDescripition}
+                        </small>
+                      ) : null} */}
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-6 mb-4">
+                        <div className=" datepicker">
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Price"
+                            //ref={servicePriceRef}
+                            //value={servicePrice}
+                            name="servicePrice"
+                            onChange={(e) => {
+                              //handleInputChange(e);
+                            }}
+                          />
+                        </div>
+                        {/* {errors.servicePrice ? (
+                          <small className="text-danger ms-1">
+                            {errors.servicePrice}
+                          </small>
+                        ) : null} */}
+                      </div>
+                      <div className="col-md-6 mb-4">
+                        <div className=" datepicker">
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Phone Number"
+                            // ref={servicePhoneRef}
+                            onChange={(e) => {
+                              //handleInputChange(e);
+                            }}
+                            //value={servicePhone}
+                            name="servicePhone"
+                          />
+                          {/* {errors.servicePhone ? (
+                            <small className="text-danger ms-1">
+                              {errors.servicePhone}
+                            </small>
+                          ) : null} */}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <input
+                        type="file"
+                        class="form-control"
+                        name="image"
+                        placeholder="Upload Image"
+                        // onChange={handelChange}
+                      />
+                      <button
+                        className="btn btn-primary "
+                        // onClick={handelUpload}
+                        // disabled={progress === 100 ? true : false}
+                      >
+                        {/* {progress === 100 ? "Uploaded" : "Upload"} */}
+                      </button>
+                    </div>
+                    {/* <span className="text-danger">{error}</span> */}
+                    {/* {progress === 0 ? null : progress > 0 && progress < 100 ? (
+                      progressComp()
+                    ) : progress === 100 ? (
+                      <>
+                        Image Uploaded{" "}
+                        <img
+                          src="https://img.icons8.com/nolan/96/photoshoot-completed.png"
+                          width="20"
+                        />
+                      </>
+                    ) : null} */}
+                    <button
+                      type="submit"
+                      className="btn btn-primary w-100 btn-lg mb-1 mt-4"
+                    >
+                      create
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Container>
     </>
   );
 }
