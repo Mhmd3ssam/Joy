@@ -13,34 +13,33 @@ import {
 import "../../components/ContactUs/ContactUs.css";
 import "./CreateService.css";
 
-
 function CreateService() {
   //Inputs Refs
   const serviceNameRef = useRef();
-  const brandeNameRef = useRef();
+  const brandNameRef = useRef();
   const serviceDescripitionRef = useRef();
   const servicePriceRef = useRef();
   const servicePhoneRef = useRef();
   const serviceImage = useRef();
 
   //Input States
-  const[serviceName, setServiceName] = useState("");
-  const[brandeName, setServiceBrandeName] = useState("");
-  const[serviceDescripition, setServiceDescripition] = useState("");
-  const[servicePrice, setServicePrice] = useState("");
-  const[servicePhone, setServicePhone] = useState("");
+  const [serviceName, setServiceName] = useState("");
+  const [brandName, setServiceBrandName] = useState("");
+  const [serviceDescripition, setServiceDescripition] = useState("");
+  const [servicePrice, setServicePrice] = useState(0);
+  const [servicePhone, setServicePhone] = useState("");
   const [catagory, setCatagory] = useState("default");
-  
+
   const [errors, setErrors] = useState({
     serviceName: "",
-    brandeName: "",
+    brandName: "",
     serviceDescripition: "",
     servicePrice: "",
     servicePhone: "",
-    catagory:""
+    catagory: "",
   });
 
-  console.log(serviceName)
+  console.log(serviceName);
 
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
@@ -54,7 +53,7 @@ function CreateService() {
   const serviceCollectionRef = collection(db, catagory);
 
   function handelChange(e) {
-    setProgress(0)
+    setProgress(0);
     if (e.target.files[0]) {
       Object.defineProperty(e.target.files[0], "name", {
         writable: true,
@@ -67,36 +66,34 @@ function CreateService() {
 
   async function handelUpload(e) {
     e.preventDefault();
-    try{
-    setError("");
-    const storage = getStorage(app);
-    const storageReff = storageRef(storage);
-    const imagesRef = storageRef(storageReff, `images/${image.name}`);
-    const uploadTask = uploadBytesResumable(imagesRef, image);
-    console.log(uploadTask);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(prog);
-        console.log(prog)
-      },
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          setUrl(downloadURL);
-        });
-      }
-    );
-    }catch(error){
-      console.log(error.message)
-      setError("Upload Image First")
+    try {
+      setError("");
+      const storage = getStorage(app);
+      const storageReff = storageRef(storage);
+      const imagesRef = storageRef(storageReff, `images/${image.name}`);
+      const uploadTask = uploadBytesResumable(imagesRef, image);
+      console.log(uploadTask);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const prog = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(prog);
+          console.log(prog);
+        },
+        (error) => console.log(error),
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            setUrl(downloadURL);
+          });
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+      setError("Upload Image First");
     }
-  
-    
   }
 
   console.log(url);
@@ -112,7 +109,7 @@ function CreateService() {
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
         servicePhone: servicePhoneRef.current.value,
-        brandName:brandeNameRef.current.value,
+        brandName: brandNameRef.current.value,
         imagePath: url,
       });
 
@@ -126,33 +123,101 @@ function CreateService() {
     setLoading(false);
     history.push(`/${catagory.toLowerCase()}`);
   }
-  const handleInputChange = (e)=>{
+  const handleInputChange = (e) => {
     if (e.target.name === "serviceName") {
-      setServiceName(e.target.value )
+      setServiceName(e.target.value);
+      setErrors({
+        ...errors,
+        serviceName:
+          e.target.value.length === 0 ? "Service name is required" : null,
+      });
     }
-    setErrors({
-      ...errors,
-      serviceName: e.target.value.length === 0 ? "Service name is required" : null,
-    });
-    
-  }
+
+    if (e.target.name === "brandName") {
+      setServiceBrandName(e.target.value);
+      setErrors({
+        ...errors,
+        brandName:
+          e.target.value.length === 0 ? "Brand name is required" : null,
+      });
+    }
+
+    if (e.target.name === "catgoryName") {
+      setCatagory(e.target.value);
+      setErrors({
+        ...errors,
+        catagory:
+          e.target.value.length === 0 ? "Please Specifiy a category" : null,
+      });
+    }
+
+    if (e.target.name === "serviceDescripition") {
+      setServiceDescripition(e.target.value);
+      setErrors({
+        ...errors,
+        serviceDescripition:
+          e.target.value.length === 0
+            ? "Service description is required"
+            : null,
+      });
+    }
+
+    if (e.target.name === "servicePrice") {
+      setServicePrice(e.target.value);
+      setErrors({
+        ...errors,
+        servicePrice:
+          e.target.value.length === 0
+            ? "Service price is required"
+            : e.target.value == 0
+            ? "Price must be more than 0"
+            : null,
+      });
+    }
+
+    if (e.target.name === "servicePhone") {
+      setServicePhone(e.target.value);
+      let mobileCode = servicePhone.substring(0, 3);
+      console.log(mobileCode);
+      let validMobileCode =
+        mobileCode == "010" ||
+        mobileCode == "011" ||
+        mobileCode == "012" ||
+        mobileCode == "015"
+          ? true
+          : false;
+      console.log(validMobileCode);
+      setErrors({
+        ...errors,
+        servicePhone:
+          e.target.value.length === 0
+            ? "Service phone Number is required"
+            : e.target.value.length !== 11
+            ? "Service phone Number must be 11 Number"
+            : !validMobileCode
+            ? "Phone Number must start with a valid code"
+            : null,
+      });
+    }
+  };
+
   useEffect(() => {
     document.title = "Create Services";
   });
-  let progressComp = ()=>{
-    return(
+  let progressComp = () => {
+    return (
       <div class="progress">
-      <div
-        class="progress-bar progress-bar-striped progress-bar-animated"
-        role="progressbar"
-        aria-valuenow={progress}
-        aria-valuemin="0"
-        aria-valuemax="100"
-        style={{width:`${progress}%`}}
-      ></div>
-    </div>
-    )
-  }
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          aria-valuenow={progress}
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+    );
+  };
   return (
     <Container className="mt-5">
       <section className="h-100 h-custom">
@@ -180,13 +245,20 @@ function CreateService() {
                         id="brand"
                         className="form-control"
                         placeholder="Brand Name"
-                        ref={brandeNameRef}
-                        onChange={(e)=>{setServiceBrandeName(e.target.value)}}
-                        value={brandeName}
-                        name="brandeName"
-
+                        ref={brandNameRef}
+                        onChange={(e) => {
+                          handleInputChange(e);
+                        }}
+                        value={brandName}
+                        name="brandName"
                       />
+                      {errors.brandName ? (
+                        <small className="text-danger ms-1">
+                          {errors.brandName}
+                        </small>
+                      ) : null}
                     </div>
+
                     <div className="mb-4">
                       <input
                         type="text"
@@ -194,15 +266,27 @@ function CreateService() {
                         className="form-control"
                         placeholder="Service Name"
                         ref={serviceNameRef}
-                        onChange={(e)=>{handleInputChange(e)}}
-                        onBlur={(e)=>{handleInputChange(e)}}
+                        onChange={(e) => {
+                          handleInputChange(e);
+                        }}
                         value={serviceName}
                         name="serviceName"
                       />
-                      {errors.serviceName ? errors.serviceName : null }
+                      {errors.serviceName ? (
+                        <small className="text-danger ms-1">
+                          {errors.serviceName}
+                        </small>
+                      ) : null}{" "}
                     </div>
                     <div className="mb-4">
-                      <select className="form-select" onChange={(e)=>setCatagory(e.target.value)} name="catgoryName">
+                      <select
+                        className="form-select"
+                        onChange={(e) => {
+                          handleInputChange(e);
+                        }}
+                        name="catgoryName"
+                        required
+                      >
                         <option disabled selected>
                           choose your service catgory
                         </option>
@@ -210,7 +294,11 @@ function CreateService() {
                         <option value="Hotels">Hotels</option>
                         <option value="Restaurants">Restaurants</option>
                       </select>
+                      {errors.catagory ? (
+                        <small className="text-danger ms-1">{errors.catagory}</small>
+                      ) : null}
                     </div>
+
                     <div className=" mb-4">
                       <textarea
                         id=""
@@ -218,12 +306,19 @@ function CreateService() {
                         placeholder="Service Details"
                         rows="5"
                         ref={serviceDescripitionRef}
-                        onChange={(e)=>setServiceDescripition(e.target.value)}
+                        onChange={(e) => {
+                          handleInputChange(e);
+                        }}
                         value={serviceDescripition}
                         name="serviceDescripition"
-
                       />
+                      {errors.serviceDescripition ? (
+                        <small className="text-danger ms-1">
+                          {errors.serviceDescripition}
+                        </small>
+                      ) : null}
                     </div>
+
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className=" datepicker">
@@ -235,8 +330,16 @@ function CreateService() {
                             ref={servicePriceRef}
                             value={servicePrice}
                             name="servicePrice"
+                            onChange={(e) => {
+                              handleInputChange(e);
+                            }}
                           />
                         </div>
+                        {errors.servicePrice ? (
+                          <small className="text-danger ms-1">
+                            {errors.servicePrice}
+                          </small>
+                        ) : null}
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className=" datepicker">
@@ -246,10 +349,17 @@ function CreateService() {
                             id="Phone_Number"
                             placeholder="Phone Number"
                             ref={servicePhoneRef}
-                            onChange={(e)=>setServicePhone(e.target.value)}
+                            onChange={(e) => {
+                              handleInputChange(e);
+                            }}
                             value={servicePhone}
                             name="servicePhone"
                           />
+                          {errors.servicePhone ? (
+                            <small className="text-danger ms-1">
+                              {errors.servicePhone}
+                            </small>
+                          ) : null}
                         </div>
                       </div>
                     </div>
@@ -261,10 +371,26 @@ function CreateService() {
                         placeholder="Upload Image"
                         onChange={handelChange}
                       />
-                      <button className="btn btn-primary "onClick={handelUpload} disabled={(progress === 100)?true:false}>{(progress === 100)?"Uploaded":"Upload"}</button>
+                      <button
+                        className="btn btn-primary "
+                        onClick={handelUpload}
+                        disabled={progress === 100 ? true : false}
+                      >
+                        {progress === 100 ? "Uploaded" : "Upload"}
+                      </button>
                     </div>
                     <span className="text-danger">{error}</span>
-                    {progress === 0 ? null : (progress > 0 && progress <100) ? progressComp():(progress === 100)?<>Image Uploaded <img src="https://img.icons8.com/nolan/96/photoshoot-completed.png" width="20"/></> : null }
+                    {progress === 0 ? null : progress > 0 && progress < 100 ? (
+                      progressComp()
+                    ) : progress === 100 ? (
+                      <>
+                        Image Uploaded{" "}
+                        <img
+                          src="https://img.icons8.com/nolan/96/photoshoot-completed.png"
+                          width="20"
+                        />
+                      </>
+                    ) : null}
                     <button
                       type="submit"
                       className="btn btn-primary w-100 btn-lg mb-1 mt-4"
@@ -283,4 +409,4 @@ function CreateService() {
   );
 }
 
-export default CreateService ;
+export default CreateService;
