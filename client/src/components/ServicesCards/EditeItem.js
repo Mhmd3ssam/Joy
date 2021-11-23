@@ -5,7 +5,7 @@ import app from "../../Firebase";
 import {  MDBInput } from 'mdbreact';
 import {BrowserRouter as Router,Link,useLocation , useHistory} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
+import EditeImage from "../../pages/CreateService/images/edite.jpeg"
 export default function EditeItem() {
   //our state
     const [error, setError] = useState("");
@@ -67,6 +67,7 @@ export default function EditeItem() {
     }
 
     function handelChange(e) {
+      setProgress(0)
       if (e.target.files[0]) {
         Object.defineProperty(e.target.files[0], 'name', {
           writable: true,
@@ -106,99 +107,197 @@ export default function EditeItem() {
     console.log(catgory)
     console.log(itemId)
     console.log(Name)
-  
+    let progressComp = () => {
+      return (
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            aria-valuenow={progress}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+      );
+    };
 
     return ( 
-      <>
-      {load ? <h1>Loading...</h1>:       
-      <Container className="mt-5">
-        <div className="row">
-          <div className="col-md-12">
-              <Card className="card-image"
-                  style={
-                    {
-                      backgroundImage: "url(https://i.pinimg.com/564x/0d/17/83/0d178380d5b058a37584d1804820c589.jpg)",
-                      //   backgroundRepeat: "no-repeat"
-                    }
-                  }
-              >
-              <div className="rgba-stylish-strong py-5 px-5 z-depth-4">
-                <div className="text-center">
-                  <h3 className="font-weight-bold">
-                    <strong>Edite Your </strong>
-                     <a href="#!" className="text-primary font-weight-bold">
-                        <strong>Service</strong>
-                     </a>
+  <>
+    <Container className="mt-5">
+      <section className="h-100 h-custom">
+        <div className="container  h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-md-8 ">
+              <div className="card rounded-3">
+                <img
+                src={EditeImage}
+                className="w-100"
+                style={{
+                  borderTopLeftRadius: ".3rem",
+                  borderTopRightRadius: ".3rem",
+                  width: "709px",
+                  height: "261px",
+                  objectFit: "cover"  
+                }}
+                alt="Sample photo"
+              />
+                <div className="card-body  ">
+                  <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
+                     Edite Service
                   </h3>
-                </div>
-                {error && <Alert variant="danger">{error}</Alert>}
-              <form >
-                <Form.Group id="Service_Name">
-                  <Form.Label className="text-primary font-weight-bold">
-                    Service name
-                  </Form.Label>
-                  <Form.Control
-                    validate
-                    labelClass="white-text"
-                    type="text"
-                    required
-                    placeholder="Enter Your Service Name"
-                    value={Name}
-                    onChange={(e)=>{setName(e.target.value)}}
-                  />
-                  </Form.Group>
-                    <Form.Group id="Service_Descripition">
-                      <Form.Label className="text-primary font-weight-bold">
-                          Service Descripition
-                      </Form.Label>
-                      <Form.Control
+                  <form className="px-md-2" onSubmit={editeService}>
+                    <div className=" mb-4">
+                      <input
                         type="text"
-                        required
+                        className="form-control"
+                        placeholder="Brand Name"
+                        onChange={(e) => {
+                         setbrand(e.target.value)
+                        }}
+                        value={brand}
+                        name="brandName"
+                     
+                      />
+                      {/* {errors.brandName ? (
+                        <small className="text-danger ms-1">
+                          {errors.brandName}
+                        </small>
+                      ) : null} */}
+                    </div>
+
+                    <div className="mb-4">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Service Name"
+                        // ref={serviceNameRef}
+                        onChange={(e) => {
+                          // handleInputChange(e);
+                        }}
+                        // value={serviceName}
+                        name="serviceName"
+                        value={Name}
+                        onChange={(e)=>{setName(e.target.value)}}
+                      />
+                      {/* {errors.serviceName ? (
+                        <small className="text-danger ms-1">
+                          {errors.serviceName}
+                        </small>
+                      ) : null}{" "} */}
+                    </div>
+                    
+
+                    <div className=" mb-4">
+                      <textarea
+                        className="form-control"
+                        placeholder="Service Details"
+                        rows="5"
+                        // ref={serviceDescripitionRef}
+                        onChange={(e) => {
+                          // handleInputChange(e);
+                        }}
+                        // value={serviceDescripition}
+                        name="serviceDescripition"
                         value={descripition}
-                        style={{ height: "8rem" }}
-                        placeholder="Enter Your Service description"
                         onChange={(e)=>{setDescripition(e.target.value)}}
+                      />
+                      {/* {errors.serviceDescripition ? (
+                        <small className="text-danger ms-1">
+                          {errors.serviceDescripition}
+                        </small>
+                      ) : null} */}
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-6 mb-4">
+                        <div className=" datepicker">
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Price"
+                            // ref={servicePriceRef}
+                            // value={servicePrice}
+                            name="servicePrice"
+                            onChange={(e) => {
+                              // handleInputChange(e);
+                            }}
+                            value={price} 
+                            onChange={(e)=>{setPrice(e.target.value)}}
+                          />
+                        </div>
+                        {/* {errors.servicePrice ? (
+                          <small className="text-danger ms-1">
+                            {errors.servicePrice}
+                          </small>
+                        ) : null} */}
+                      </div>
+                      <div className="col-md-6 mb-4">
+                        <div className=" datepicker">
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Phone Number"
+                            // ref={servicePhoneRef}
+                            onChange={(e) => {
+                              // handleInputChange(e);
+                            }}
+                            // value={servicePhone}
+                            name="servicePhone"
+                            value={phone}
+                            onChange={(e)=>{setPhone(e.target.value)}}
+                          />
+                          {/* {errors.servicePhone ? (
+                            <small className="text-danger ms-1">
+                              {errors.servicePhone}
+                            </small>
+                          ) : null} */}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <input
+                        type="file"
+                        class="form-control"
+                        name="image"
+                        placeholder="Upload Image"
+                        onChange={handelChange}
+                      />
+                      <button
+                        className="btn btn-primary "
+                        onClick={handelUpload}
+                        disabled={progress === 100 ? true : false}
+                        type="button"
+                      >
+                        {progress === 100 ? "Uploaded" : "Upload"}
+                      </button>
+                    </div>
+                    {/* <span className="text-danger">{error}</span> */}
+                    {progress === 0 ? null : progress > 0 && progress < 100 ? (
+                      progressComp()
+                    ) : progress === 100 ? (
+                      <>
+                        Image Uploaded{" "}
+                        <img
+                          src="https://img.icons8.com/nolan/96/photoshoot-completed.png"
+                          width="20"
                         />
-                      </Form.Group>
-                      <Form.Group id="Service_Price">
-                        <Form.Label className="text-primary font-weight-bold">
-                          Service Price
-                        </Form.Label>
-                        <Form.Control type="number" 
-                        value={price} required 
-                        className="col-md-2" placeholder="Enter Your Service Price"
-                        style={{ height: "2rem" }}
-                        onChange={(e)=>{setPrice(e.target.value)}}
-                        />
-                      </Form.Group>
-                      <Form.Group id="Phone_Number">
-                        <Form.Label className="text-primary font-weight-bold">
-                          Phone Number
-                        </Form.Label>
-                        <Form.Control
-                        type="number" 
-                        value={phone}
-                        onChange={(e)=>{setPhone(e.target.value)}}
-                        required 
-                        placeholder="Enter Your Phone Number"/>
-                      </Form.Group>
-                      <Form.Group id="Service_Image">
-                        <label className="text-primary font-weight-bold mb-2">Service Image </label>
-                        <MDBInput
-                          type="file"
-                          onChange={handelChange}
-                        />
-                        <Button className="btn-upload-gradiant mt-5" onClick={handelUpload}>Upload</Button>
-                      </Form.Group>
-                      <Button  className="w-100 btn-upload-gradiant mt-5" onClick={editeService}>
-                        Confirm Edite
-                      </Button>
-                    </form>
-                  </div>
-                </Card>
+                      </>
+                    ) : null}
+                    <button
+                      type="submit"
+                      className="btn btn-primary w-100 btn-lg mb-1 mt-4"
+                    >
+                      create
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
-          </Container>}
+          </div>
+        </div>
+      </section>
+    </Container>
       </>
   
     )

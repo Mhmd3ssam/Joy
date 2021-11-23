@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Form, Button, Card, Alert, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../Firebase";
 import { Link, useHistory } from "react-router-dom";
@@ -9,7 +9,6 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { MDBInput } from "mdbreact";
 import RegisterImage from "../pages/CreateService/images/register.jpeg";
 import app from "../Firebase";
 
