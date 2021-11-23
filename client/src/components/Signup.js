@@ -27,8 +27,40 @@ export default function Signup() {
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
   const [imgErr, setImgErr] = useState("");
+  const [signError, setSignError] = useState({email:"", userName:"",phone:"", password:""});
+  const[phone, setPhone] = useState("")
+
+  //ٌRegex
+  const emailValidation =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  
+  const userNameValidation =
+  /[a-zA-Z]{2,10}[^&*%$#@!|~`'"){+->?]+\s[a-zA-Z]{2,10}[^&*%$#@!|~`'"){+->?]$/;
+
+    const password =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 
+
+  function errorSubmitState(e){
+
+  //mobile validation
+
+    console.log(e)
+    setSignError({
+      ...signError,
+      email:
+       !emailValidation.test(e.target[0].value)? "you should provide an email" : null,
+      userName:
+       !userNameValidation.test(e.target[1].value)? "user name" : null,
+      phone: 
+      e.target[2].value.length !== 11? "Phone Number must be 11 Number" : null,
+       password:
+       !password.test(e.target[3].value)? 
+       "The Password should contain at least one lowercase, one uppercase, at least one digit, & special character [*@%$# ] and mustn't have any white spaces." : null
+            
+    });
+  }
 
   async function handelUpload() {
     console.log("test")
@@ -56,7 +88,7 @@ export default function Signup() {
     );
     }catch (error) {
       console.log(error.message);
-      setError("Upload Image First");
+      setImgErr("Upload Image First");
     }
   }
   
@@ -74,11 +106,27 @@ export default function Signup() {
   }
   async function handleSubmit(e) {
     e.preventDefault();
+    let mobileCode= phoneRef.current.value.substring(0,3);
+    let validMobileCode =
+    mobileCode == "010" ||
+    mobileCode == "011" ||
+    mobileCode == "012" ||
+    mobileCode == "015"
+      ? true
+      : false;
+    setPhone(phoneRef)
+    console.log(phoneRef)
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords doesn't match");
     }
     try {
+    
       setError("");
+      if (!userNameValidation.test(englishUserName.current.value) || !emailValidation.test(emailRef.current.value)
+           || !password.test(passwordRef.current.value) || phoneRef.current.value.length !== 11 || !validMobileCode
+           ){
+        throw "User name must start with letters a-z"
+      }
       setLoading(true);
       await signup(auth, emailRef.current.value, passwordRef.current.value);
       await login(auth, emailRef.current.value, passwordRef.current.value);
@@ -92,7 +140,8 @@ export default function Signup() {
       history.push("/layout");
     } catch (err) {
       console.log(err);
-      setError("Failed to create an account");
+      setError(err);
+      errorSubmitState(e)
     }
     setLoading(false);
   }
@@ -116,70 +165,6 @@ export default function Signup() {
   };
 
   return (
-    <>
-      {/* <Container
-        className="d-flex align-items-center   justify-content-between"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="w-100 text-center">
-          <span className="display-1  d-block">Be one of us </span>
-          <span className="  ">let's achieve success together</span>
-        </div>
-
-        <Card className="w-100" style={{ maxWidth: "400px" }}>
-          <Card.Body>
-            <h2 className="text-center mb-4"> Sign Up</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="english-userName">
-                <Form.Label> User Name in English</Form.Label>
-                <Form.Control type="text" ref={englishUserName} required />
-              </Form.Group>
-              <Form.Group id="email">
-                <Form.Label> Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group>
-              <Form.Group id="phone">
-                <Form.Label> Phone number</Form.Label>
-                <Form.Control type="number" ref={phoneRef} required />
-              </Form.Group>
-              <Form.Group id="User_Image">
-                   
-                <label className="text-primary font-weight-bold mb-2">
-                  User Image{" "}
-                </label>{" "}
-                       
-                <MDBInput type="file" required onChange={handelChange} />
-                <Button
-                  onClick={handelUpload}
-                  className="btn-upload-gradiant mt-5"
-                >
-                  Upload
-                </Button>
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label> Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} required />
-              </Form.Group>
-              <Form.Group id="password-confrim">
-                <Form.Label> Password confirmation</Form.Label>
-                <Form.Control
-                  type="password"
-                  ref={passwordConfirmRef}
-                  required
-                />
-              </Form.Group>
-              <Button disabled={loading} type="submit" className="w-100 mt-4">
-                Sign Up
-              </Button>
-            </Form>
-          </Card.Body>
-          <div className="w-100 text-center mt-2">
-            Already have an account? <Link to="/login"> Log In </Link>
-          </div>
-        </Card>
-      </Container> */}
-
       <Container className="mt-1">
         <section className="h-100 h-custom">
           <div className="container  h-100">
@@ -217,12 +202,12 @@ export default function Signup() {
                           // value={brandName}
                           name="Email"
                         />
-                        {/* {errors.brandName ? (
-                        <small className="text-danger ms-1">
-                          {errors.brandName}
-                        </small>
-                      ) : null} */}
+                        {signError.email? <small className="text-danger ms-1">
+                          {signError.email}
+                        </small>: null }
+
                       </div>
+                        
 
                       <div className="mb-4">
                         <input
@@ -238,11 +223,9 @@ export default function Signup() {
                           ref={englishUserName}
                           required
                         />
-                        {/* {errors.serviceName ? (
-                        <small className="text-danger ms-1">
-                          {errors.serviceName}
-                        </small>
-                      ) : null}{" "} */}
+                      {signError.userName? <small className="text-danger ms-1">
+                          {signError.userName}
+                        </small>: null }
                       </div>
 
                       <div className="row">
@@ -261,11 +244,9 @@ export default function Signup() {
                             }}
                           />
                         </div>
-                        {/* {errors.servicePrice ? (
-                          <small className="text-danger ms-1">
-                            {errors.servicePrice}
-                          </small>
-                        ) : null} */}
+                        {signError.phone? <small className="text-danger ms-1">
+                          {signError.phone}
+                        </small>: null }
                       </div>
 
                       {/* <div class="form-check form-check-inline mb-4">
@@ -308,11 +289,9 @@ export default function Signup() {
                             }}
                           />
                         </div>
-                        {/* {errors.servicePrice ? (
-                          <small className="text-danger ms-1">
-                            {errors.servicePrice}
-                          </small>
-                        ) : null} */}
+                        {signError.password? <small className="text-danger ms-1">
+                          {signError.password}
+                        </small>: null }
                       </div>
 
                       <div className="row">
@@ -374,10 +353,9 @@ export default function Signup() {
                       </button>
                     </form>
                     <div className="w-100 text-center mt-2">
-                      Already have an account?{" "}
+                      Already have an account?
                       <Link to="/login" className="text-primary">
-                        {" "}
-                        Log In{" "}
+                        Log In
                       </Link>
                     </div>
                   </div>
@@ -387,6 +365,5 @@ export default function Signup() {
           </div>
         </section>
       </Container>
-    </>
   );
 }
