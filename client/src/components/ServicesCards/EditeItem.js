@@ -27,13 +27,51 @@ export default function EditeItem() {
     const[created,setCreated] = useState("");
     const[brand,setbrand] = useState("");
 
+
+
+    let mobileCode = phone.substring(0, 3);
+    console.log(mobileCode);
+    let validMobileCode =
+      mobileCode == "010" ||
+      mobileCode == "011" ||
+      mobileCode == "012" ||
+      mobileCode == "015"
+        ? true
+        : false;
+    console.log(validMobileCode);
+
+
+// Error Object for Validation
+    const [errors, setErrors] = useState({
+      brandName: "",
+      serviceName: "",
+      serviceDescripition: "",
+      servicePrice: "",
+      servicePhone: "",
+      catagory: "",
+    });
+
     let catgory = search.split('=')[2];
     let itemId = search.split('&')[0].split('=')[1];
 
 
     //our functions 
-    function editeService() {
+    function editeService(e) {
+      e.preventDefault();
+      try{
       console.log("ggg");
+      if( Name === ""
+      ||descripition ===""
+      || price ===""
+      || price === "0"
+      || phone === ""
+      || phone.length !== 11
+      ||brand === ""
+      ||validMobileCode === false
+      ||imgPath === ""
+      ){
+        throw "error"
+      }
       editAllServicesFields(catgory, itemId, {
         serviceName: Name,
         serviceDescripition: descripition,
@@ -48,7 +86,14 @@ export default function EditeItem() {
       });
       history.push(`/${catgory.toLowerCase()}`)
 
+    } catch(err){
+      errorSubmitState(e)
     }
+
+  }
+
+
+  
 
     function getData(){
       getSingleService(catgory, itemId)
@@ -76,6 +121,74 @@ export default function EditeItem() {
         setImage(e.target.files[0])
       }
     }
+
+    const validateInputs = (e) => {
+      if (e.target.name === "serviceName") {
+        setErrors({
+          ...errors,
+          serviceName:
+            e.target.value.length === 0 ? "Service name is required" : null,
+            
+        });
+        if(e.target.value.length === 0 ){
+           throw "Service name is required"
+        }
+      }
+  
+      if (e.target.name === "brandName") {
+        setErrors({
+          ...errors,
+          brandName:
+            e.target.value.length === 0 ? "Brand name is required" : null,
+        });
+      }
+  
+      if (e.target.name === "catgoryName") {
+        console.log(e.target.name)
+        setErrors({
+          ...errors,
+          catagory:
+            e.target.value === "default" ? "Please Specifiy a category" : null,
+        });
+      }
+      if (e.target.name === "serviceDescripition") {
+        setErrors({
+          ...errors,
+          serviceDescripition:
+            e.target.value.length === 0
+              ? "Service description is required"
+              : null,
+        });
+      }
+    
+      if (e.target.name === "servicePrice") {
+        setErrors({
+          ...errors,
+          servicePrice:
+            e.target.value.length === 0
+              ? "Service price is required"
+              : parseInt(e.target.value) === 0
+              ? "Price must be more than 0"
+              : null,
+        });
+        console.log(typeof(e.target.value))
+      }
+  
+      if (e.target.name === "servicePhone") {
+        setErrors({
+          ...errors,
+          servicePhone:
+            e.target.value.length === 0
+              ? "Service phone Number is required"
+              : e.target.value.length !== 11
+              ? "Service phone Number must be 11 Number"
+              : !validMobileCode
+              ? "Phone Number must start with a valid code"
+              : null,
+        });
+      }
+    }
+  
     
   async function handelUpload() {
     const storage = getStorage(app);
@@ -122,13 +235,44 @@ export default function EditeItem() {
       );
     };
 
+    function errorSubmitState(e){
+      console.log(e)
+      setErrors({
+        ...errors,
+        brandName:
+          e.target[0].value === ""? "Brand name is required" : null,
+        serviceName:
+          e.target[1].value=== "" ? "Service name is required" : null,
+        catagory:
+          e.target[2].value === "" ? "Please Specifiy a category" : null,
+        serviceDescripition:
+          e.target[3].value === ""
+            ? "Service description is required"
+            : null,
+        servicePrice:
+            e.target[4].value.length === 0
+              ? "Service price is required"
+              : e.target[4].value == 0
+              ? "Price must be more than 0"
+              : null,
+        servicePhone:
+              e.target[5].value.length === 0
+                ? "Service phone Number is required"
+                : e.target[5].value.length !== 11
+                ? "Service phone Number must be 11 Number"
+                : !validMobileCode
+                ? "Phone Number must start with a valid code"
+                : null,
+      });
+    }
+
     return ( 
   <>
-    <Container className="mt-5">
+    <Container className="mt-1">
       <section className="h-100 h-custom">
         <div className="container  h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-md-8 ">
+            <div className="col-md-8">
               <div className="card rounded-3">
                 <img
                 src={EditeImage}
@@ -144,7 +288,7 @@ export default function EditeItem() {
               />
                 <div className="card-body  ">
                   <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
-                     Edite Service
+                     Edit Service
                   </h3>
                   <form className="px-md-2" onSubmit={editeService}>
                     <div className=" mb-4">
@@ -157,13 +301,14 @@ export default function EditeItem() {
                         }}
                         value={brand}
                         name="brandName"
+                        onBlur={(e) => validateInputs(e)}
                      
                       />
-                      {/* {errors.brandName ? (
+                      {errors.brandName ? (
                         <small className="text-danger ms-1">
                           {errors.brandName}
                         </small>
-                      ) : null} */}
+                      ) : null}
                     </div>
 
                     <div className="mb-4">
@@ -171,20 +316,16 @@ export default function EditeItem() {
                         type="text"
                         className="form-control"
                         placeholder="Service Name"
-                        // ref={serviceNameRef}
-                        onChange={(e) => {
-                          // handleInputChange(e);
-                        }}
-                        // value={serviceName}
+                        onBlur={(e) => validateInputs(e)}
                         name="serviceName"
                         value={Name}
                         onChange={(e)=>{setName(e.target.value)}}
                       />
-                      {/* {errors.serviceName ? (
+                      {errors.serviceName ? (
                         <small className="text-danger ms-1">
                           {errors.serviceName}
                         </small>
-                      ) : null}{" "} */}
+                      ) : null}{" "}
                     </div>
                     
 
@@ -193,67 +334,51 @@ export default function EditeItem() {
                         className="form-control"
                         placeholder="Service Details"
                         rows="5"
-                        // ref={serviceDescripitionRef}
-                        onChange={(e) => {
-                          // handleInputChange(e);
-                        }}
-                        // value={serviceDescripition}
+                        onBlur={(e) => validateInputs(e)}
                         name="serviceDescripition"
                         value={descripition}
                         onChange={(e)=>{setDescripition(e.target.value)}}
                       />
-                      {/* {errors.serviceDescripition ? (
+                      {errors.serviceDescripition ? (
                         <small className="text-danger ms-1">
                           {errors.serviceDescripition}
                         </small>
-                      ) : null} */}
+                      ) : null}
                     </div>
 
                     <div className="row">
                       <div className="col-md-6 mb-4">
-                        <div className=" datepicker">
                           <input
                             type="number"
                             className="form-control"
                             placeholder="Price"
-                            // ref={servicePriceRef}
-                            // value={servicePrice}
                             name="servicePrice"
-                            onChange={(e) => {
-                              // handleInputChange(e);
-                            }}
+                            onBlur={(e) => validateInputs(e)}
                             value={price} 
                             onChange={(e)=>{setPrice(e.target.value)}}
                           />
-                        </div>
-                        {/* {errors.servicePrice ? (
+                        {errors.servicePrice ? (
                           <small className="text-danger ms-1">
                             {errors.servicePrice}
                           </small>
-                        ) : null} */}
+                        ) : null}
                       </div>
                       <div className="col-md-6 mb-4">
-                        <div className=" datepicker">
                           <input
                             type="number"
                             className="form-control"
                             placeholder="Phone Number"
-                            // ref={servicePhoneRef}
-                            onChange={(e) => {
-                              // handleInputChange(e);
-                            }}
-                            // value={servicePhone}
+                            onBlur={(e) => validateInputs(e)}
                             name="servicePhone"
                             value={phone}
                             onChange={(e)=>{setPhone(e.target.value)}}
                           />
-                          {/* {errors.servicePhone ? (
+                          {errors.servicePhone ? (
                             <small className="text-danger ms-1">
                               {errors.servicePhone}
                             </small>
-                          ) : null} */}
+                          ) : null}
                         </div>
-                      </div>
                     </div>
                     <div class="input-group mb-3">
                       <input
@@ -288,7 +413,7 @@ export default function EditeItem() {
                       type="submit"
                       className="btn btn-primary w-100 btn-lg mb-1 mt-4"
                     >
-                      create
+                      Save Changes
                     </button>
                   </form>
                 </div>

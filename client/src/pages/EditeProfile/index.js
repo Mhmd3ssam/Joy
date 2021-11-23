@@ -127,7 +127,7 @@ export default function EditeItem() {
               <div className="rgba-stylish-strong py-5 px-5 z-depth-4">
                 <div className="text-center">
                   <h3 className="font-weight-bold">
-                    <strong>Edite Your </strong>
+                    <strong>Edit Your </strong>
                      <a href="#!" className="text-primary font-weight-bold">
                         <strong>Service</strong>
                      </a>
@@ -169,7 +169,7 @@ export default function EditeItem() {
                         <Button className="btn-upload-gradiant mt-5" onClick={handelUpload}>Upload</Button>
                       </Form.Group>
                       <Button  className="w-100 btn-upload-gradiant mt-5" onClick={editeService}>
-                        Confirm Edite
+                        Confirm Edit
                       </Button>
                     </form>
                   </div>
