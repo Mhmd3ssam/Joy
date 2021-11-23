@@ -113,7 +113,7 @@ export default function EditeItem() {
     return ( 
       <>
       {load ? <h1>Loading...</h1>:       
-      <Container className="mt-5">
+      <Container className="mt-1">
         <div className="row">
           <div className="col-md-12">
               <Card className="card-image"

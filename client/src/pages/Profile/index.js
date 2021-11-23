@@ -55,9 +55,14 @@ export default function Profile() {
                     <Loader />
                 </div>
                 : <div class="padding">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <div class="card">
-                            <img class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="Card image cap" />
+                            <img class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="Card image cap"
+                              style={{
+                                borderTopLeftRadius: ".3rem",
+                                borderTopRightRadius: ".3rem",
+                                objectFit: "cover"   
+                              }} />
                             <div class="card-body little-profile text-center">
                                 <div class="pro-img">
                                     <img src={user ? user.imagePath : ""} alt="user" />
