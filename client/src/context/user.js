@@ -32,23 +32,25 @@ async function resetPassword(auth, email) {
 async function updatedEmail(auth , email) {
   return updateEmail(auth.currentUser, email)
 }
-async function editeUserData(collectionName, userEmailId,{englishUserName,userEmail,userPassword,userPhone,imagePath}){
+async function editeUserData(collectionName, userEmailId,{englishUserName,userEmail,userPassword,userPhone,imagePath,gender}){
   const alyDocRef = doc(db, collectionName, userEmailId);
   await updateDoc(alyDocRef, { 
       englishUserName:englishUserName,
       userPassword: userPassword,
       userEmail: userEmail,
       userPhone:userPhone,
-      imagePath:imagePath  
+      imagePath:imagePath,
+      gender:gender
   });
 }
-async function setUser(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath}){
+async function setUser(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath,gender}){
     return await setDoc(doc(db,Collection , id), {
       englishUserName:englishUserName,
       userPassword: userPassword,
       userEmail: userEmail,
       userPhone:userPhone,
-      imagePath:imagePath
+      imagePath:imagePath,
+      gender:gender
     })
 }
 

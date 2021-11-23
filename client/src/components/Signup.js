@@ -14,18 +14,31 @@ import RegisterImage from "../pages/CreateService/images/register.jpeg";
 import app from "../Firebase";
 
 export default function Signup() {
+  const { signup, currentUser, login, setUser } = useAuth();
+
   const englishUserName = useRef();
   const phoneRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const [userGender,setuserGender] = useState('');
+  const[valdation,setValdation] =useState({
+    userName:"",
+    userEmail:"",
+    userPhone:"",
+    userPassword:""
+  })
+  console.log(userGender)
+
   const history = useHistory();
-  const { signup, currentUser, login, setUser } = useAuth();
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
+
   const [imgErr, setImgErr] = useState("");
   const [signError, setSignError] = useState({email:"", userName:"",phone:"", password:""});
   const[phone, setPhone] = useState("")
@@ -41,25 +54,41 @@ export default function Signup() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 
-
+  function handelBluerInputs(e){
+   
+  }
   function errorSubmitState(e){
 
   //mobile validation
-
-    console.log(e)
-    setSignError({
+  //type'blur'
+    if(e.type=="blur"){
+      if(e.target.name === "email" ){
+        setSignError({...signError,email:!emailValidation.test(e.target.value)? "you should provide an email" : null,})
+      }else if(e.target.name === "userName"){
+        setSignError({...signError,userName:!userNameValidation.test(e.target.value)? "User name should be two words and each word have at least 3 char like Ali Ali" : null,})
+      }else if(e.target.name === "phoneNumber"){
+        setSignError({...signError,phone: e.target.value.length !== 11? "Phone Number must be 11 Number" : null,})
+      }else if(e.target.name === "password"){
+        setSignError({...signError, password:!password.test(e.target.value)? "The Password should contain at least one lowercase, one uppercase, at least one digit, & special character [*@%$# ] and mustn't have any white spaces." : null})
+      }
+    }
+    else{
+        setSignError({
       ...signError,
       email:
        !emailValidation.test(e.target[0].value)? "you should provide an email" : null,
       userName:
-       !userNameValidation.test(e.target[1].value)? "user name" : null,
+       !userNameValidation.test(e.target[1].value)? "User name should be two words and each word have at least 3 char like Ali Ali" : null,
       phone: 
       e.target[2].value.length !== 11? "Phone Number must be 11 Number" : null,
        password:
        !password.test(e.target[3].value)? 
        "The Password should contain at least one lowercase, one uppercase, at least one digit, & special character [*@%$# ] and mustn't have any white spaces." : null
             
-    });
+    })
+    }
+    console.log(e.type)
+  ;
   }
 
   async function handelUpload() {
@@ -124,7 +153,7 @@ export default function Signup() {
       setError("");
       if (!userNameValidation.test(englishUserName.current.value) || !emailValidation.test(emailRef.current.value)
            || !password.test(passwordRef.current.value) || phoneRef.current.value.length !== 11 || !validMobileCode
-           ){
+        ){
         throw "User name must start with letters a-z"
       }
       setLoading(true);
@@ -136,6 +165,7 @@ export default function Signup() {
         userPassword: passwordRef.current.value,
         userPhone: phoneRef.current.value,
         imagePath: url,
+        gender:userGender
       });
       history.push("/layout");
     } catch (err) {
@@ -187,7 +217,7 @@ export default function Signup() {
                     <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
                       Create an account
                     </h3>
-                    {error && <Alert variant="danger">{error}</Alert>}
+                    {/* {error && <Alert variant="danger">{error}</Alert>} */}
                     <form className="px-md-2" onSubmit={handleSubmit}>
                       <div className=" mb-4">
                         <input
@@ -195,67 +225,57 @@ export default function Signup() {
                           className="form-control"
                           placeholder="Email Address"
                           ref={emailRef} 
-                          required 
-                          onChange={(e) => {
-                            //  handleInputChange(e);
-                          }}
-                          // value={brandName}
-                          name="Email"
+                          name="email"
+                          value={valdation.userEmail}
+                          onChange={(e)=>setValdation({...valdation,userEmail:e.target.value})}
+                          onBlur={(e)=>{errorSubmitState(e)}}
                         />
                         {signError.email? <small className="text-danger ms-1">
                           {signError.email}
                         </small>: null }
-
                       </div>
-                        
-
                       <div className="mb-4">
                         <input
                           type="text"
                           className="form-control"
                           placeholder="User Name"
-                          //ref={serviceNameRef}
-                          onChange={(e) => {
-                            // handleInputChange(e);
-                          }}
-                          //value={serviceName}
                           name="userName"
                           ref={englishUserName}
-                          required
+                          value={valdation.userName}
+                          onChange={(e)=>setValdation({...valdation,userName:e.target.value})}
+                          onBlur={(e)=>{errorSubmitState(e)}}
                         />
                       {signError.userName? <small className="text-danger ms-1">
                           {signError.userName}
                         </small>: null }
                       </div>
-
                       <div className="row">
                         <div className="col-md-12 mb-4">
                           <input
-                            type="text"
+                            type="number"
                             className="form-control"
                             placeholder="Phone Number"
-                            //ref={servicePriceRef}
-                            //value={servicePrice}
                             name="phoneNumber"
                             ref={phoneRef}
-                            required
-                            onChange={(e) => {
-                              //handleInputChange(e);
-                            }}
+                            value={valdation.userPhone}
+                            onChange={(e)=>setValdation({...valdation,userPhone:e.target.value})}
+                            onBlur={(e)=>{errorSubmitState(e)}}
                           />
-                        </div>
-                        {signError.phone? <small className="text-danger ms-1">
+                          {signError.phone? <small className="text-danger ms-1">
                           {signError.phone}
                         </small>: null }
+                        </div>
+                        
                       </div>
 
-                      {/* <div class="form-check form-check-inline mb-4">
+                      <div class="form-check form-check-inline mb-4">
                         <input
                           class="form-check-input"
                           type="radio"
                           name="gender"
                           id="male"
-                          value="male"
+                          value='Male'
+                          onChange={(e)=>{setuserGender(e.target.value)}}
                         />
                         <label class="form-check-label" for="male">
                           male
@@ -268,11 +288,12 @@ export default function Signup() {
                           name="gender"
                           id="female"
                           value="female"
+                          onChange={(e)=>{setuserGender(e.target.value)}}
                         />
                         <label class="form-check-label" for="female">
                           female
                         </label>
-                      </div> */}
+                      </div>
 
                       <div className="row">
                         <div className="col-md-12 mb-4">
@@ -280,18 +301,17 @@ export default function Signup() {
                             type="password"
                             className="form-control"
                             placeholder="Password"
-                            //value={servicePrice}
                             name="password"
                             ref={passwordRef}
-                            required 
-                            onChange={(e) => {
-                              //handleInputChange(e);
-                            }}
+                            value={valdation.userPassword}
+                            onChange={(e)=>setValdation({...valdation,userPassword:e.target.value})}
+                            onBlur={(e)=>{errorSubmitState(e)}}
                           />
-                        </div>
-                        {signError.password? <small className="text-danger ms-1">
+                          {signError.password? <small className="text-danger ms-1">
                           {signError.password}
                         </small>: null }
+                        </div>
+                        
                       </div>
 
                       <div className="row">
@@ -300,13 +320,8 @@ export default function Signup() {
                             type="password"
                             className="form-control"
                             placeholder="Confirm Password"
-                            //value={servicePrice}
                             name="confirm"
                             ref={passwordConfirmRef}
-                            required
-                            onChange={(e) => {
-                              //handleInputChange(e);
-                            }}
                           />
                         </div>
                         {/* {errors.servicePrice ? (

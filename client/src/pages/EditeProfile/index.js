@@ -22,6 +22,7 @@ export default function EditeItem() {
     const[userPhone,setUserPhone] = useState("");
     const[email,setEmail] = useState("");
     const[password,setUsrPassword] = useState("");
+    const[userGender,setUserGendr] = useState("")
   
     console.log(editeUserData)
 
@@ -37,7 +38,8 @@ export default function EditeItem() {
         userEmail: email,
         imagePath: userImage,
         userPhone:userPhone,
-        userPassword:password
+        userPassword:password,
+        gender:userGender
       });
       history.push("/profile")
     }
@@ -46,12 +48,14 @@ export default function EditeItem() {
       getSingleService("UserProvider", userEmail)
       .then((data)=>{
         console.log(data)
-        const{imagePath,englishUserName,userPhone,userEmail, userPassword}= data;
+        const{imagePath,englishUserName,userPhone,userEmail, userPassword, gender}= data;
         setUserImage(imagePath)
         setUserPhone(userPhone)
         setUserName(englishUserName)
         setEmail(userEmail)
         setUsrPassword(userPassword)
+        setUserGendr(gender)
+        
       })
     }
     /*
