@@ -169,7 +169,7 @@ const Hotels = () => {
             You don't have any services yet !!
           </h4>
           <h6 className=" text-center bosition_1">
-            <Link to={`/layout/create?name=hotels`}>Creat One</Link>
+            <Link to={`/layout/create?name=hotels`}className="text-primary">Create your first One</Link>
           </h6>
         </>
       ) : (
@@ -184,7 +184,8 @@ const Hotels = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+              </div>
+           
 
           {comp}
         </div>
