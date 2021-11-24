@@ -50,6 +50,38 @@ async function setService(catgory,{ serviceName, serviceDescripition, servicePri
         booked:false
     });
 }
+
+async function setHotelService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName,roomNumbers }) {
+    return await addDoc(catgory, {
+        serviceName: serviceName,
+        serviceDescripition: serviceDescripition,
+        servicePrice: servicePrice,
+        brandName:brandName,
+        servicePhone: servicePhone,
+        imagePath:imagePath,
+        createdBy: auth.currentUser.email,
+        offerd:false,
+        offerRatio:"",
+        createdAt: new Date(),
+        roomNumbers:roomNumbers
+    });
+}
+async function setRentService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName,roomNumbers }) {
+    return await addDoc(catgory, {
+        serviceName: serviceName,
+        serviceDescripition: serviceDescripition,
+        servicePrice: servicePrice,
+        brandName:brandName,
+        servicePhone: servicePhone,
+        imagePath:imagePath,
+        createdBy: auth.currentUser.email,
+        offerd:false,
+        offerRatio:"",
+        createdAt: new Date(),
+        roomNumbers:roomNumbers
+    });
+}
+
 async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName, }){
     const alyDocRef = doc(db, collectionName, documentId);
     await updateDoc(alyDocRef, { 
@@ -64,7 +96,6 @@ async function editAllServicesFields(collectionName, documentId,{serviceDescripi
         createdBy: auth.currentUser.email,
         imagePath: imagePath,
         
-
     });
 }
 
@@ -87,5 +118,7 @@ export { editServiceField };
 export { setService };
 export { deletService };
 export { getSingleService };
+export { setHotelService };
+export { setRentService };
 
 

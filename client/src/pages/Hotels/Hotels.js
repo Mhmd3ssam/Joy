@@ -169,7 +169,7 @@ const Hotels = () => {
             You don't have any services yet !!
           </h4>
           <h6 className=" text-center bosition_1">
-            <Link to={`/layout/create?name=hotels`}className="text-primary">Create your first One</Link>
+            <Link to={`/hotelservices?name=hotels`}className="text-primary">Create your first One</Link>
           </h6>
         </>
       ) : (
@@ -177,7 +177,7 @@ const Hotels = () => {
             <div className="col-md-4 col-sm-6 ">
             <div class="card bg-light position-relative p-0 ">
                 <div class="card-body text-center serevice_overlay">
-                  <Link to={`/layout/create?name=hotels`}>
+                  <Link to={`/hotelservices?name=hotels`}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-lg serevice_add" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                   </svg>

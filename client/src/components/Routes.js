@@ -11,6 +11,8 @@ import Offer from './ServicesCards/Offer';
 import Profile from '../pages/Profile';
 import EditeProfile from '../pages/EditeProfile';
 import Servicesdetails from '../pages/ServiceDetails/Servicesdetails';
+import CreateHotelServices from '../pages/CreateService/CreateHotelServices';
+import CreateRentServices from '../pages/CreateService/CreateRentServices';
 function Routes() {
     return (
         <Switch>
@@ -25,6 +27,8 @@ function Routes() {
             <Route exact path="/profile" component={Profile}/>
             <Route exact path="/editeprofile" component={EditeProfile}/>
             <Route exact path="/details" component={Servicesdetails}/>
+            <Route exact path="/hotelservices" component={CreateHotelServices}/>
+            <Route exact path="/rentservices" component={CreateRentServices}/>
         </Switch>
     )
 }
