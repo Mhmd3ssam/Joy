@@ -38,14 +38,7 @@ function useSidebar(){
             })
         },
     
-        {
-            "display_name": "Create Service",
-            "route": "/layout/create",
-            "icon": React.createElement('img',{
-                src:"https://img.icons8.com/office/80/000000/create-new.png",
-                width:30,
-            })
-        },
+        
         {
             "display_name": "Hotels",
             "route": "/hotels",
