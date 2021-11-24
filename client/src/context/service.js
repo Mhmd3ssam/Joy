@@ -98,6 +98,23 @@ async function editAllServicesFields(collectionName, documentId,{serviceDescripi
         
     });
 }
+async function editHotelService(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName,roomNumbers }){
+    const alyDocRef = doc(db, collectionName, documentId);
+    await updateDoc(alyDocRef, { 
+        serviceDescripition: serviceDescripition,
+        serviceName: serviceName,
+        servicePhone:servicePhone,
+        servicePrice: servicePrice,
+        offerd:offerd,
+        brandName:brandName,
+        offerRatio:offerRatio,
+        createdAt: new Date(),
+        createdBy: auth.currentUser.email,
+        imagePath: imagePath,
+        roomNumbers:roomNumbers
+        
+    });
+}
 
 async function editServiceField(collectionName, documentId,inputTitle){
     const alyDocRef = doc(db, collectionName, documentId);
@@ -120,5 +137,6 @@ export { deletService };
 export { getSingleService };
 export { setHotelService };
 export { setRentService };
+export { editHotelService };
 
 

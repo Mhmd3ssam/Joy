@@ -178,7 +178,7 @@ function CreateHotelServices() {
         servicePhone: servicePhoneRef.current.value,
         brandName: brandNameRef.current.value,
         imagePath: url,
-        roomNumbers:romNumberRef.current.value
+        roomNumbers:parseInt(romNumberRef.current.value)
       });
       console.log("done");
       history.push('/hotels');
@@ -445,7 +445,7 @@ function CreateHotelServices() {
                             //   handleInputChange(e);
                             // }}
                         />
-                        </div>
+                      </div>
                     <div class="input-group mb-3">
                       <input
                         type="file"

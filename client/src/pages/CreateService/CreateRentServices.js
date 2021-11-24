@@ -174,8 +174,7 @@ function CreateRentServices() {
         servicePhone: servicePhoneRef.current.value,
         brandName: brandNameRef.current.value,
         imagePath: url,
-        roomNumbers:romNumberRef.current.value
-
+        roomNumbers:parseInt(romNumberRef.current.value)
       });
       console.log("done");
       history.push('/rent');
