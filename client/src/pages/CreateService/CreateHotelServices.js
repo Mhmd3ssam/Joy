@@ -328,7 +328,7 @@ function CreateHotelServices() {
                
                 <div className="card-body  ">
                   <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
-                    {searchName === "hotels" ?"Hotels"
+                    {searchName === "hotels" ?"Room Details"
                     : searchName === "rent" ?"Rent"
                     :searchName === "restaurants"?"Restaurants"
                     :"Create Your Service"
@@ -339,7 +339,7 @@ function CreateHotelServices() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Brand Name"
+                        placeholder="Hotel Name"
                         ref={brandNameRef}
                         onChange={(e) => {
                           handleInputChange(e);
@@ -358,7 +358,7 @@ function CreateHotelServices() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Service Name"
+                        placeholder="Room Title"
                         ref={serviceNameRef}
                         onChange={(e) => {
                           handleInputChange(e);
@@ -375,7 +375,7 @@ function CreateHotelServices() {
                     <div className=" mb-4">
                       <textarea
                         className="form-control"
-                        placeholder="Service Details"
+                        placeholder="Room Features"
                         rows="5"
                         ref={serviceDescripitionRef}
                         onChange={(e) => {
@@ -397,7 +397,7 @@ function CreateHotelServices() {
                           <input
                             type="number"
                             className="form-control"
-                            placeholder="Price"
+                            placeholder="Room Price per night"
                             ref={servicePriceRef}
                             value={servicePrice}
                             name="servicePrice"
@@ -417,7 +417,7 @@ function CreateHotelServices() {
                           <input
                             type="number"
                             className="form-control"
-                            placeholder="Phone Number"
+                            placeholder="Reservation Number"
                             ref={servicePhoneRef}
                             onChange={(e) => {
                               handleInputChange(e);
@@ -433,11 +433,11 @@ function CreateHotelServices() {
                         </div>
                       </div>
                     </div>
-                    <div className=" datepicker">
+                    <div className=" datepicker mb-4">
                         <input
                             type="number"
                             className="form-control"
-                            placeholder="Room Numbers"
+                            placeholder="Available Number"
                             ref={romNumberRef}
                             // value={servicePrice}
                             // name="servicePrice"
@@ -477,9 +477,8 @@ function CreateHotelServices() {
                     <button
                       type="submit"
                       className="btn btn-primary w-100 btn-lg mb-1 mt-4"
-
                     >
-                      create
+                      Create
                     </button>
                   </form>
                 </div>

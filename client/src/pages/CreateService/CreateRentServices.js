@@ -334,7 +334,7 @@ function CreateRentServices() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Brand Name"
+                        placeholder="Agency Name"
                         ref={brandNameRef}
                         onChange={(e) => {
                           handleInputChange(e);
@@ -353,7 +353,7 @@ function CreateRentServices() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Service Name"
+                        placeholder="Building Name"
                         ref={serviceNameRef}
                         onChange={(e) => {
                           handleInputChange(e);
@@ -370,7 +370,7 @@ function CreateRentServices() {
                     <div className=" mb-4">
                       <textarea
                         className="form-control"
-                        placeholder="Service Details"
+                        placeholder="Unit Details"
                         rows="5"
                         ref={serviceDescripitionRef}
                         onChange={(e) => {
@@ -392,7 +392,7 @@ function CreateRentServices() {
                           <input
                             type="number"
                             className="form-control"
-                            placeholder="Price"
+                            placeholder="Price per day"
                             ref={servicePriceRef}
                             value={servicePrice}
                             name="servicePrice"
@@ -428,7 +428,7 @@ function CreateRentServices() {
                         </div>
                       </div>
                     </div>
-                    <div className=" datepicker">
+                    <div className="datepicker mb-4">
                         <input
                             type="number"
                             className="form-control"
@@ -473,7 +473,7 @@ function CreateRentServices() {
                       type="submit"
                       className="btn btn-primary w-100 btn-lg mb-1 mt-4"
                     >
-                      create
+                      Create
                     </button>
                   </form>
                 </div>
