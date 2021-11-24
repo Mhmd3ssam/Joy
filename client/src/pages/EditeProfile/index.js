@@ -26,21 +26,46 @@ export default function EditeItem() {
     const[password,setUsrPassword] = useState("");
     const[userGender,setUserGender] = useState("")
 
-  //Validate inputs
-  const[valdation,setValdation] =useState({
-    userName:"",
-    userPhone:"",
-  })
-  
+  //Error object to Validate inputs
+  const [updateError, setUpdateError] = useState({userName:"",phone:""});
+
+
+  //ٌRegex  
+  const userNameValidation =
+  /[a-zA-Z]{2,10}[^&*%$#@!|~`'"){+->?]+\s[a-zA-Z]{2,10}[^&*%$#@!|~`'"){+->?]$/;
+
+
+  //validate mobile code
+  let mobileCode = userPhone.substring(0, 3);
+  console.log(mobileCode);
+  let validMobileCode =
+    mobileCode == "010" ||
+    mobileCode == "011" ||
+    mobileCode == "012" ||
+    mobileCode == "015"
+      ? true
+      : false;
+  console.log(validMobileCode);  
+
     console.log(editeUserData)
 
     let userEmail = search.split('=')[1];
     console.log(userEmail)
 
     //our functions 
-    function editeService() {
+    function editeService(e) {
+      e.preventDefault()
+      try{
       console.log("ggg");
       //updatedEmail(auth,email)
+      if(userName === ""
+      ||!userNameValidation
+      || userPhone === ""
+      || userPhone.length !== 11
+      ||validMobileCode === false
+      ){
+        throw "error"
+      }
       editeUserData("UserProvider", userEmail, {
         englishUserName: userName,
         userEmail: email,
@@ -50,6 +75,10 @@ export default function EditeItem() {
         gender:userGender
       });
       history.push("/profile")
+    } catch(err){
+      console.log(err)
+      errorSubmitState(e)
+    }
     }
 
     function getData(){
@@ -69,6 +98,7 @@ export default function EditeItem() {
    
 
     function handelChange(e) {
+      setProgress(0);
       if (e.target.files[0]) {
         Object.defineProperty(e.target.files[0], 'name', {
           writable: true,
@@ -79,7 +109,9 @@ export default function EditeItem() {
     }
 
     
-  async function handelUpload() {
+  async function handelUpload(e) {
+    e.preventDefault();
+    try{
     const storage = getStorage(app);
     const storageReff = storageRef(storage);
     const imagesRef = storageRef(storageReff, `images/${image.name}`);
@@ -101,7 +133,47 @@ export default function EditeItem() {
         });
       }
     )
+  }catch(err){
+    setError("Upload Image First");
   }
+
+}
+
+ //function to validate inputs onBlur & onSubmit
+ function errorSubmitState(e){
+
+  //mobile validation
+  //type'blur'
+    if(e.type=="blur"){
+       if(e.target.name === "userName"){
+        setUpdateError({...updateError,userName:e.target.value.length === 0 ? "User name is required" :
+        !userNameValidation.test(e.target.value)? "User name should be two words and each word have at least 3 char like Ali Ali" : null,})
+      }else if(e.target.name === "phoneNumber"){
+        setUpdateError({...updateError,phone: e.target.value.length === 0 ? "Phone number is required" :
+           e.target.value.length !== 11? "Phone Number must be 11 Number" :!validMobileCode
+           ? "Phone Number must start with a valid code": null})
+      }
+    }
+    else{
+      setUpdateError({
+      ...updateError,
+      userName:
+      e.target[0].value.length === 0 ? "User name is required" :
+       !userNameValidation.test(e.target[0].value)? "User name should be two words and each word have at least 3 char like Ali Ali" : null,
+      phone: 
+      e.target[1].value.length === 0
+      ? "Phone Number is required" :
+      e.target[1].value.length !== 11? "Phone Number must be 11 Number" : 
+      !validMobileCode
+            ? "Phone Number must start with a valid code"
+            : null,
+            
+    })
+    }
+    console.log(e.type)
+  ;
+  }
+
     useEffect(()=>{
       getData()
       setLoad(false)
@@ -155,7 +227,7 @@ export default function EditeItem() {
                     <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
                     Update Your information
                     </h3>
-                    <form className="px-md-2">
+                    <form className="px-md-2" onSubmit={editeService}>
                       <div className=" mb-4">
                         <input
                           type="text"
@@ -164,12 +236,13 @@ export default function EditeItem() {
                           onChange={(e)=>{setUserName(e.target.value)}}
                           value={userName}
                           name="userName"
+                          onBlur={(e) => {errorSubmitState(e)}}
                         />
-                        {/* {errors.brandName ? (
+                        {updateError.userName ? (
                           <small className="text-danger ms-1">
-                            {errors.brandName}
+                            {updateError.userName}
                           </small>
-                        ) : null} */}
+                        ) : null}
                       </div>
   
                       <div className="mb-4">
@@ -179,13 +252,14 @@ export default function EditeItem() {
                           placeholder="Edit your phone number"
                           value={userPhone}
                           onChange={(e)=>{setUserPhone(e.target.value)}}
-                          name="phone number"
+                          name="phoneNumber"
+                          onBlur={(e) => {errorSubmitState(e)}}
                         />
-                        {/* {errors.serviceName ? (
+                        {updateError.phone ? (
                           <small className="text-danger ms-1">
-                            {errors.serviceName}
+                            {updateError.phone}
                           </small>
-                        ) : null} */}
+                        ) : null}
                       </div>
   
                       <div class="form-check form-check-inline mb-4">
@@ -196,6 +270,7 @@ export default function EditeItem() {
                             id="male"
                             value='Male'
                             onChange={(e)=>{setUserGender(e.target.value)}}
+                            checked={userGender === "Male"? true: false}
                           />
                           <label class="form-check-label" for="male">
                             male
@@ -209,6 +284,8 @@ export default function EditeItem() {
                             id="female"
                             value="female"
                             onChange={(e)=>{setUserGender(e.target.value)}}
+                            checked={userGender === "female"? true: false}
+
                           />
                           <label class="form-check-label" for="female">
                             female
@@ -221,6 +298,7 @@ export default function EditeItem() {
                           name="image"
                           placeholder="Upload Image"
                           onChange={handelChange}
+                          
                         />
                         <button
                           className="btn btn-primary "
@@ -246,7 +324,6 @@ export default function EditeItem() {
                       <button
                         type="submit"
                         className="btn btn-primary w-100 btn-lg mb-1 mt-4"
-                        onClick={editeService}
                       >
                         Save changes
                       </button>

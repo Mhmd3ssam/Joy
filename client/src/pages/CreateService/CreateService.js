@@ -262,9 +262,6 @@ function CreateService() {
     }
 };
 
-const formSu = (e)=>{
-  console.log(  e.elements.image)
-}
   useEffect(() => {
     document.title = "Create Services";
   });

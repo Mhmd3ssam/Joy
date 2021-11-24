@@ -53,9 +53,7 @@ export default function Signup() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 
-  function handelBluerInputs(e){
-   
-  }
+  
   function errorSubmitState(e){
 
   //mobile validation
