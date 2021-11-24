@@ -6,7 +6,7 @@ import {  MDBInput } from 'mdbreact';
 import {BrowserRouter as Router,Link,useLocation , useHistory} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import EditeImage from "../../pages/CreateService/images/edite.jpeg"
-export default function EditeItem() {
+export default function EditeRestaurants() {
   //our state
     const [error, setError] = useState("");
     const [load, setLoad] = useState(true);

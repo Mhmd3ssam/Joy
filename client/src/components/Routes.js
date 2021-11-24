@@ -6,7 +6,7 @@ import HomePage from '../pages/HomePage';
 import Hotels from '../pages/Hotels/Hotels';
 import Restaurants from '../pages/Restaurants/Restaurants';
 import Rent from '../pages/Rent/Rent';
-import EditeItem from './ServicesCards/EditeItem';
+import EditeRestaurants from './ServicesCards/EditeRestaurants';
 import Offer from './ServicesCards/Offer';
 import Profile from '../pages/Profile';
 import EditeProfile from '../pages/EditeProfile';
@@ -33,7 +33,7 @@ function Routes() {
             <Route exact path="/rentservices" component={CreateRentServices}/>
             <Route exact path="/eiditehotels" component={EiditeHotels}/>
             <Route exact path="/eiditerent" component={EditeRent}/>
-            <Route exact path="/eiditerestaurants" component={EditeItem}/>
+            <Route exact path="/eiditerestaurants" component={EditeRestaurants}/>
 
         </Switch>
     )
