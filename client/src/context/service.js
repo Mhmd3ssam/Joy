@@ -35,7 +35,7 @@ async function getSingleService(collection, id){
   
   }
 
-async function setService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName }) {
+async function setRestaurantService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName }) {
     return await addDoc(catgory, {
         serviceName: serviceName,
         serviceDescripition: serviceDescripition,
@@ -115,7 +115,7 @@ const alyDocRef = doc(db, collectionName, documentId);
 export {getAllUserService};
 export { editAllServicesFields };
 export { editServiceField };
-export { setService };
+export { setRestaurantService };
 export { deletService };
 export { getSingleService };
 export { setHotelService };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
 import HomePage from '../pages/HomePage';
-import CreateService from '../pages/CreateService/CreateService';
+//import CreateService from '../pages/CreateService/CreateService';
 import Hotels from '../pages/Hotels/Hotels';
 import Restaurants from '../pages/Restaurants/Restaurants';
 import Rent from '../pages/Rent/Rent';
@@ -13,12 +13,13 @@ import EditeProfile from '../pages/EditeProfile';
 import Servicesdetails from '../pages/ServiceDetails/Servicesdetails';
 import CreateHotelServices from '../pages/CreateService/CreateHotelServices';
 import CreateRentServices from '../pages/CreateService/CreateRentServices';
+import CreatRestaurantseService from '../pages/CreateService/CreateService';
 function Routes() {
     return (
         <Switch>
             <Route exact path="/layout/services" component={Dashboard} />
             <Route exact path="/layout" component={HomePage} />
-            <Route exact path="/layout/create" component={CreateService} /> 
+            <Route exact path="/restaurantservices" component={CreatRestaurantseService} /> 
             <Route  exact path="/hotels" component={Hotels} />
             <Route exact path="/restaurants" component={Restaurants} />
             <Route exact path="/rent" component={Rent}/>

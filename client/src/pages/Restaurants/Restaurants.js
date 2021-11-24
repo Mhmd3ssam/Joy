@@ -4,17 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
 import ReactPaginate from "react-paginate";
-import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBIcon,
-  MDBBtn,
-} from "mdbreact";
+import { Container } from "react-bootstrap";
+
 import "../Hotels/hotels.css";
 import Loader from "../../components/Loader/Loader";
 
@@ -202,7 +193,7 @@ const Restaurants = () => {
           </h4>
           <h6 className=" text-center bosition_1">
             <Link
-              to={`/layout/create?name=restaurants`}
+              to={`/restaurantservices?name=restaurants`}
               className="text-primary"
             >
               Create your first One
@@ -215,7 +206,7 @@ const Restaurants = () => {
             <div className="col-md-4 col-sm-6 ">
               <div class="card bg-light position-relative p-0 ">
                 <div class="card-body text-center serevice_overlay">
-                  <Link to={`/layout/create?name=restaurants`}>
+                  <Link to={`/restaurantservices?name=restaurants`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="50"

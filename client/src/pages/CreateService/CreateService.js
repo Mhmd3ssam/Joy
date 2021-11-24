@@ -17,7 +17,7 @@ import Restaurants from "./images/rest.jpeg"
 import Buildings from "./images/building.jpeg"
 import "./CreateService.css";
 
-function CreateService() {
+function CreatRestaurantseService() {
   //Inputs Refs
   const serviceNameRef = useRef();
   const brandNameRef = useRef();
@@ -33,7 +33,6 @@ function CreateService() {
   const [serviceDescripition, setServiceDescripition] = useState("");
   const [servicePrice, setServicePrice] = useState("");
   const [servicePhone, setServicePhone] = useState("");
-  const [catagory, setCatagory] = useState("default");
 
 
   const { search } = useLocation();
@@ -47,7 +46,6 @@ function CreateService() {
     serviceDescripition: "",
     servicePrice: "",
     servicePhone: "",
-    catagory: "",
   });
 
   console.log(serviceName);
@@ -67,12 +65,12 @@ function CreateService() {
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
-  const { setService } = useAuth();
+  const { setRestaurantService } = useAuth();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
   const db = getFirestore(app);
-  const serviceCollectionRef = collection(db, catagory);
+  const serviceCollectionRef = collection(db, "Restaurants");
 
   function handelChange(e) {
     setProgress(0);
@@ -127,8 +125,6 @@ function CreateService() {
         e.target[0].value === ""? "Brand name is required" : null,
       serviceName:
         e.target[1].value=== "" ? "Service name is required" : null,
-      catagory:
-        e.target[2].value === "" ? "Please Specifiy a category" : null,
       serviceDescripition:
         e.target[3].value === ""
           ? "Service description is required"
@@ -153,7 +149,6 @@ function CreateService() {
 
   async function handelSubmit(e) {
     console.log(url);
-    console.log(errors.catagory)
     e.preventDefault();
     try {
       setError("");
@@ -167,11 +162,10 @@ function CreateService() {
       ||brandNameRef.current.value === ""
       ||validMobileCode === false
       ||url === ""
-      ||catagory === "default"
       ){
         throw "error"
       }
-      await setService(serviceCollectionRef, {
+      await setRestaurantService(serviceCollectionRef, {
         serviceName: serviceNameRef.current.value,
         serviceDescripition: serviceDescripitionRef.current.value,
         servicePrice: servicePriceRef.current.value,
@@ -181,8 +175,9 @@ function CreateService() {
         booked:false
       });
       console.log("done");
-      history.push(`/${catagory.toLowerCase()}`);
+      history.push('/restaurants');
     } catch (error) {
+      console.log(error)
       setError("Failed to create an service");
       errorSubmitState(e)
     }
@@ -212,15 +207,7 @@ function CreateService() {
       });
     }
 
-    if (e.target.name === "catgoryName") {
-      console.log(e.target.name)
-      setCatagory(e.target.value);
-      setErrors({
-        ...errors,
-        catagory:
-          e.target.value === "default" ? "Please Specifiy a category" : null,
-      });
-    }
+    
     if (e.target.name === "serviceDescripition") {
       setServiceDescripition(e.target.value);
       setErrors({
@@ -379,27 +366,6 @@ function CreateService() {
                         </small>
                       ) : null}{" "}
                     </div>
-                    <div className="mb-4">
-                      <select
-                        className="form-select"
-                        onChange={(e) => {
-                          handleInputChange(e);
-                        }}
-                        name="catgoryName"
-                        required
-                      >
-                        <option disabled selected>
-                          choose your service catgory
-                        </option>
-                        <option value="Rent">Rent</option>
-                        <option value="Hotels">Hotels</option>
-                        <option value="Restaurants">Restaurants</option>
-                      </select>
-                      {errors.catagory ? (
-                        <small className="text-danger ms-1">{errors.catagory}</small>
-                      ) : null}
-                    </div>
-
                     <div className=" mb-4">
                       <textarea
                         className="form-control"
@@ -507,4 +473,4 @@ function CreateService() {
   );
 }
 
-export default CreateService;
+export default CreatRestaurantseService;
