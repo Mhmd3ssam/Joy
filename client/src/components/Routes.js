@@ -25,7 +25,6 @@ function Routes() {
             <Route  exact path="/hotels" component={Hotels} />
             <Route exact path="/restaurants" component={Restaurants} />
             <Route exact path="/rent" component={Rent}/>
-            <Route exact path="/editItem" component={EditeItem}/>
             <Route exact path="/offer" component={Offer}/>
             <Route exact path="/profile" component={Profile}/>
             <Route exact path="/editeprofile" component={EditeProfile}/>
@@ -34,6 +33,8 @@ function Routes() {
             <Route exact path="/rentservices" component={CreateRentServices}/>
             <Route exact path="/eiditehotels" component={EiditeHotels}/>
             <Route exact path="/eiditerent" component={EditeRent}/>
+            <Route exact path="/eiditerestaurants" component={EditeItem}/>
+
         </Switch>
     )
 }
