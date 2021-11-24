@@ -6,6 +6,8 @@ import {  MDBInput } from 'mdbreact';
 import {BrowserRouter as Router,Link,useLocation , useHistory} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { auth } from "../../Firebase";
+import updateProfile from "../CreateService/images/updateProfile.jpeg";
+import Loader from "../../components/Loader/Loader";
 export default function EditeItem() {
   //our state
     const [error, setError] = useState("");
@@ -22,7 +24,13 @@ export default function EditeItem() {
     const[userPhone,setUserPhone] = useState("");
     const[email,setEmail] = useState("");
     const[password,setUsrPassword] = useState("");
-    const[userGender,setUserGendr] = useState("")
+    const[userGender,setUserGender] = useState("")
+
+  //Validate inputs
+  const[valdation,setValdation] =useState({
+    userName:"",
+    userPhone:"",
+  })
   
     console.log(editeUserData)
 
@@ -54,17 +62,11 @@ export default function EditeItem() {
         setUserName(englishUserName)
         setEmail(userEmail)
         setUsrPassword(userPassword)
-        setUserGendr(gender)
+        setUserGender(gender)
         
       })
     }
-    /*
-    englishUserName: "Mohamed "
-    imagePath: "https://firebasestorage.googleapis.com/v0/b/jooy-dadba.appspot.com/o/images%2FThu%20Nov%2018%202021%2022%3A51%3A25%20GMT%2B0200%20(Eastern%20European%20Standard%20Time)?alt=media&token=c65d3324-72e3-4d65-ba7f-1e4a8719102c"
-    userEmail: "mohamed@gmail.com"
-    userPhone: "01012143511"
-    
-    */
+   
 
     function handelChange(e) {
       if (e.target.files[0]) {
@@ -110,73 +112,154 @@ export default function EditeItem() {
   console.log(password)
   console.log(email)
 
+  let progressComp = () => {
+    return (
+      <div class="progress">
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          aria-valuenow={progress}
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+    );
+  };
+
     return ( 
       <>
-      {load ? <h1>Loading...</h1>:       
-      <Container className="mt-1">
-        <div className="row">
-          <div className="col-md-12">
-              <Card className="card-image"
-                  style={
-                    {
-                      backgroundImage: "url(https://i.pinimg.com/564x/0d/17/83/0d178380d5b058a37584d1804820c589.jpg)",
-                      //   backgroundRepeat: "no-repeat"
-                    }
-                  }
-              >
-              <div className="rgba-stylish-strong py-5 px-5 z-depth-4">
-                <div className="text-center">
-                  <h3 className="font-weight-bold">
-                    <strong>Edit Your </strong>
-                     <a href="#!" className="text-primary font-weight-bold">
-                        <strong>Service</strong>
-                     </a>
-                  </h3>
-                </div>
-                {error && <Alert variant="danger">{error}</Alert>}
-              <form >
-                <Form.Group id="Service_Name">
-                  <Form.Label className="text-primary font-weight-bold">
-                    User Name
-                  </Form.Label>
-                  <Form.Control
-                    validate
-                    labelClass="white-text"
-                    type="text"
-                    required
-                    placeholder="Enter Your Service Name"
-                    value={userName}
-                    onChange={(e)=>{setUserName(e.target.value)}}
+      {load ?  <div className="row d-flex justify-content-center align-items-center min-vh-100">
+          <Loader />
+        </div>:
+        <Container className="mt-1">
+        <section className="h-100 h-custom">
+          <div className="container  h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-md-8 ">
+                <div className="card rounded-3">
+                   <img
+                    src={updateProfile}
+                    className="w-100"
+                    style={{
+                      borderTopLeftRadius: ".3rem",
+                      borderTopRightRadius: ".3rem",
+                      width: "709px",
+                      height: "261px",
+                      objectFit: "cover"   
+                    }}
+                    alt="Sample photo"
                   />
-                  </Form.Group>
-                      <Form.Group id="Phone_Number">
-                        <Form.Label className="text-primary font-weight-bold">
-                          Phone Number
-                        </Form.Label>
-                        <Form.Control
-                        type="number" 
-                        value={userPhone}
-                        onChange={(e)=>{setUserPhone(e.target.value)}}
-                        required 
-                        placeholder="Enter Your Phone Number"/>
-                      </Form.Group>
-                      <Form.Group id="Service_Image">
-                        <label className="text-primary font-weight-bold mb-2">UserImage </label>
-                        <MDBInput
+                
+                  <div className="card-body  ">
+                    <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
+                    Update Your information
+                    </h3>
+                    <form className="px-md-2">
+                      <div className=" mb-4">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Edit your User Name"
+                          onChange={(e)=>{setUserName(e.target.value)}}
+                          value={userName}
+                          name="userName"
+                        />
+                        {/* {errors.brandName ? (
+                          <small className="text-danger ms-1">
+                            {errors.brandName}
+                          </small>
+                        ) : null} */}
+                      </div>
+  
+                      <div className="mb-4">
+                        <input
+                          type="number"
+                          className="form-control"
+                          placeholder="Edit your phone number"
+                          value={userPhone}
+                          onChange={(e)=>{setUserPhone(e.target.value)}}
+                          name="phone number"
+                        />
+                        {/* {errors.serviceName ? (
+                          <small className="text-danger ms-1">
+                            {errors.serviceName}
+                          </small>
+                        ) : null} */}
+                      </div>
+  
+                      <div class="form-check form-check-inline mb-4">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="male"
+                            value='Male'
+                            onChange={(e)=>{setUserGender(e.target.value)}}
+                          />
+                          <label class="form-check-label" for="male">
+                            male
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline mb-4">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="female"
+                            value="female"
+                            onChange={(e)=>{setUserGender(e.target.value)}}
+                          />
+                          <label class="form-check-label" for="female">
+                            female
+                          </label>
+                        </div>
+                      <div class="input-group mb-3">
+                        <input
                           type="file"
+                          class="form-control"
+                          name="image"
+                          placeholder="Upload Image"
                           onChange={handelChange}
                         />
-                        <Button className="btn-upload-gradiant mt-5" onClick={handelUpload}>Upload</Button>
-                      </Form.Group>
-                      <Button  className="w-100 btn-upload-gradiant mt-5" onClick={editeService}>
-                        Confirm Edit
-                      </Button>
+                        <button
+                          className="btn btn-primary "
+                          onClick={handelUpload}
+                          disabled={progress === 100 ? true : false}
+                          type="button"
+                        >
+                          {progress === 100 ? "Uploaded" : "Upload"}
+                        </button>
+                      </div>
+                      <span className="text-danger">{error}</span>
+                      {progress === 0 ? null : progress > 0 && progress < 100 ? (
+                        progressComp()
+                      ) : progress === 100 ? (
+                        <>
+                          Image Uploaded
+                          <img
+                            src="https://img.icons8.com/nolan/96/photoshoot-completed.png"
+                            width="20"
+                          />
+                        </>
+                      ) : null}
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100 btn-lg mb-1 mt-4"
+                        onClick={editeService}
+                      >
+                        Save changes
+                      </button>
                     </form>
                   </div>
-                </Card>
+                </div>
               </div>
             </div>
-          </Container>}
+          </div>
+        </section>
+      </Container>  
+    }
+        
       </>
   
     )
