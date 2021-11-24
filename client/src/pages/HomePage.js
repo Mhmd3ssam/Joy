@@ -1,4 +1,5 @@
 import React , {useEffect}from 'react'
+import ReactPaginate from 'react-paginate'
 import Loader from '../components/Loader/Loader'
 function HomePage() {
 
@@ -7,7 +8,8 @@ function HomePage() {
     })
     return (
         <div className="d-flex justify-content-center align-items-center min-vh-100 ">
-            <Loader/>
+            {/* <Loader/> */}
+           
         </div>
     )
 }

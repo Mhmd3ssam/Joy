@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
+import ReactPaginate from "react-paginate";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import {
   MDBContainer,
@@ -14,7 +15,7 @@ import {
   MDBIcon,
   MDBBtn,
 } from "mdbreact";
-import "../Hotels/hotels.css"
+import "../Hotels/hotels.css";
 import Loader from "../../components/Loader/Loader";
 
 const Restaurants = () => {
@@ -79,6 +80,12 @@ const Restaurants = () => {
     document.title = "Restaurants";
   }, [counter]);
 
+  function handleCardClick(pageNumber){
+    console.log(pageNumber.selected+1)
+    
+
+  }
+
   let comp = rent.map((res) => {
     const {
       imagePath,
@@ -92,16 +99,20 @@ const Restaurants = () => {
       serviceDescripition,
       createdAt,
     } = res;
-    let sale = (Number(servicePrice) * Number(offerRatio)) / 100
-    let newprice = Number(servicePrice) - sale
+    let sale = (Number(servicePrice) * Number(offerRatio)) / 100;
+    let newprice = Number(servicePrice) - sale;
 
-    console.log(newprice)
+    console.log(newprice);
     const creationTime = new Date(createdAt.seconds);
     return (
       <div className="col-md-4 col-sm-6">
         <div class="card bg-light position-relative p-0 card-round">
           <div>
-            <img class="img-fluid w-100 hotel-img card-round" src={imagePath} alt="Sample" />
+            <img
+              class="img-fluid w-100 hotel-img card-round"
+              src={imagePath}
+              alt="Sample"
+            />
             <div class="mb-0 pb-0 position-absolute top-0 start-0 ms-1 mt-1 ">
               {offerd ? (
                 <span class="badge bg-warning rounded-pill">
@@ -121,17 +132,33 @@ const Restaurants = () => {
           <div class="card-body text-center">
             <h5>{serviceName}</h5>
             <p class="small text-muted text-uppercase mb-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2 bi bi-telephone-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" /></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="me-2 bi bi-telephone-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
+                />
+              </svg>
               {servicePhone}
             </p>
             <hr />
-            <h6 class="mb-3">
-              <span class="text-danger mr-1">{offerRatio ? `${parseInt(newprice)} EGP` : `${servicePrice} EGP`}</span>
+            <h6 class="mb-2">
+              <span class="text-danger mr-1">
+                {offerRatio
+                  ? `${parseInt(newprice)} EGP`
+                  : `${servicePrice} EGP`}
+              </span>
               <span class="text-grey ms-2">
                 <s>{offerRatio ? `${servicePrice} EGP` : ""}</s>
               </span>
             </h6>
-            <button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
+            <button type="button" class="btn btn-primary btn-sm mr-1 mb-1">
               <i class="fas fa-info-circle pr-2"></i>
               <Link to={`/details?id=${id}&name=Restaurants`}>See More </Link>
             </button>
@@ -140,13 +167,21 @@ const Restaurants = () => {
                 deletService(id);
               }}
               type="button"
-              class="btn btn-danger btn-sm px-3 mb-2 ms-1 material-tooltip-main"
+              class="btn btn-danger btn-sm px-3 mb-1 ms-1 material-tooltip-main"
               data-toggle="tooltip"
               data-placement="top"
               title="Add to wishlist"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" /></svg>
-
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+              </svg>
             </button>
           </div>
         </div>
@@ -156,37 +191,73 @@ const Restaurants = () => {
 
   return (
     <Container>
-
-        {load ? (
-          <div className="row d-flex justify-content-center align-items-center min-vh-100">
-              <Loader/>
-          </div>
-        ) : rent.length === 0 ? (
-          <>
+      {load ? (
+        <div className="row d-flex justify-content-center align-items-center min-vh-100">
+          <Loader />
+        </div>
+      ) : rent.length === 0 ? (
+        <>
           <h4 className="row d-flex justify-content-center align-items-center min-vh-100 text-center bosition">
-            You don't have any services yet !! 
+            You don't have any services yet !!
           </h4>
           <h6 className=" text-center bosition_1">
-            <Link to={`/layout/create?name=restaurants`} className="text-primary">Create your first One</Link>
+            <Link
+              to={`/layout/create?name=restaurants`}
+              className="text-primary"
+            >
+              Create your first One
+            </Link>
           </h6>
         </>
-        ) : (
+      ) : (
+        <>
           <div className="row">
             <div className="col-md-4 col-sm-6 ">
-            <div class="card bg-light position-relative p-0 ">
+              <div class="card bg-light position-relative p-0 ">
                 <div class="card-body text-center serevice_overlay">
                   <Link to={`/layout/create?name=restaurants`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-lg serevice_add" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-                  </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50"
+                      height="50"
+                      fill="currentColor"
+                      class="bi bi-plus-lg serevice_add"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                      />
+                    </svg>
                   </Link>
                 </div>
-                </div>
               </div>
-              {comp}
-              </div>
-        )}
- 
+            </div>
+            {comp}
+          </div>
+          <div className="row">
+            <ReactPaginate
+              previousLabel="Previous"
+              nextLabel="Next"
+              breakLabel="..."
+              pageCount={15}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              containerClassName={"pagination justify-content-center"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+              onPageChange={handleCardClick}
+            />
+          </div>
+        </>
+      )}
     </Container>
   );
 };
