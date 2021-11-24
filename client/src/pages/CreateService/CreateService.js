@@ -35,6 +35,7 @@ function CreateService() {
   const [servicePhone, setServicePhone] = useState("");
   const [catagory, setCatagory] = useState("default");
 
+
   const { search } = useLocation();
   let searchName = search.split('=')[1];
 
@@ -177,6 +178,7 @@ function CreateService() {
         servicePhone: servicePhoneRef.current.value,
         brandName: brandNameRef.current.value,
         imagePath: url,
+        booked:false
       });
       console.log("done");
       history.push(`/${catagory.toLowerCase()}`);

@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
 import "./hotels.css"
+import coverImage from "../CreateService/images/edite.jpeg"
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import {
   MDBContainer,
@@ -158,24 +159,36 @@ const Hotels = () => {
 
   return (
     <Container>
-        {load ? (
-          <div className="row d-flex justify-content-center align-items-center min-vh-100">
-             <Loader/>
-          </div>
-        ) : rent.length == 0 ? (
-          <>
-            <h4 className="row d-flex justify-content-center align-items-center min-vh-100 text-center bosition">
-              You don't have any services yet !! 
-            </h4>
-            <h6 className=" text-center bosition_1">
-              <Link to={`/layout/create?name=hotels`}>Creat One</Link>
-            </h6>
-          </>
-        ) : (
-          <div className="row d-flex justify-content-start align-items-center"> 
-            {comp}
-          </div>
-        )}
+      {load ? (
+        <div className="row d-flex justify-content-center align-items-center min-vh-100">
+          <Loader />
+        </div>
+      ) : rent.length == 0 ? (
+        <>
+          <h4 className="row d-flex justify-content-center align-items-center min-vh-100 text-center bosition">
+            You don't have any services yet !!
+          </h4>
+          <h6 className=" text-center bosition_1">
+            <Link to={`/layout/create?name=hotels`}>Creat One</Link>
+          </h6>
+        </>
+      ) : (
+        <div className="row ">
+            <div className="col-md-4 col-sm-6 ">
+            <div class="card bg-light position-relative p-0 ">
+                <div class="card-body text-center serevice_overlay">
+                  <Link to={`/layout/create?name=hotels`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-lg serevice_add" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                  </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+          {comp}
+        </div>
+      )}
     </Container>
   );
 };

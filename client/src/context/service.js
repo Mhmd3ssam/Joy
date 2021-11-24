@@ -47,9 +47,10 @@ async function setService(catgory,{ serviceName, serviceDescripition, servicePri
         offerd:false,
         offerRatio:"",
         createdAt: new Date(),
+        booked:false
     });
 }
-async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName}){
+async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName, }){
     const alyDocRef = doc(db, collectionName, documentId);
     await updateDoc(alyDocRef, { 
         serviceDescripition: serviceDescripition,
@@ -61,7 +62,8 @@ async function editAllServicesFields(collectionName, documentId,{serviceDescripi
         offerRatio:offerRatio,
         createdAt: new Date(),
         createdBy: auth.currentUser.email,
-        imagePath: imagePath
+        imagePath: imagePath,
+        
 
     });
 }

@@ -15,3 +15,11 @@
     transform: translate(10px, -476px);
 
 }
+.serevice_overlay{
+    height:458px;
+    background-color:rgba(0, 0, 0, .1)
+}
+.serevice_add{
+    transform: translate(-1px, 186px);
+    cursor: pointer;
+}
