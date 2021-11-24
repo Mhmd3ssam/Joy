@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
-import { useHistory , useLocation} from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { getFirestore, collection } from "firebase/firestore";
 import app from "../../Firebase";
 import {
@@ -12,9 +12,9 @@ import {
 } from "firebase/storage";
 
 import "../../components/ContactUs/ContactUs.css";
-import Hotel from "./images/hotels.jpeg"
-import Restaurants from "./images/rest.jpeg"
-import Buildings from "./images/building.jpeg"
+import Hotel from "./images/hotels.jpeg";
+import Restaurants from "./images/rest.jpeg";
+import Buildings from "./images/building.jpeg";
 import "./CreateService.css";
 
 function CreatRestaurantseService() {
@@ -25,20 +25,19 @@ function CreatRestaurantseService() {
   const servicePriceRef = useRef();
   const servicePhoneRef = useRef();
   const serviceImage = useRef();
-  const formRef = useRef()
-  console.log(formRef)
+  const formRef = useRef();
+  console.log(formRef);
   //Input States
   const [serviceName, setServiceName] = useState("");
   const [brandName, setServiceBrandName] = useState("");
   const [serviceDescripition, setServiceDescripition] = useState("");
   const [servicePrice, setServicePrice] = useState("");
   const [servicePhone, setServicePhone] = useState("");
-
-
+  const [mealCatgory, setMealCatgory] =useState("");
   const { search } = useLocation();
-  let searchName = search.split('=')[1];
+  let searchName = search.split("=")[1];
 
-  console.log(searchName)
+  console.log(mealCatgory);
 
   const [errors, setErrors] = useState({
     serviceName: "",
@@ -117,33 +116,28 @@ function CreatRestaurantseService() {
   }
 
   console.log(url);
-  function errorSubmitState(e){
-    console.log(e)
+  function errorSubmitState(e) {
+    console.log(e);
     setErrors({
       ...errors,
-      brandName:
-        e.target[0].value === ""? "Brand name is required" : null,
-      serviceName:
-        e.target[1].value=== "" ? "Service name is required" : null,
+      brandName: e.target[0].value === "" ? "Brand name is required" : null,
+      serviceName: e.target[1].value === "" ? "Service name is required" : null,
       serviceDescripition:
-        e.target[3].value === ""
-          ? "Service description is required"
-          : null,
+        e.target[3].value === "" ? "Service description is required" : null,
       servicePrice:
-          e.target[4].value.length === 0
-            ? "Service price is required"
-            : e.target[4].value == 0
-            ? "Price must be more than 0"
-            : null,
+        e.target[4].value.length === 0
+          ? "Service price is required"
+          : e.target[4].value == 0
+          ? "Price must be more than 0"
+          : null,
       servicePhone:
-            e.target[5].value.length === 0
-              ? "Service phone Number is required"
-              : e.target[5].value.length !== 11
-              ? "Service phone Number must be 11 Number"
-              : !validMobileCode
-              ? "Phone Number must start with a valid code"
-              : null,
-            
+        e.target[5].value.length === 0
+          ? "Service phone Number is required"
+          : e.target[5].value.length !== 11
+          ? "Service phone Number must be 11 Number"
+          : !validMobileCode
+          ? "Phone Number must start with a valid code"
+          : null,
     });
   }
 
@@ -153,17 +147,18 @@ function CreatRestaurantseService() {
     try {
       setError("");
       setLoading(true);
-      if(serviceNameRef.current.value === ""
-      ||serviceDescripitionRef.current.value ===""
-      || servicePriceRef.current.value ===""
-      || servicePriceRef.current.value === "0"
-      || servicePhoneRef.current.value === ""
-      || servicePhoneRef.current.value.length !== 11
-      ||brandNameRef.current.value === ""
-      ||validMobileCode === false
-      ||url === ""
-      ){
-        throw "error"
+      if (
+        serviceNameRef.current.value === "" ||
+        serviceDescripitionRef.current.value === "" ||
+        servicePriceRef.current.value === "" ||
+        servicePriceRef.current.value === "0" ||
+        servicePhoneRef.current.value === "" ||
+        servicePhoneRef.current.value.length !== 11 ||
+        brandNameRef.current.value === "" ||
+        validMobileCode === false ||
+        url === ""
+      ) {
+        throw "error";
       }
       await setRestaurantService(serviceCollectionRef, {
         serviceName: serviceNameRef.current.value,
@@ -172,18 +167,19 @@ function CreatRestaurantseService() {
         servicePhone: servicePhoneRef.current.value,
         brandName: brandNameRef.current.value,
         imagePath: url,
-        booked:false
+        booked: false,
+        mealCatgory:mealCatgory
       });
       console.log("done");
-      history.push('/restaurants');
+      history.push("/restaurants");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError("Failed to create an service");
-      errorSubmitState(e)
+      errorSubmitState(e);
     }
     setLoading(false);
   }
-  
+
   const handleInputChange = (e) => {
     if (e.target.name === "serviceName") {
       setServiceName(e.target.value);
@@ -191,10 +187,9 @@ function CreatRestaurantseService() {
         ...errors,
         serviceName:
           e.target.value.length === 0 ? "Service name is required" : null,
-          
       });
-      if(e.target.value.length === 0 ){
-         throw "Service name is required"
+      if (e.target.value.length === 0) {
+        throw "Service name is required";
       }
     }
 
@@ -207,7 +202,6 @@ function CreatRestaurantseService() {
       });
     }
 
-    
     if (e.target.name === "serviceDescripition") {
       setServiceDescripition(e.target.value);
       setErrors({
@@ -230,7 +224,7 @@ function CreatRestaurantseService() {
             ? "Price must be more than 0"
             : null,
       });
-      console.log(typeof(e.target.value))
+      console.log(typeof e.target.value);
     }
 
     if (e.target.name === "servicePhone") {
@@ -247,7 +241,7 @@ function CreatRestaurantseService() {
             : null,
       });
     }
-};
+  };
 
   useEffect(() => {
     document.title = "Create Services";
@@ -273,67 +267,77 @@ function CreatRestaurantseService() {
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-md-8 ">
               <div className="card rounded-3">
-                {searchName === "hotels"? 
-                 <img
-                  src={Hotel}
-                  className="w-100"
-                  style={{
-                    borderTopLeftRadius: ".3rem",
-                    borderTopRightRadius: ".3rem",
-                    width: "709px",
-                    height: "261px",
-                    objectFit: "cover"   
-                  }}
-                  alt="Sample photo"
-                />:searchName === "restaurants"?
-                <img
-                  src={Restaurants}
-                  className="w-100"
-                  style={{
-                    borderTopLeftRadius: ".3rem",
-                    borderTopRightRadius: ".3rem",
-                    width: "709px",
-                    height: "261px",
-                    objectFit: "cover"   
-                  }}
-                  alt="Sample photo"
-                />:searchName === "rent"?
-                <img
-                  src={Buildings}
-                  className="w-100"
-                  style={{
-                    borderTopLeftRadius: ".3rem",
-                    borderTopRightRadius: ".3rem",
-                    width: "709px",
-                    height: "261px",
-                    objectFit: "cover"   
-                  }}
-                  alt="Sample photo"
-                />:
-                <img
-                src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-registration/img3.jpg"
-                className="w-100"
-                style={{
-                  borderTopLeftRadius: ".3rem",
-                  borderTopRightRadius: ".3rem",
-                }}
-                alt="Sample photo"
-              />}
-               
+                {searchName === "hotels" ? (
+                  <img
+                    src={Hotel}
+                    className="w-100"
+                    style={{
+                      borderTopLeftRadius: ".3rem",
+                      borderTopRightRadius: ".3rem",
+                      width: "709px",
+                      height: "261px",
+                      objectFit: "cover",
+                    }}
+                    alt="Sample photo"
+                  />
+                ) : searchName === "restaurants" ? (
+                  <img
+                    src={Restaurants}
+                    className="w-100"
+                    style={{
+                      borderTopLeftRadius: ".3rem",
+                      borderTopRightRadius: ".3rem",
+                      width: "709px",
+                      height: "261px",
+                      objectFit: "cover",
+                    }}
+                    alt="Sample photo"
+                  />
+                ) : searchName === "rent" ? (
+                  <img
+                    src={Buildings}
+                    className="w-100"
+                    style={{
+                      borderTopLeftRadius: ".3rem",
+                      borderTopRightRadius: ".3rem",
+                      width: "709px",
+                      height: "261px",
+                      objectFit: "cover",
+                    }}
+                    alt="Sample photo"
+                  />
+                ) : (
+                  <img
+                    src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-registration/img3.jpg"
+                    className="w-100"
+                    style={{
+                      borderTopLeftRadius: ".3rem",
+                      borderTopRightRadius: ".3rem",
+                    }}
+                    alt="Sample photo"
+                  />
+                )}
+
                 <div className="card-body  ">
                   <h3 className="mb-4 pb-2 pb-md-0  px-md-2 text-center text-primary">
-                    {searchName === "hotels" ?"Hotels"
-                    : searchName === "rent" ?"Rent"
-                    :searchName === "restaurants"?"Restaurants"
-                    :"Create Your Service"
-                    }
+                    {searchName === "hotels"
+                      ? "Hotels"
+                      : searchName === "rent"
+                      ? "Rent"
+                      : searchName === "restaurants"
+                      ? "Restaurants"
+                      : "Create Your Service"}
                   </h3>
-                  <form className="px-md-2" ref={formRef} onSubmit={handelSubmit}>
+                  <form
+                    className="px-md-2"
+                    ref={formRef}
+                    onSubmit={handelSubmit}
+                  >
                     <div className=" mb-4">
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Brand Name"
+                        placeholder="Restaurant Name"
                         ref={brandNameRef}
                         onChange={(e) => {
                           handleInputChange(e);
@@ -352,7 +356,7 @@ function CreatRestaurantseService() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Service Name"
+                        placeholder="Meal Name"
                         ref={serviceNameRef}
                         onChange={(e) => {
                           handleInputChange(e);
@@ -366,10 +370,21 @@ function CreatRestaurantseService() {
                         </small>
                       ) : null}{" "}
                     </div>
+                    <select
+                      className="form-select mb-4"
+                      aria-label="Default select example"
+                      value={mealCatgory}
+                      onChange={(e)=>{setMealCatgory(e.target.value)}}
+                    >
+                      <option unselectable>Chose Meal Catagory</option>
+                      <option value="breakfast">Breakfast</option>
+                      <option value="lunch">Lunch</option>
+                      <option value="fastFood">Fast Food</option>
+                    </select>
                     <div className=" mb-4">
                       <textarea
                         className="form-control"
-                        placeholder="Service Details"
+                        placeholder="Meal Details"
                         rows="5"
                         ref={serviceDescripitionRef}
                         onChange={(e) => {
@@ -391,7 +406,7 @@ function CreatRestaurantseService() {
                           <input
                             type="number"
                             className="form-control"
-                            placeholder="Price"
+                            placeholder="Meal Price"
                             ref={servicePriceRef}
                             value={servicePrice}
                             name="servicePrice"
@@ -411,7 +426,7 @@ function CreatRestaurantseService() {
                           <input
                             type="number"
                             className="form-control"
-                            placeholder="Phone Number"
+                            placeholder="Restaurant Number"
                             ref={servicePhoneRef}
                             onChange={(e) => {
                               handleInputChange(e);
@@ -458,7 +473,6 @@ function CreatRestaurantseService() {
                     <button
                       type="submit"
                       className="btn btn-primary w-100 btn-lg mb-1 mt-4"
-
                     >
                       create
                     </button>

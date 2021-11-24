@@ -35,7 +35,7 @@ async function getSingleService(collection, id){
   
   }
 
-async function setRestaurantService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName }) {
+async function setRestaurantService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName,mealCatgory }) {
     return await addDoc(catgory, {
         serviceName: serviceName,
         serviceDescripition: serviceDescripition,
@@ -47,7 +47,8 @@ async function setRestaurantService(catgory,{ serviceName, serviceDescripition, 
         offerd:false,
         offerRatio:"",
         createdAt: new Date(),
-        booked:false
+        booked:false,
+        mealCatgory:mealCatgory
     });
 }
 
@@ -82,7 +83,7 @@ async function setRentService(catgory,{ serviceName, serviceDescripition, servic
     });
 }
 
-async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName, }){
+async function editAllServicesFields(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName,}){
     const alyDocRef = doc(db, collectionName, documentId);
     await updateDoc(alyDocRef, { 
         serviceDescripition: serviceDescripition,
@@ -95,10 +96,28 @@ async function editAllServicesFields(collectionName, documentId,{serviceDescripi
         createdAt: new Date(),
         createdBy: auth.currentUser.email,
         imagePath: imagePath,
+
         
     });
 }
 async function editHotelService(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName,roomNumbers }){
+    const alyDocRef = doc(db, collectionName, documentId);
+    await updateDoc(alyDocRef, { 
+        serviceDescripition: serviceDescripition,
+        serviceName: serviceName,
+        servicePhone:servicePhone,
+        servicePrice: servicePrice,
+        offerd:offerd,
+        brandName:brandName,
+        offerRatio:offerRatio,
+        createdAt: new Date(),
+        createdBy: auth.currentUser.email,
+        imagePath: imagePath,
+        roomNumbers:roomNumbers
+        
+    });
+}
+async function editRentService(collectionName, documentId,{serviceDescripition,serviceName,servicePhone,servicePrice, offerd , offerRatio, imagePath, brandName,roomNumbers }){
     const alyDocRef = doc(db, collectionName, documentId);
     await updateDoc(alyDocRef, { 
         serviceDescripition: serviceDescripition,
@@ -138,5 +157,6 @@ export { getSingleService };
 export { setHotelService };
 export { setRentService };
 export { editHotelService };
+export { editRentService };
 
 

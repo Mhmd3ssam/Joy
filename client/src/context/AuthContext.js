@@ -11,7 +11,18 @@ import {
   sendPasswordResetEmail ,
   onAuthStateChanged,
 } from "firebase/auth";
-import { setRestaurantService , getAllUserService , editServiceField, deletService, editAllServicesFields, getSingleService , setHotelService, setRentService, editHotelService} from "./service";
+import { setRestaurantService ,
+   getAllUserService ,
+  editServiceField,
+  deletService,
+  editAllServicesFields,
+  getSingleService ,
+  setHotelService, 
+  setRentService, 
+  editHotelService,
+  editRentService
+
+} from "./service";
 import { setUser, updatedEmail, resetPassword, logout, login,signup , getUser, editeUserData} from "./user";
 
 const AuthContext = React.createContext();
@@ -124,7 +135,8 @@ function updatePassword(password) {
     editeUserData,
     setHotelService,
     setRentService,
-    editHotelService
+    editHotelService,
+    editRentService
   };
 
   return (

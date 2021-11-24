@@ -16,7 +16,7 @@ export default function EditeRent() {
     const history = useHistory();
 
     const { search } = useLocation();
-    const {  editAllServicesFields, getSingleService , editHotelService} = useAuth();
+    const {  editAllServicesFields, getSingleService , editHotelService, editRentService} = useAuth();
 
     const[imgPath,setImgPath] = useState("");
     const[descripition,setDescripition] = useState("");
@@ -73,7 +73,7 @@ export default function EditeRent() {
       ){
         throw "error"
       }
-      editHotelService(catgory, itemId, {
+      editRentService(catgory, itemId, {
         serviceName: Name,
         serviceDescripition: descripition,
         servicePhone: phone,

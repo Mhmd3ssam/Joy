@@ -34,7 +34,6 @@ function Routes() {
             <Route exact path="/eiditehotels" component={EiditeHotels}/>
             <Route exact path="/eiditerent" component={EditeRent}/>
             <Route exact path="/eiditerestaurants" component={EditeRestaurants}/>
-
         </Switch>
     )
 }
