@@ -3,6 +3,8 @@ import { Container } from "react-bootstrap";
 import { useAuth } from '../../context/AuthContext';
 import { getFirestore, collection } from "firebase/firestore";
 import app from '../../Firebase';
+import { doc, updateDoc } from "firebase/firestore"; 
+
 
 
 
@@ -14,7 +16,7 @@ export default function Adman() {
     const[serviceProvider, setServiceProvider] = useState([]);
     const[counter, setCounter] = useState(0);
     const[todayDate, setTodayDate] = useState(new Date().getDate());
-    serviceProvider.map((user) => {user.prem = 10; user.pending = 20; user.paid = false })
+    serviceProvider.map((user) => {user.prem = 10; user.pending = 20 })
 
 
 
@@ -34,7 +36,8 @@ export default function Adman() {
 
     function countFreedays(user){
         let creationDay = user.createdAt.seconds
-        let creationDate = new Date(creationDay * 1000).getDate()
+        let creation = new Date(creationDay * 1000)
+        let creationDate = creation.getDate()
         console.log(creationDate)
         // console.log(expireDateInSeconds)
         // let expireDate = new Date(expireDateInSeconds * 1000)
@@ -54,59 +57,76 @@ export default function Adman() {
             user.pending = user.prem + 10
 
         }
-        return [user.prem, user.pending];
+        return [creationDay,creation, user.prem, user.pending];
     }
 function paid(user){
     user.paid=true;
+    editeUserData("UserProvider", user.userEmail ,{paid})
+    setCounter(counter+1)
 }
 
+
+async function editeUserData(collectionName, userEmailId,{paid}){
+    const alyDocRef = doc(db, collectionName, userEmailId);
+    await updateDoc(alyDocRef, { 
+       paid:true
+        });
+  }
 
     useEffect(() => {
         getData();
         document.title = "Admin Panel";
-
     }, [counter])
 
     console.log(serviceProvider)
     console.log(todayDate)
 
-
-
 return (
         <Container>
-        <h3 className="text-center text-primary mt-5">
+        <h1 className="text-center text-primary mt-5">
             Admin Panel
-        </h3>
+        </h1>
         <table class="table table-sm table-primary mt-5">
   <thead>
      <tr>
       <th>User Name</th>
       <th scope="col">User Phone</th>
       <th scope="col">User email</th>
+      <th scope="col">Creation date</th>
+      <th scope="col">Renewing date</th>
       <th scope="col">Subcription Plan</th>
       <th scope="col">Available free days</th>
       <th scope="col">Pending days</th>
-      <th scope="col">Status</th>
+      <th scope="col">Paid Status</th>
       <th scope="col">Paid</th>
+      <th scope="col">Subcription Plan</th>
       <th scope="col">Delete User</th>
     </tr>
 </thead>
 
 <tbody>
     {serviceProvider.map((user) => {
-       const [prem, pending] = countFreedays(user)
+       const [creationDay, creation, prem, pending] = countFreedays(user)
+       let renewingDate = creation.setMonth(creation.getMonth() + 3 )
+       let date = new Date(creationDay * 1000)
+      //let RR = new Date (renewingDate*1000)
+       let paidClass;
     return (
           <tr className="p-5" key={user.userEmail}>
           <td>{user.englishUserName}</td>
           <td>{user.userPhone}</td>
           <td>{user.userEmail}</td>
+          <td>{date.toString()}</td>
+          <td>{creation.toString()}</td>
           <td>{5}</td>
           <td>{prem}</td>
           <td>{pending}</td>
-          <td>{user.paid === true? <span class="badge bg-success text-light">paid</span> :
+          <td>{user.paid === true? <span class="badge bg-success text-light">Success</span> :
           pending>13 && pending <= 20 ? <span class="badge bg-info text-dark">Waiting</span> :
           pending>10 && pending < 14 ? <span class="badge bg-warning text-dark">Calling</span> : pending===0? <span class="badge bg-danger">Expired</span> : null}</td>
-         <td><button onClick={()=> {paid(user)}} type="button" class="btn btn-primary btn-sm">Primary</button></td>
+         <td>
+        <button disabled={user.paid} onClick={()=> {paid(user)}} type="button" className={`badge bg-${user.paid?"success" : "primary"} btn-sm`}>{user.paid? "Paid" : "pay now" }</button></td>
+        <td>{user.paid? "Subscribed" : "pending"}</td>
           <td><button
               onClick={() => {
                 deleteUser(user.id);
