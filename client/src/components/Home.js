@@ -1,12 +1,14 @@
 import React from "react";
 import { Navbar, Container} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom"
-import NavBar from "./Home/NavBar";
-import HeroSection from "./Home/HeroSection";
+import NavBar from "../components/Home/Navbar/NavBar";
+import HeroSection from "../components/Home/HeroSection/HeroSection"
+import PlansCards from "./Home/PlansCards.js/PlansCards";
+import Footer from "./Home/Footer/Footer";
 export default function Home() {
   return (
     <>
-      <Navbar>
+      {/* <Navbar>
         <Container>
           <Navbar.Brand href="#home">Joy </Navbar.Brand>
           <Navbar.Toggle />
@@ -18,9 +20,16 @@ export default function Home() {
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
+      </Navbar> */}
+
+
+
+
+
       <NavBar />
       <HeroSection/>
+      <PlansCards />
+      <Footer/>
 
     </>
   );

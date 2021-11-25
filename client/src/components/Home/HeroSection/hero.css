@@ -1,0 +1,19 @@
+.main{
+    position: relative;
+    background: url("../../../assets/images/hero.jpg");
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero{
+    overflow-x: hidden;
+    padding: 0%;
+}
+
+.main h2{
+    font-size: 2rem;
+    color: aliceblue;
+    text-transform: uppercase;
+    font-weight: bold;
+}
