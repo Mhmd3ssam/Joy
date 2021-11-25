@@ -13,6 +13,8 @@ export default function Adman() {
     const userProviderCollectionRef = collection(db, "UserProvider");
     const[serviceProvider, setServiceProvider] = useState([]);
     const[counter, setCounter] = useState(0);
+    const[todayDate, setTodayDate] = useState(new Date().getDate());
+    serviceProvider.map((user) => {user.prem = 10; user.pending = 20 })
 
 
 
@@ -20,6 +22,7 @@ export default function Adman() {
         getAllServiceProviders(userProviderCollectionRef).then((res) => {
         setServiceProvider(res);
           console.log(res);
+         // countFreedays()
         });
       }
 
@@ -29,12 +32,42 @@ export default function Adman() {
         setCounter(counter+1)
       }
 
+    function countFreedays(user){
+        let creationDay = user.createdAt.seconds
+        let creationDate = new Date(creationDay * 1000).getDate()
+        console.log(creationDate)
+        // console.log(expireDateInSeconds)
+        // let expireDate = new Date(expireDateInSeconds * 1000)
+        // console.log(expireDate)
+        if(todayDate === creationDate){
+            user.prem = 10
+            user.pending = user.prem + 10
+
+
+        }else if (todayDate-creationDate === 10 ){
+            user.prem = 0
+            user.pending = user.prem + 10
+
+
+        }else if(todayDate-creationDate >0 && todayDate-creationDate < 10) {
+            user.prem = (10 - (todayDate-creationDate))
+            user.pending = user.prem + 10
+
+        }
+        return [user.prem, user.pending];
+    }
+
+
+
     useEffect(() => {
         getData();
         document.title = "Admin Panel";
+
     }, [counter])
 
     console.log(serviceProvider)
+    console.log(todayDate)
+
 
 
 return (
@@ -44,34 +77,32 @@ return (
         </h3>
         <table class="table table-sm table-primary mt-5">
   <thead>
-  <tr>
+     <tr>
       <th>User Name</th>
       <th scope="col">User Phone</th>
       <th scope="col">User email</th>
-      <th scope="col">Free days</th>
+      <th scope="col">Subcription Plan</th>
+      <th scope="col">Available free days</th>
+      <th scope="col">Pending days</th>
       <th scope="col">Status</th>
       <th scope="col">Delete User</th>
     </tr>
 </thead>
 
-{/* englishUserName: "Mohamed Essam Ammar"
-id: "ammar@gmail.com"
-imagePath: "https://firebasestorage.googleapis.com/v0/b/jooy-dadba.appspot.com/o/Images%2FMon%20Nov%2022%202021%2001%3A37%3A58%20GMT%2B0200%20(Eastern%20European%20Standard%20Time)?alt=media&token=242df14a-e2d0-4b56-b7e9-2220de41401b"
-userEmail: "ammar@gmail.com"
-userPassword: "123456"
-userPhone: "0100513555" */}
-
-
 <tbody>
     {serviceProvider.map((user) => {
+       const [prem, pending] = countFreedays(user)
     return (
           <tr className="p-5" key={user.userEmail}>
           <td>{user.englishUserName}</td>
           <td>{user.userPhone}</td>
           <td>{user.userEmail}</td>
           <td>{5}</td>
-          <td>Status</td>
-          <td>  <button
+          <td>{prem}</td>
+          <td>{pending}</td>
+          <td>{pending>13 && pending <= 20 ? <span class="badge bg-info text-dark">Waiting</span> :
+          pending>10 && pending < 14 ? <span class="badge bg-warning text-dark">Calling</span> : pending===0? <span class="badge bg-danger">Expired</span> : null}</td>
+          <td><button
               onClick={() => {
                 deleteUser(user.id);
               }}
