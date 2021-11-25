@@ -14,7 +14,7 @@ export default function Adman() {
     const[serviceProvider, setServiceProvider] = useState([]);
     const[counter, setCounter] = useState(0);
     const[todayDate, setTodayDate] = useState(new Date().getDate());
-    serviceProvider.map((user) => {user.prem = 10; user.pending = 20 })
+    serviceProvider.map((user) => {user.prem = 10; user.pending = 20; user.paid = false })
 
 
 
@@ -56,7 +56,9 @@ export default function Adman() {
         }
         return [user.prem, user.pending];
     }
-
+function paid(user){
+    user.paid=true;
+}
 
 
     useEffect(() => {
@@ -85,6 +87,7 @@ return (
       <th scope="col">Available free days</th>
       <th scope="col">Pending days</th>
       <th scope="col">Status</th>
+      <th scope="col">Paid</th>
       <th scope="col">Delete User</th>
     </tr>
 </thead>
@@ -100,8 +103,10 @@ return (
           <td>{5}</td>
           <td>{prem}</td>
           <td>{pending}</td>
-          <td>{pending>13 && pending <= 20 ? <span class="badge bg-info text-dark">Waiting</span> :
+          <td>{user.paid === true? <span class="badge bg-success text-light">paid</span> :
+          pending>13 && pending <= 20 ? <span class="badge bg-info text-dark">Waiting</span> :
           pending>10 && pending < 14 ? <span class="badge bg-warning text-dark">Calling</span> : pending===0? <span class="badge bg-danger">Expired</span> : null}</td>
+         <td><button onClick={()=> {paid(user)}} type="button" class="btn btn-primary btn-sm">Primary</button></td>
           <td><button
               onClick={() => {
                 deleteUser(user.id);
