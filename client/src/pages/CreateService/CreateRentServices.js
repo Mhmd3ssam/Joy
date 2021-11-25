@@ -191,11 +191,11 @@ function CreateRentServices() {
       setErrors({
         ...errors,
         serviceName:
-          e.target.value.length === 0 ? "Service name is required" : null,
+          e.target.value.length === 0 ? "Building name is required" : null,
           
       });
       if(e.target.value.length === 0 ){
-         throw "Service name is required"
+         throw "Building name is required"
       }
     }
 
@@ -204,7 +204,7 @@ function CreateRentServices() {
       setErrors({
         ...errors,
         brandName:
-          e.target.value.length === 0 ? "Brand name is required" : null,
+          e.target.value.length === 0 ? "Agency name is required" : null,
       });
     }
 
@@ -215,7 +215,7 @@ function CreateRentServices() {
         ...errors,
         serviceDescripition:
           e.target.value.length === 0
-            ? "Service description is required"
+            ? "Unit details is required"
             : null,
       });
     }
@@ -226,7 +226,7 @@ function CreateRentServices() {
         ...errors,
         servicePrice:
           e.target.value.length === 0
-            ? "Service price is required"
+            ? "Price is required"
             : parseInt(e.target.value) === 0
             ? "Price must be more than 0"
             : null,

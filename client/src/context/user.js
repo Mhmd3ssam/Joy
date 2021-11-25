@@ -1,4 +1,4 @@
-import { doc, setDoc, getFirestore , getDoc, updateDoc } from "firebase/firestore"; 
+import { doc, setDoc, getFirestore , getDoc, updateDoc, deleteDoc, getDocs } from "firebase/firestore"; 
 import app from "../Firebase";
 import {
   getAuth,
@@ -10,8 +10,10 @@ import {
   onAuthStateChanged
 } from "firebase/auth";
 
+
 const db = getFirestore(app);
 const auth = getAuth();
+//const userProviderCollectionRef = collection(db, "UserProvider");
 
 async function signup(auth, email, password) {
   return createUserWithEmailAndPassword(auth, email, password)
@@ -64,6 +66,20 @@ async function getUser(collection, id){
   }
 }
 
+async function getAllServiceProviders(userProviderCollectionRef) {
+  const querySnapshot = await getDocs(userProviderCollectionRef);
+ return (querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+}
+
+async function deleteSingleUser(collectionName, documentId){
+    console.log(documentId)
+    console.log(collectionName)
+    console.log(db)
+const userRef = doc(db, collectionName, documentId);
+   return await deleteDoc(userRef);
+}
+
 
 
 export {signup}
@@ -74,3 +90,5 @@ export {updatedEmail}
 export {setUser}
 export {getUser}
 export {editeUserData}
+export {getAllServiceProviders}
+export {deleteSingleUser}

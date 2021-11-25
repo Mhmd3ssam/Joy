@@ -23,7 +23,7 @@ import { setRestaurantService ,
   editRentService
 
 } from "./service";
-import { setUser, updatedEmail, resetPassword, logout, login,signup , getUser, editeUserData} from "./user";
+import { setUser, updatedEmail, resetPassword, logout, login,signup , getUser, editeUserData, getAllServiceProviders, deleteSingleUser} from "./user";
 
 const AuthContext = React.createContext();
 
@@ -136,7 +136,9 @@ function updatePassword(password) {
     setHotelService,
     setRentService,
     editHotelService,
-    editRentService
+    editRentService,
+    getAllServiceProviders,
+    deleteSingleUser,
   };
 
   return (

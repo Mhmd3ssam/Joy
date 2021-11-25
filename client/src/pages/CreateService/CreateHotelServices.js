@@ -124,26 +124,26 @@ function CreateHotelServices() {
     setErrors({
       ...errors,
       brandName:
-        e.target[0].value === ""? "Brand name is required" : null,
+        e.target[0].value === ""? "Hotel name is required" : null,
       serviceName:
-        e.target[1].value=== "" ? "Service name is required" : null,
+        e.target[1].value=== "" ? "Room Title is required" : null,
       // catagory:
       //   e.target[2].value === "" ? "Please Specifiy a category" : null,
       serviceDescripition:
         e.target[3].value === ""
-          ? "Service description is required"
+          ? "Room features is required"
           : null,
       servicePrice:
           e.target[4].value.length === 0
-            ? "Service price is required"
+            ? "Room price is required"
             : e.target[4].value == 0
             ? "Price must be more than 0"
             : null,
       servicePhone:
             e.target[5].value.length === 0
-              ? "Service phone Number is required"
+              ? "Reservation Number is required"
               : e.target[5].value.length !== 11
-              ? "Service phone Number must be 11 Number"
+              ? "phone Number must be 11 Number"
               : !validMobileCode
               ? "Phone Number must start with a valid code"
               : null,
@@ -196,7 +196,7 @@ function CreateHotelServices() {
       setErrors({
         ...errors,
         serviceName:
-          e.target.value.length === 0 ? "Service name is required" : null,
+          e.target.value.length === 0 ? "Room Title is required" : null,
           
       });
       if(e.target.value.length === 0 ){
@@ -209,7 +209,7 @@ function CreateHotelServices() {
       setErrors({
         ...errors,
         brandName:
-          e.target.value.length === 0 ? "Brand name is required" : null,
+          e.target.value.length === 0 ? "Hotel name is required" : null,
       });
     }
 
@@ -220,7 +220,7 @@ function CreateHotelServices() {
         ...errors,
         serviceDescripition:
           e.target.value.length === 0
-            ? "Service description is required"
+            ? "Room features is required"
             : null,
       });
     }
@@ -231,7 +231,7 @@ function CreateHotelServices() {
         ...errors,
         servicePrice:
           e.target.value.length === 0
-            ? "Service price is required"
+            ? "Room price is required"
             : parseInt(e.target.value) === 0
             ? "Price must be more than 0"
             : null,
@@ -245,9 +245,9 @@ function CreateHotelServices() {
         ...errors,
         servicePhone:
           e.target.value.length === 0
-            ? "Service phone Number is required"
+            ? "Reservation Number is required"
             : e.target.value.length !== 11
-            ? "Service phone Number must be 11 Number"
+            ? "phone Number must be 11 Number"
             : !validMobileCode
             ? "Phone Number must start with a valid code"
             : null,
