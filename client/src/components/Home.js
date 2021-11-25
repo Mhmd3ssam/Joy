@@ -1,6 +1,8 @@
 import React from "react";
 import { Navbar, Container} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom"
+import NavBar from "./Home/NavBar";
+import HeroSection from "./Home/HeroSection";
 export default function Home() {
   return (
     <>
@@ -17,6 +19,9 @@ export default function Home() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <NavBar />
+      <HeroSection/>
+
     </>
   );
 }
