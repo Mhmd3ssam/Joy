@@ -3,7 +3,7 @@ import { Navbar, Container} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom"
 import NavBar from "../components/Home/Navbar/NavBar";
 import HeroSection from "../components/Home/HeroSection/HeroSection"
-import PlansCards from "./Home/PlansCards.js/PlansCards";
+import PlansCards from "./Home/PlansCards/PlansCards";
 import Footer from "./Home/Footer/Footer";
 export default function Home() {
   return (
