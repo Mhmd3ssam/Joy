@@ -58,6 +58,17 @@ async function setUser(Collection,id,{englishUserName,userEmail,userPassword,use
       paid:false
     })
 }
+async function setAdman(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath,gender,}){
+    return await setDoc(doc(db,Collection , id), {
+      englishUserName:englishUserName,
+      userPassword: userPassword,
+      userEmail: userEmail,
+      userPhone:userPhone,
+      imagePath:imagePath,
+      gender:gender,
+      createdAt: new Date(),
+    })
+}
 
 async function getUser(collection, id){
   const docRef = doc(db,collection , id);
@@ -95,3 +106,4 @@ export {getUser}
 export {editeUserData}
 export {getAllServiceProviders}
 export {deleteSingleUser}
+export {setAdman}

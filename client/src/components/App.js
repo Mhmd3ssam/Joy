@@ -14,7 +14,7 @@ import '../assets/boxicons-2.0.7/css/boxicons.min.css'
 import '../assets/css/grid.css'
 import '../assets/css/theme.css'
 import '../assets/css/index.css'
-
+import AdmanSignup from "./Adman/AdmanRegister";
 import PrivateRoute from "./PrivateRoute";
 import { AuthProvider } from "../context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -32,6 +32,7 @@ function App() {
              <Route path="/forgot-password" component={ForgotPassword} />
              <Route path="/contact" component={ContactUs} />
              <Route path="/adman" component={Adman} />
+             <Route path="/admanregister" component={AdmanSignup} />
             </Switch>
           </AuthProvider>
           </Router>

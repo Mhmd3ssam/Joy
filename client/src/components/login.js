@@ -11,13 +11,13 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const history = useHistory();
-
+  const admanemailRegx = /[a-zA-Z]{2,10}_[a-zA-Z]{2,10}@\d[1-9]{2,10}.joy.com$/
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       setError("");
       setLoading(true);
-      if (emailRef.current.value === "adman@joy.com") {
+      if (admanemailRegx.test(emailRef.current.value)) {
         await login(auth, emailRef.current.value, passwordRef.current.value);
         history.push("/adman");
       } else {
