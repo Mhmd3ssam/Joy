@@ -5,6 +5,7 @@ import NavBar from "../components/Home/Navbar/NavBar";
 import HeroSection from "../components/Home/HeroSection/HeroSection"
 import PlansCards from "./Home/PlansCards/PlansCards";
 import Footer from "./Home/Footer/Footer";
+import ServiceAd from "./Home/ServiceAds/ServiceAd";
 export default function Home() {
   return (
     <>
@@ -28,6 +29,7 @@ export default function Home() {
 
       <NavBar />
       <HeroSection/>
+      <ServiceAd/>
       <PlansCards />
       <Footer/>
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../Firebase";
 import { Link , useHistory} from "react-router-dom"
@@ -32,10 +32,10 @@ export default function ForgotPassword() {
 
   
     return (
-        <>
+        <Container className="col-md-8 mt-5">
         <Card>
           <Card.Body>
-            <h2 className="text-center mb-4">Password Reset</h2>
+            <h2 className="text-center mb-4 text-primary">Reset your Password</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             {message && <Alert variant="success">{message}</Alert>}
             <Form onSubmit={handleSubmit}>
@@ -55,6 +55,6 @@ export default function ForgotPassword() {
         <div className="w-100 text-center mt-2">
           Need an account? <Link to="/signup">Sign Up</Link>
         </div>
-      </>
+      </Container>
     )
 }
