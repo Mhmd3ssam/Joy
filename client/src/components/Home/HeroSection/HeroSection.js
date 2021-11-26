@@ -1,7 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./hero.css";
+import WOW from 'wowjs';
+
 
 export default function HeroSection() {
+
+    useEffect(() => {
+        new WOW.WOW({
+            live: false
+        }).init();
+    }, [])
   return (
       <>
      {/* <!-- Main navigation --> */}
@@ -58,7 +66,7 @@ export default function HeroSection() {
               {/* <!--Grid column-->
               <!--Grid column--> */}
               <div class="col-md-6 col-xl-5 mt-xl-5 wow fadeInRight" data-wow-delay="0.3s">
-                <img src="https://mdbootstrap.com/img/Mockups/Transparent/Small/admin-new.png" alt="" class="img-fluid"/>
+                <img src="" alt="" class="img-fluid"/>
               </div>
               {/* <!--Grid column--> */}
             </div>

@@ -7,7 +7,7 @@ import res from "../../../assets/images/res.jpg"
 
 function ServiceAd() {
   return (
-    <div className="container text-center mt-5 services">
+    <div className="container text-center services">
       <h1
         class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown"
         data-wow-delay="0.3s"
