@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../Firebase";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory,useLocation } from "react-router-dom";
 import {
   getStorage,
   ref as storageRef,
@@ -14,6 +14,8 @@ import app from "../Firebase";
 
 export default function Signup() {
   const { signup, currentUser, login, setUser } = useAuth();
+  const { search } = useLocation();
+  let plane = search.split('=')[1];
 
   const englishUserName = useRef();
   const phoneRef = useRef();
@@ -162,7 +164,8 @@ export default function Signup() {
         userPassword: passwordRef.current.value,
         userPhone: phoneRef.current.value,
         imagePath: url,
-        gender:userGender
+        gender:userGender,
+        plane:plane
       });
       history.push("/layout");
     } catch (err) {

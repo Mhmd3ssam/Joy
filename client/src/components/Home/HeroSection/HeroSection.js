@@ -1,15 +1,15 @@
 import React, {useEffect} from "react";
 import "./hero.css";
-import WOW from 'wowjs';
+//import WOW from 'wowjs';
 
 
 export default function HeroSection() {
 
-    useEffect(() => {
-        new WOW.WOW({
-            live: false
-        }).init();
-    }, [])
+    // useEffect(() => {
+    //     new WOW.WOW({
+    //         live: false
+    //     }).init();
+    // }, [])
   return (
       <>
      {/* <!-- Main navigation --> */}

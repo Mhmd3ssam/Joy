@@ -28,7 +28,7 @@ export default function Home() {
 
 
       <NavBar />
-      <HeroSection/>
+    
       <ServiceAd/>
       <PlansCards />
       <Footer/>

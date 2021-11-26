@@ -45,14 +45,17 @@ async function editeUserData(collectionName, userEmailId,{englishUserName,userEm
       gender:gender
   });
 }
-async function setUser(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath,gender}){
+async function setUser(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath,gender,plane}){
     return await setDoc(doc(db,Collection , id), {
       englishUserName:englishUserName,
       userPassword: userPassword,
       userEmail: userEmail,
       userPhone:userPhone,
       imagePath:imagePath,
-      gender:gender
+      gender:gender,
+      plane:plane,
+      createdAt: new Date(),
+      paid:false
     })
 }
 

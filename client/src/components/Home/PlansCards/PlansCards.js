@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link}from "react-router-dom"
 import "./plans.css"
 
 function PlansCards() {
@@ -22,7 +23,7 @@ function PlansCards() {
                         </ul>
                     </div>
                     <div class="pricingTable-signup">
-                        <a href="#">sign up</a>
+                        <Link to="/signup?plane=3m">sign up</Link>
                     </div>
                 </div>
             </div>
@@ -65,7 +66,7 @@ function PlansCards() {
                         </ul>
                     </div>
                     <div class="pricingTable-signup">
-                        <a href="#">sign up</a>
+                    <Link to="/signup?plane=6m">sign up</Link>
                     </div>
                 </div>
             </div>
@@ -86,7 +87,7 @@ function PlansCards() {
                         </ul>
                     </div>
                     <div class="pricingTable-signup">
-                        <a href="#">sign up</a>
+                    <Link to="/signup?plane=1y">sign up</Link>
                     </div>
                 </div>
             </div>
