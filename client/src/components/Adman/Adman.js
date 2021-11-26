@@ -130,7 +130,7 @@ export default function Adman() {
                                             pending > 10 && pending < 14 ? <span class="badge bg-warning text-dark">Calling</span> : pending === 0 ? <span class="badge bg-danger">Expired</span> : null}</td>
                                     <td>
                                         <button disabled={user.paid} onClick={() => { paid(user) }} type="button" className={`badge bg-${user.paid ? "success" : "primary"} btn-sm`}>{user.paid ? "Paid" : "pay now"}</button></td>
-                                    <td>{user.paid ? "Subscribed" : "pending"}</td>
+                                    <td>{user.paid ? user.plane : "pending"}</td>
                                     <td><button
                                         onClick={() => {
                                             deleteUser(user.id);
