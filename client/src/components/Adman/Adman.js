@@ -5,6 +5,8 @@ import { getFirestore, collection } from "firebase/firestore";
 import app from '../../Firebase';
 import { doc, updateDoc } from "firebase/firestore";
 import { Link } from 'react-router-dom';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+
 
 
 
@@ -90,7 +92,15 @@ export default function Adman() {
                       <button  className="btn bg-primary col-12">Make Adman</button>
                     </Link>
                 </h1>
-                <table class="table table-sm table-primary mt-5">
+                <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"/>
+
+                <table class="table table-sm table-primary mt-5" id="table-to-xls">
                     <thead>
                         <tr>
                             <th>User Name</th>
