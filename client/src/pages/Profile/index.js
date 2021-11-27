@@ -6,6 +6,9 @@ import { useAuth } from "../../context/AuthContext";
 import { useHistory, Link } from "react-router-dom";
 import { auth } from "../../Firebase";
 import Loader from "../../components/Loader/Loader";
+import avatarBoy from "../../assets/images/1.png"
+import avatarGirl from "../../assets/images/2.png"
+
 
 export default function Profile() {
     const [user, setUser] = useState(null)
@@ -47,7 +50,6 @@ export default function Profile() {
     }, [])
     
 
-
     return (
         <>
             {load ?
@@ -65,7 +67,7 @@ export default function Profile() {
                               }} />
                             <div class="card-body little-profile text-center">
                                 <div class="pro-img">
-                                    <img src={user ? user.imagePath : ""} alt="user" />
+                                     <img src={user? user.imagePath? user.imagePath : user.gender === "Male"? avatarBoy: avatarGirl : ""} alt="user" /> 
                                 </div>
                                 <h3 class="m-b-0">{user ? user.englishUserName : ""}</h3>
                                 <p>{user ? user.userEmail : ""}</p>
