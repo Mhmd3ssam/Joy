@@ -124,7 +124,7 @@
     border: none;
 }
 .panel .panel-footer .col{ line-height: 35px; }
-.pagination{ margin: 0; }
+/* .pagination{ margin: 0; }
 .pagination li a{
     color: #fff;
     background-color: transparent;
@@ -155,7 +155,7 @@
 .pagination li:first-child a,
 .pagination li:last-child a{
     border-radius: 50%;
-}
+} */
 @media only screen and (max-width:767px){
     .panel .panel-heading .title{
         text-align: center;
