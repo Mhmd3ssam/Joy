@@ -17,7 +17,7 @@ export default function EditeItem() {
     const history = useHistory();
 
     const { search } = useLocation();
-    const {  editeUserData, getSingleService, updatedEmail } = useAuth();
+    const {  editeUserData, getSingleService, updatedEmail,  getUser} = useAuth();
 
     const[userImage,setUserImage] = useState("");
     const[userName,setUserName] = useState("");
@@ -25,7 +25,7 @@ export default function EditeItem() {
     const[email,setEmail] = useState("");
     const[password,setUsrPassword] = useState("");
     const[userGender,setUserGender] = useState("")
-
+    console.log(auth.currentUser.email)
   //Error object to Validate inputs
   const [updateError, setUpdateError] = useState({userName:"",phone:""});
 
@@ -82,16 +82,16 @@ export default function EditeItem() {
     }
 
     function getData(){
-      getSingleService("UserProvider", userEmail)
+      getUser("UserProvider",auth.currentUser.email)
       .then((data)=>{
         console.log(data)
-        const{imagePath,englishUserName,userPhone,userEmail, userPassword, gender}= data;
-        setUserImage(imagePath)
-        setUserPhone(userPhone)
-        setUserName(englishUserName)
-        setEmail(userEmail)
-        setUsrPassword(userPassword)
-        setUserGender(gender)
+        //const{imagePath,englishUserName,userPhone,userEmail, userPassword, gender}= data;
+        // setUserImage(imagePath)
+        // setUserPhone(userPhone)
+        // setUserName(englishUserName)
+        // setEmail(userEmail)
+        // setUsrPassword(userPassword)
+        // setUserGender(gender)
         
       })
     }
@@ -173,9 +173,10 @@ export default function EditeItem() {
     console.log(e.type)
   ;
   }
+      getData()
 
     useEffect(()=>{
-      getData()
+     // getData()
       setLoad(false)
     },[])
  

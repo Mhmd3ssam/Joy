@@ -78,7 +78,7 @@ const curr_user = {
   return (
     <div className="topnav">
       <div className="topnav__search">
-        <input type="text" placeholder="Search here..." />
+        {/* <input type="text" placeholder="Search here..." /> */}
         <i className="bx bx-search"></i>
       </div>
 

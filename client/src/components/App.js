@@ -18,6 +18,7 @@ import AdmanSignup from "./Adman/AdmanRegister";
 import PrivateRoute from "./PrivateRoute";
 import { AuthProvider } from "../context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Routes from "./Routes";
 function App() {
 
   return (
@@ -33,6 +34,7 @@ function App() {
              <Route path="/contact" component={ContactUs} />
              <Route path="/adman" component={Adman} />
              <Route path="/admanregister" component={AdmanSignup} />
+             <Route path="/routes" component={Routes} />
             </Switch>
           </AuthProvider>
           </Router>

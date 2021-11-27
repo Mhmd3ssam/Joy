@@ -33,7 +33,7 @@ async function getSingleService(collection, id){
      return  console.log("No such document!");
     }
   
-  }
+}
 
 async function setRestaurantService(catgory,{ serviceName, serviceDescripition, servicePrice, servicePhone , imagePath, brandName,mealCatgory }) {
     return await addDoc(catgory, {

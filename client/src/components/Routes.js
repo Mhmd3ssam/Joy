@@ -16,6 +16,9 @@ import CreateRentServices from '../pages/CreateService/CreateRentServices';
 import CreatRestaurantseService from '../pages/CreateService/CreateService';
 import EiditeHotels from './ServicesCards/EiditeHotels';
 import EditeRent from './ServicesCards/EditeRent';
+import RestaurantsOrders from './Ordedrs/RestaurantsOrders';
+import HotelsOrders from './Ordedrs/HotelsOrders';
+import RentOrders from './Ordedrs/RentOrders';
 function Routes() {
     return (
         <Switch>
@@ -34,6 +37,10 @@ function Routes() {
             <Route exact path="/eiditehotels" component={EiditeHotels}/>
             <Route exact path="/eiditerent" component={EditeRent}/>
             <Route exact path="/eiditerestaurants" component={EditeRestaurants}/>
+            <Route exact path="/restaurantsorders" component={RestaurantsOrders}/>
+            <Route exact path="/hotelsorders" component={HotelsOrders}/>
+            <Route exact path="/rentorders" component={RentOrders}/>
+
         </Switch>
     )
 }

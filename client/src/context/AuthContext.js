@@ -139,7 +139,8 @@ function updatePassword(password) {
     editRentService,
     getAllServiceProviders,
     deleteSingleUser,
-    setAdman
+    setAdman,
+    
   };
 
   return (
