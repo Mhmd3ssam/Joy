@@ -23,6 +23,28 @@ async function getAllUserService(serviceCollectionRef) {
     // });
 }
 
+let arr = []
+
+async function getAllRestaurantsOrders(serviceCollectionRef) {
+    const userServices = query(
+        serviceCollectionRef,
+        where("Barcodes", "!=", []),
+        where("createdBy", "==", auth.currentUser.email)
+    );
+    const querySnapshot = await getDocs(userServices);
+   return (querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));  
+}
+async function getAllHotelsOrders(serviceCollectionRef) {
+    const userServices = query(
+        serviceCollectionRef,
+        where("usersID", "!=", []),
+        where("createdBy", "==", auth.currentUser.email)
+    );
+    const querySnapshot = await getDocs(userServices);
+   return (querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));  
+}
+
+
 
 async function getSingleService(collection, id){
     const docRef = doc(db,collection , id);
@@ -158,5 +180,7 @@ export { setHotelService };
 export { setRentService };
 export { editHotelService };
 export { editRentService };
+export { getAllRestaurantsOrders };
+export { getAllHotelsOrders };
 
 

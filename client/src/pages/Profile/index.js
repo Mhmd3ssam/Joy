@@ -75,12 +75,15 @@ export default function Profile() {
                                 <div class="row text-center m-t-20">
                                     <div class="col-lg-4 col-md-4 m-t-20">
                                         <h3 class="m-b-0 font-light">{load ? "" : restaurants.length}</h3><small> <Link to="/restaurants">Restaurants</Link></small>
+                                        <div><small> <Link to="/restaurantsorders" className="text-danger">Restaurant Orders</Link></small></div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 m-t-20">
                                         <h3 class="m-b-0 font-light">{load ? "" : rent.length}</h3><small> <Link to="/rent">Rent</Link></small>
+                                        <div><small> <Link to="/rentorders" className="text-danger"> Rent Orders</Link></small></div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 m-t-20">
                                         <h3 class="m-b-0 font-light">{load ? "" : hotels.length}</h3><small> <Link to="/hotels">Hotels</Link></small>
+                                        <div><small> <Link to="/hotelsorders" className="text-danger">Hotels Orders</Link></small></div>
                                     </div>
                                 </div>
                             </div>

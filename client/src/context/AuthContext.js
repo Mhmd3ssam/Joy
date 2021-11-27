@@ -20,7 +20,9 @@ import { setRestaurantService ,
   setHotelService, 
   setRentService, 
   editHotelService,
-  editRentService
+  editRentService,
+  getAllRestaurantsOrders,
+  getAllHotelsOrders
 
 } from "./service";
 import { setAdman,setUser, updatedEmail, resetPassword, logout, login,signup , getUser, editeUserData, getAllServiceProviders, deleteSingleUser} from "./user";
@@ -140,6 +142,8 @@ function updatePassword(password) {
     getAllServiceProviders,
     deleteSingleUser,
     setAdman,
+    getAllRestaurantsOrders,
+    getAllHotelsOrders
     
   };
 
