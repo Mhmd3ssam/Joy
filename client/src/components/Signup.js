@@ -165,7 +165,7 @@ export default function Signup() {
         userPhone: phoneRef.current.value,
         imagePath: url,
         gender:userGender,
-        plane:"for testing"
+        plane:plane
       });
       history.push("/layout");
     } catch (err) {

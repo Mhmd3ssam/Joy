@@ -8,13 +8,13 @@ import ContactUs from "./ContactUs/ContactUs";
 import ForgotPassword from "./ForgotPassword";
 import Home from "./Home";
 import Layout from "./layout/Layout";
-import Adman from "./Adman/Adman";
+import Adman from "./Admin/Adman";
 //import style and icons files
 import '../assets/boxicons-2.0.7/css/boxicons.min.css'
 import '../assets/css/grid.css'
 import '../assets/css/theme.css'
 import '../assets/css/index.css'
-import AdmanSignup from "./Adman/AdmanRegister";
+import AdmanSignup from "./Admin/AdmanRegister";
 import PrivateRoute from "./PrivateRoute";
 import { AuthProvider } from "../context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
