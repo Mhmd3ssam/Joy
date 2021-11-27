@@ -4,7 +4,13 @@ import "./plans.css"
 
 function PlansCards() {
     return (
-        <div class="container plans">
+        <div class="container plans" id="plans">
+              <h1
+        class="h1-reponsive white-text text-uppercase font-weight-bold mb-5 text-center wow fadeInDown"
+        data-wow-delay="0.3s"
+      >
+        <strong style={{fontFamily:"monospace", color:"#108fe3", fontStyle:"italic"}} className="">Pricing Plans</strong>
+      </h1>
         <div class="row">
             <div class="col-md-4 col-sm-6">
                 <div class="pricingTable">
@@ -98,7 +104,6 @@ function PlansCards() {
 }
 
 export default PlansCards
-
 
 
 

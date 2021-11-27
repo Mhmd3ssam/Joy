@@ -3,12 +3,12 @@ import { Navbar, Container} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom"
 import NavBar from "../components/Home/Navbar/NavBar";
 import HeroSection from "../components/Home/HeroSection/HeroSection"
+import ServiceAd from "./Home/ServiceAds/ServiceAd";
 import PlansCards from "./Home/PlansCards/PlansCards";
 import Footer from "./Home/Footer/Footer";
-import ServiceAd from "./Home/ServiceAds/ServiceAd";
 export default function Home() {
   return (
-    <>
+    <div style={{backgroundColor: "#f2efef"}}>
       {/* <Navbar>
         <Container>
           <Navbar.Brand href="#home">Joy </Navbar.Brand>
@@ -23,16 +23,12 @@ export default function Home() {
         </Container>
       </Navbar> */}
 
-
-
-
-
-      <NavBar />
-    
+    {/* <NavBar /> */}
+    <HeroSection/>
       <ServiceAd/>
       <PlansCards />
       <Footer/>
 
-    </>
+    </div>
   );
 }

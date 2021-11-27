@@ -16,11 +16,11 @@ img {
 //   background: #444;
 // }
 
-.card {
+.serv {
   position: relative;
   background: #333;
-  //width: 400px;
-  //height: 75vh;
+  width: 400px;
+  height: 600px;
   border-radius: 6px;
   padding: 2rem;
   color: #aaa;
@@ -43,14 +43,13 @@ img {
   }
 
   &__title {
-    color: #000;
-    margin-top: 0;
-    font-weight: 800;
-    letter-spacing: 0.01em;
+    color: #0092ed;
+    margin-top: 20px;
+    letter-spacing: .1px;
   }
   
   &__content {
-    margin-top: -1rem;
+    margin-top: 1px;
     opacity: 0;
     animation: ContentFadeIn .8s 1.6s forwards;
   }
@@ -58,7 +57,7 @@ img {
   &__svg {
     position: absolute;
     left: 0;
-    top: 115px;
+    top: 52px;
   }
 }
 
@@ -79,12 +78,13 @@ img {
   100% { transform: translateY(0) scale(1.0); opacity: 1; filter: blur(0); }
 }
 
-
-h1 {
-  letter-spacing: 8px;
+ .joy-ser {
+  font-style: italic;
   }
   
   .hr-light {
-  border-top: 3px solid #fff;
+  border-top: 3px solid rgb(23, 4, 92);
   width: 80px;
+  margin: 0 auto;
+  background-color: rgb(34, 9, 124);
   }

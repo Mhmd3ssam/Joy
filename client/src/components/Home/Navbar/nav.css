@@ -9,3 +9,12 @@
     z-index: 10;
     width: 100%;
 }
+
+.top-nav{
+    background-image: linear-gradient(to right, rgba(155, 97, 46, 0.2), rgba(155, 97, 46, 0.2));
+    cursor: pointer;
+    padding: 0 !important;
+    height: 50px;
+    color: #108fe3;
+
+}

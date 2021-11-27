@@ -7,34 +7,34 @@ import res from "../../../assets/images/res.jpg"
 
 function ServiceAd() {
   return (
-    <div className="container text-center services">
+    <div className="container text-center services" id="services">
       <h1
-        class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown"
+        class="h1-reponsive white-text text-uppercase font-weight-bold mb-5  wow fadeInDown"
         data-wow-delay="0.3s"
       >
-        <strong>Joy Services</strong>
+        <strong style={{fontFamily:"monospace", color:"#108fe3"}} className="joy-ser">Joy Services</strong>
       </h1>
-      <hr class="hr-light my-4 wow fadeInDown" data-wow-delay="0.4s" />
+      {/* <hr class="hr-light my-4 wow fadeInDown" data-wow-delay="0.4s" /> */}
 
       <div className="row">
         <div className="col-md-4">
-          <div class="card">
-            <div class="card__image-container">
+          <div class="card serv">
+            <div class="serv__image-container">
               <img
-                class="card__image"
-                src={hotel}
+                class="serv__image"
+                src="http://seethrumag.com/wp-content/uploads/2016/06/P2160146-1.jpg"
                 alt=""
               />
             </div>
 
-            <svg class="card__svg" viewBox="0 0 800 500">
+            <svg class="serv__svg" viewBox="0 0 800 500">
               <path
                 d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400 L 800 500 L 0 500"
                 stroke="transparent"
-                fill="#333"
+                fill="rgba(0,0,0,.5)"
               />
               <path
-                class="card__line"
+                class="serv__line"
                 d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400"
                 stroke="pink"
                 stroke-width="3"
@@ -42,8 +42,8 @@ function ServiceAd() {
               />
             </svg>
 
-            <div class="card__content">
-              <h1 class="card__title">Lorem ipsum</h1>
+            <div class="serv__content">
+              <h2 class="serv__title">Hotels</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
                 dolor praesentium at quod autem omnis, amet eaque unde
@@ -54,23 +54,23 @@ function ServiceAd() {
           </div>
         </div>
         <div className="col-md-4">
-          <div class="card">
-            <div class="card__image-container">
+          <div class="card serv">
+            <div class="serv__image-container">
               <img
-                class="card__image"
+                class="serv__image"
                 src={res}
                 alt=""
               />
             </div>
 
-            <svg class="card__svg" viewBox="0 0 800 500">
+            <svg class="serv__svg" viewBox="0 0 800 500">
               <path
                 d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400 L 800 500 L 0 500"
                 stroke="transparent"
-                fill="#333"
+                fill="rgba(0,0,0,.5)"
               />
               <path
-                class="card__line"
+                class="serv__line"
                 d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400"
                 stroke="pink"
                 stroke-width="3"
@@ -78,8 +78,8 @@ function ServiceAd() {
               />
             </svg>
 
-            <div class="card__content">
-              <h1 class="card__title">Lorem ipsum</h1>
+            <div class="serv__content">
+              <h2 class="serv__title">Restaurants</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
                 dolor praesentium at quod autem omnis, amet eaque unde
@@ -90,23 +90,23 @@ function ServiceAd() {
           </div>
         </div>
         <div className="col-md-4">
-          <div class="card">
-            <div class="card__image-container">
+          <div class="card serv">
+            <div class="serv__image-container">
               <img
-                class="card__image"
+                class="serv__image"
                 src={rent}
                 alt=""
               />
             </div>
 
-            <svg class="card__svg" viewBox="0 0 800 500">
+            <svg class="serv__svg" viewBox="0 0 800 500">
               <path
                 d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400 L 800 500 L 0 500"
                 stroke="transparent"
-                fill="#333"
+                fill="rgba(0,0,0,.5)"
               />
               <path
-                class="card__line"
+                class="serv__line"
                 d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400"
                 stroke="pink"
                 stroke-width="3"
@@ -114,8 +114,8 @@ function ServiceAd() {
               />
             </svg>
 
-            <div class="card__content">
-              <h1 class="card__title">Lorem ipsum</h1>
+            <div class="serv__content">
+              <h2 class="serv__title">Rent</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
                 dolor praesentium at quod autem omnis, amet eaque unde
