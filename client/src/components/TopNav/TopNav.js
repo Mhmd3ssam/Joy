@@ -32,8 +32,8 @@ const renderUserToggle = (user) => (
 
 
 
-function TopNav() {
-
+function TopNav(prop) {
+console.log(prop)
 const [error, setError] = useState("");
 const[user,setUser] = useState(null)
 const {logout, getUser} = useAuth();

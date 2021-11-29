@@ -10,7 +10,7 @@ import {useHistory } from "react-router-dom";
 import useSidebar from '../../assets/JsonData/sidebar_icon';
 
 
-const SidebarItem = props => {
+const SidebarItem = (props )=> {
     const active = props.active ? 'active' : ''
     return (
         <div className="sidebar__item" onClick={props.click}>

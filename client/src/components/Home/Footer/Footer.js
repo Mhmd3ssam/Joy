@@ -106,9 +106,10 @@ function Footer() {
                       style={{width: "30px", backgroundColor: "#ffa442", height: "4px"}}
                       />
                   <p>
-                    Here you can use rows and columns to organize your footer
-                    content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                    elit.
+                    Want to grow your business faster?<br/>
+                    Reach more number of customers? <br/>
+                    Know exactly your customer needs?<br/>
+                    So, you're in the right place
                   </p>
                 </div>
                 {/* <!-- Grid column --> */}

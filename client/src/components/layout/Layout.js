@@ -11,9 +11,9 @@ const Layout = () => {
         <Router>
             <Route render={(props) => (
                 <div className="layout">
-                    <Sidebar {...props} />
+                    <Sidebar  {...props } />
                     <div className="layout__content">
-                        <TopNav />
+                        <TopNav kk="ll" />
                         <div className="layout__content__main">
                             <Routes />
                         </div>

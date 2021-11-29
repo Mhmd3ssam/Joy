@@ -45,10 +45,9 @@ function ServiceAd() {
             <div class="serv__content">
               <h2 class="serv__title">Hotels</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                dolor praesentium at quod autem omnis, amet eaque unde
-                perspiciatis adipisci possimus quam facere illo et quisquam quia
-                earum nesciunt porro.
+                Your offers will reach the right customers by showing
+                your hotels services, their prices & their unique features in joy agency.
+                With joy your services will spread widely.
               </p>
             </div>
           </div>
@@ -81,10 +80,8 @@ function ServiceAd() {
             <div class="serv__content">
               <h2 class="serv__title">Restaurants</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                dolor praesentium at quod autem omnis, amet eaque unde
-                perspiciatis adipisci possimus quam facere illo et quisquam quia
-                earum nesciunt porro.
+               Your restaurant has delicious dishes, good offers, remarkable discounts
+               then, you're in the right place as we have who are searching for your services.
               </p>
             </div>
           </div>
@@ -117,10 +114,8 @@ function ServiceAd() {
             <div class="serv__content">
               <h2 class="serv__title">Rent</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                dolor praesentium at quod autem omnis, amet eaque unde
-                perspiciatis adipisci possimus quam facere illo et quisquam quia
-                earum nesciunt porro.
+              Renting your apartment by joy will guarantee you a fair and effortless deal 
+              with the customers who are searching for yours at the other side of joy.
               </p>
             </div>
           </div>
