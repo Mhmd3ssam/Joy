@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
 import { useHistory , useLocation} from "react-router-dom";
 import { getFirestore, collection } from "firebase/firestore";
-import app from "../../Firebase";
+import app, { auth } from "../../Firebase";
 import {
   getStorage,
   ref as storageRef,
@@ -67,7 +67,8 @@ function CreateHotelServices() {
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState([]);
-  const { setService, setHotelService} = useAuth();
+  const { getUser, setHotelService} = useAuth();
+  const[userData, setUserData] = useState([]);
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
@@ -173,39 +174,45 @@ function CreateHotelServices() {
   async function handelSubmit(e) {
     console.log(url);
     e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      if(serviceNameRef.current.value === ""
-      ||serviceDescripitionRef.current.value ===""
-      || servicePriceRef.current.value ===""
-      || servicePriceRef.current.value === "0"
-      || servicePhoneRef.current.value === ""
-      || servicePhoneRef.current.value.length !== 11
-      ||brandNameRef.current.value === ""
-      ||validMobileCode === false
-      ||url === ""
-      // ||catagory === "default"
-      ){
-        throw "error"
+    if(userData.diaplayServ){
+      try {
+        setError("");
+        setLoading(true);
+        if(serviceNameRef.current.value === ""
+        ||serviceDescripitionRef.current.value ===""
+        || servicePriceRef.current.value ===""
+        || servicePriceRef.current.value === "0"
+        || servicePhoneRef.current.value === ""
+        || servicePhoneRef.current.value.length !== 11
+        ||brandNameRef.current.value === ""
+        ||validMobileCode === false
+        ||url === ""
+        // ||catagory === "default"
+        ){
+          throw "error"
+        }
+        //serviceCollectionRef
+        await setHotelService(serviceCollectionRef, {
+          serviceName: serviceNameRef.current.value,
+          serviceDescripition: serviceDescripitionRef.current.value,
+          servicePrice: servicePriceRef.current.value,
+          servicePhone: servicePhoneRef.current.value,
+          brandName: brandNameRef.current.value,
+          imagePath: url,
+          roomNumbers:parseInt(romNumberRef.current.value)
+        });
+        console.log("done");
+        history.push('/hotels');
+      } catch (error) {
+        setError(error.message);
+        console.log(error)
+        errorSubmitState(e)
       }
-      //serviceCollectionRef
-      await setHotelService(serviceCollectionRef, {
-        serviceName: serviceNameRef.current.value,
-        serviceDescripition: serviceDescripitionRef.current.value,
-        servicePrice: servicePriceRef.current.value,
-        servicePhone: servicePhoneRef.current.value,
-        brandName: brandNameRef.current.value,
-        imagePath: url,
-        roomNumbers:parseInt(romNumberRef.current.value)
-      });
-      console.log("done");
-      history.push('/hotels');
-    } catch (error) {
-      setError(error.message);
-      console.log(error)
-      errorSubmitState(e)
+    }else{
+      alert("You Can't create Service Until paying")
+
     }
+    
     setLoading(false);
   }
   
@@ -276,7 +283,12 @@ function CreateHotelServices() {
 
   useEffect(() => {
     document.title = "Create Services";
-  });
+    getUser("UserProvider", auth.currentUser.email)
+    .then((data) => {
+      setUserData(data)
+    })
+
+  }, []);
   let progressComp = () => {
     return (
       <div class="progress">
