@@ -262,27 +262,6 @@ const Restaurants = () => {
             </div>
             {comp}
           </div>
-          <div className="row">
-            <ReactPaginate
-              previousLabel="Previous"
-              nextLabel="Next"
-              breakLabel="..."
-              pageCount={15}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              containerClassName={"pagination justify-content-center"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item"}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-              onPageChange={handleCardClick}
-            />
-          </div>
         </>
       )}
     </Container>

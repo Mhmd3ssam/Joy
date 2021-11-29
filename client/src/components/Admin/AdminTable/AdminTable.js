@@ -2,23 +2,25 @@ import React, { useEffect, useState } from "react";
 import "./admintable.css";
 import { useAuth } from "../../../context/AuthContext";
 import { getFirestore, collection } from "firebase/firestore";
-import app from "../../../Firebase";
+import app, { auth } from "../../../Firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 function AdminTable() {
-  const { getAllServiceProviders, deleteSingleUser } = useAuth();
+  const { getAllServiceProviders, deleteSingleUser, getUser } = useAuth();
   console.log(getAllServiceProviders, deleteSingleUser);
   const db = getFirestore(app);
   const userProviderCollectionRef = collection(db, "UserProvider");
   const [serviceProvider, setServiceProvider] = useState([]);
+  const[userData,setuserData] = useState([])
   const [counter, setCounter] = useState(0);
   const [todayDate, setTodayDate] = useState(new Date().getDate());
   serviceProvider.map((user) => {
     user.prem = 10;
     user.pending = 20;
   });
+  console.log(userData)
 
   function getData() {
     getAllServiceProviders(userProviderCollectionRef).then((res) => {
@@ -77,6 +79,11 @@ function AdminTable() {
   useEffect(() => {
     getData();
     document.title = "Admin Panel";
+    getUser("Adamans",auth.currentUser.email)
+    .then((data)=>{
+      setuserData(data)
+    })
+
   }, [counter]);
 
   console.log(serviceProvider);
@@ -86,6 +93,7 @@ function AdminTable() {
     <div>
       <div class="container-fluid">
           <h1 className="mb-3 text-warning">Joy Admin Panel</h1>
+          <h5 className="mb-3">Current Adman : {userData.englishUserName}</h5>
         <div class="row">
           <div class="col-md-12">
             <div class="panel">

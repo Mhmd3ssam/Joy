@@ -16,8 +16,7 @@ export default function RestaurantsOrders() {
         .then((data)=>{
             setOrder(data)
             data.map((obj)=>{
-                
-                
+              
             })
            
         })
