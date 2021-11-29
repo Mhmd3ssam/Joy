@@ -21,7 +21,7 @@ function PlansCards() {
                     <h3 class="heading">Basic</h3>
                     <div class="pricing-content">
                         <ul>
-                            <li><b>50GB</b> Disk Space</li>
+                            <li><b>3 Months</b> membership</li>
                             <li><b>50</b> Email Accounts</li>
                             <li><b>50GB</b> Monthly Bandwidth</li>
                             <li><b>10</b> subdomains</li>
@@ -64,8 +64,8 @@ function PlansCards() {
                     <h3 class="heading">Business</h3>
                     <div class="pricing-content">
                         <ul>
-                            <li><b>70GB</b> Disk Space</li>
-                            <li><b>70</b> Email Accounts</li>
+                            <li><b>6 Months</b> membership</li>
+                            <li><b>1000 EGP</b> To save</li>
                             <li><b>70GB</b> Monthly Bandwidth</li>
                             <li><b>20</b> subdomains</li>
                             <li><b>25</b> Domains</li>
@@ -85,8 +85,8 @@ function PlansCards() {
                     <h3 class="heading">Premium</h3>
                     <div class="pricing-content">
                         <ul>
-                            <li><b>80GB</b> Disk Space</li>
-                            <li><b>80</b> Email Accounts</li>
+                            <li><b>1 Year</b> membership</li>
+                            <li><b>1000 EGP</b> To save</li>
                             <li><b>80GB</b> Monthly Bandwidth</li>
                             <li><b>25</b> subdomains</li>
                             <li><b>30</b> Domains</li>

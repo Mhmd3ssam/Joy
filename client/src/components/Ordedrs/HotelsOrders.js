@@ -30,14 +30,14 @@ export default function HotelsOrders() {
       });
     });
   }
-  let arr = [];
-  function getUserData() {
-    user.map((ele) => {
-      getUser("Users", ele).then((data) => {
-        setUserData([{ ...data }]);
-      });
-    });
-  }
+  // let arr = [];
+  // function getUserData() {
+  //   user.map((ele) => {
+  //     getUser("Users", ele).then((data) => {
+  //       setUserData([{ ...data }]);
+  //     });
+  //   });
+  // }
   console.log(userDate);
   useEffect(() => {
     getData();
