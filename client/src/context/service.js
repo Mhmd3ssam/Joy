@@ -34,6 +34,9 @@ async function getAllRestaurantsOrders(serviceCollectionRef) {
     const querySnapshot = await getDocs(userServices);
    return (querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));  
 }
+
+
+
 async function getAllHotelsOrders(serviceCollectionRef) {
     const userServices = query(
         serviceCollectionRef,
