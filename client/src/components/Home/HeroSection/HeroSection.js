@@ -56,9 +56,8 @@ export default function HeroSection() {
               }} >
                <h1 class="h1-responsive text-light font-weight-bold mt-sm-5">It's time to grow your Business </h1>
                <hr class="hr-light"/>
-               <h6 class="mb-4 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem repellendus quasi fuga nesciunt
-               dolorum nulla magnam veniam sapiente, fugiat! Commodi sequi non animi ea dolor molestiae
-               iste.</h6>
+               <h6 class="mb-4 text-light">With joy, you'll grow your business faster & wider through affordable business Plans help you
+               market your services to fit the market needs, as we know the other side exact needs.</h6>
                <a class="btn btn-white">Download</a>
                <a class="btn btn-outline-white">Learn more</a>
              </div>

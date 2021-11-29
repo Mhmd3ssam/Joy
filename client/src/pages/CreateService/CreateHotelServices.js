@@ -63,10 +63,10 @@ function CreateHotelServices() {
       : false;
   console.log(validMobileCode);
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState([]);
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState([]);
   const { setService, setHotelService} = useAuth();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
@@ -74,48 +74,67 @@ function CreateHotelServices() {
   const db = getFirestore(app);
   const serviceCollectionRef = collection(db, "Hotels");
 
+  
   function handelChange(e) {
     setProgress(0);
-    if (e.target.files[0]) {
-      Object.defineProperty(e.target.files[0], "name", {
-        writable: true,
-        value: new Date(),
-      });
-      setImage(e.target.files[0]);
-      console.log(image);
-    }
-  }
+    for(let i=0; i < e.target.files.length; i++)
+    {
 
+      if (e.target.files[i]) {
+        Object.defineProperty(e.target.files[i], "name", {
+          writable: true,
+          value: `${new Date()} + ${i}`,
+        });
+        const newImage = e.target.files[i]
+        newImage["id"] = `${new Date()} + ${i}`
+        setImage((prevState)=> [...prevState, newImage]);
+        console.log(image);
+      }
+    }
+   
+  }
+  console.log(image);
+
+
+  
   async function handelUpload(e) {
     e.preventDefault();
-    try {
-      setError("");
-      const storage = getStorage(app);
-      const storageReff = storageRef(storage);
-      const imagesRef = storageRef(storageReff, `images/${image.name}`);
-      const uploadTask = uploadBytesResumable(imagesRef, image);
-      console.log(uploadTask);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const prog = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(prog);
-          console.log(prog);
-        },
-        (error) => console.log(error),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
-            setUrl(downloadURL);
-          });
-        }
-      );
-    } catch (error) {
-      console.log(error.message);
-      setError("Upload Image First");
-    }
+    const promises = [];
+    image.map((img) => {
+
+      try {
+        setError("");
+        const storage = getStorage(app);
+        const storageReff = storageRef(storage);
+        const imagesRef = storageRef(storageReff, `Hotel/${img.name}`);
+        const uploadTask = uploadBytesResumable(imagesRef, img);
+        promises.push(uploadTask)
+        console.log(uploadTask);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const prog = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgress(prog);
+            console.log(prog);
+          },
+          (error) => console.log(error),
+          async () => {
+          await  getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              console.log("File available at", downloadURL);
+              setUrl((prevState) => [...prevState, downloadURL]);
+            });
+          }
+        );
+      } catch (error) {
+        console.log(error.message);
+        setError("Upload Image First");
+      }
+    })
+   Promise.all(promises)
+   .then(()=> alert("Done"))
+   .catch((e) => alert(e))
   }
 
   console.log(url);
@@ -453,6 +472,7 @@ function CreateHotelServices() {
                         name="image"
                         placeholder="Upload Image"
                         onChange={handelChange}
+                        multiple
                       />
                       <button
                         className="btn btn-primary "
