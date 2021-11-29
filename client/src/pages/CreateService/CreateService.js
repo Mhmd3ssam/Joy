@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
 import { useHistory, useLocation } from "react-router-dom";
 import { getFirestore, collection } from "firebase/firestore";
-import app from "../../Firebase";
+import app, { auth } from "../../Firebase";
 import {
   getStorage,
   ref as storageRef,
@@ -64,9 +64,10 @@ function CreatRestaurantseService() {
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
-  const { setRestaurantService } = useAuth();
+  const { setRestaurantService, getUser } = useAuth();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const[userData, setUserData] = useState([]);
 
   const db = getFirestore(app);
   const serviceCollectionRef = collection(db, "Restaurants");
@@ -144,39 +145,45 @@ function CreatRestaurantseService() {
   async function handelSubmit(e) {
     console.log(url);
     e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      if (
-        serviceNameRef.current.value === "" ||
-        serviceDescripitionRef.current.value === "" ||
-        servicePriceRef.current.value === "" ||
-        servicePriceRef.current.value === "0" ||
-        servicePhoneRef.current.value === "" ||
-        servicePhoneRef.current.value.length !== 11 ||
-        brandNameRef.current.value === "" ||
-        validMobileCode === false ||
-        url === ""
-      ) {
-        throw "error";
+    if(userData.diaplayServ){
+      try {
+        setError("");
+        setLoading(true);
+        if (
+          serviceNameRef.current.value === "" ||
+          serviceDescripitionRef.current.value === "" ||
+          servicePriceRef.current.value === "" ||
+          servicePriceRef.current.value === "0" ||
+          servicePhoneRef.current.value === "" ||
+          servicePhoneRef.current.value.length !== 11 ||
+          brandNameRef.current.value === "" ||
+          validMobileCode === false ||
+          url === ""
+        ) {
+          throw "error";
+        }
+        await setRestaurantService(serviceCollectionRef, {
+          serviceName: serviceNameRef.current.value,
+          serviceDescripition: serviceDescripitionRef.current.value,
+          servicePrice: servicePriceRef.current.value,
+          servicePhone: servicePhoneRef.current.value,
+          brandName: brandNameRef.current.value,
+          imagePath: url,
+          booked: false,
+          mealCatgory:mealCatgory
+        });
+        console.log("done");
+        history.push("/restaurants");
+      } catch (error) {
+        console.log(error);
+        setError("Failed to create an service");
+        errorSubmitState(e);
       }
-      await setRestaurantService(serviceCollectionRef, {
-        serviceName: serviceNameRef.current.value,
-        serviceDescripition: serviceDescripitionRef.current.value,
-        servicePrice: servicePriceRef.current.value,
-        servicePhone: servicePhoneRef.current.value,
-        brandName: brandNameRef.current.value,
-        imagePath: url,
-        booked: false,
-        mealCatgory:mealCatgory
-      });
-      console.log("done");
-      history.push("/restaurants");
-    } catch (error) {
-      console.log(error);
-      setError("Failed to create an service");
-      errorSubmitState(e);
+    }else{
+      alert("You Can't create Service Until paying")
+
     }
+    
     setLoading(false);
   }
 
@@ -244,8 +251,12 @@ function CreatRestaurantseService() {
   };
 
   useEffect(() => {
+    getUser("UserProvider", auth.currentUser.email)
+    .then((data) => {
+      setUserData(data)
+    })
     document.title = "Create Services";
-  });
+  },[]);
   let progressComp = () => {
     return (
       <div class="progress">

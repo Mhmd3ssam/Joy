@@ -28,8 +28,9 @@ function AdminTable() {
     });
   }
 
-  function deleteUser(id) {
-    deleteSingleUser("UserProvider", id);
+  function deleteUser(user) {
+    //deleteSingleUser("UserProvider", id);
+    editeUser("UserProvider", user.userEmail, !user.displayServ)
     console.log("deleted");
     setCounter(counter + 1);
   }
@@ -64,6 +65,12 @@ function AdminTable() {
     const alyDocRef = doc(db, collectionName, userEmailId);
     await updateDoc(alyDocRef, {
       paid: true,
+    });
+  }
+  async function editeUser(collectionName, userEmailId, bool) {
+    const alyDocRef = doc(db, collectionName, userEmailId);
+    await updateDoc(alyDocRef, {
+      displayServ: bool,
     });
   }
 
@@ -196,7 +203,7 @@ function AdminTable() {
                           <td>
                             <button
                               onClick={() => {
-                                deleteUser(user.id);
+                                deleteUser(user);
                               }}
                               type="button"
                               class="btn btn-danger btn-sm px-3 mb-2 ms-1 material-tooltip-main"
