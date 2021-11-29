@@ -105,7 +105,7 @@ const Hotels = () => {
         <div class="card bg-light position-relative p-0 card-round">
           <div>
             {/* <img class="img-fluid w-100 hotel-img card-round" src={imagePath} alt="Sample" /> */}
-            {/* <div
+            <div
               id={`carouselExampleControls${i}`}
               class="carousel slide"
               data-bs-ride="carousel"
@@ -120,14 +120,14 @@ const Hotels = () => {
                       </div>
                 {imagePath.map((img, i) => {
                   return (
-                    <div key={i} class="carousel-item"> */}
-                    {/* <img class="img-fluid w-100 hotel-img card-round " src={img} alt="Sample" /> */}
+                    <div key={i} class="carousel-item">
+                    <img class="img-fluid w-100 hotel-img card-round " src={img} alt="Sample" /> 
 
-                        {/* <img
+                         {/* <img
                           class="img-fluid w-100 hotel-img card-round d-block"
                           src={img}
                           alt="Third slide"
-                        />
+                        /> */}
                     </div>
                   );
                 })}
@@ -140,7 +140,7 @@ const Hotels = () => {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-            </div> */}
+            </div>
             <div class="mb-0 pb-0 position-absolute top-0 start-0 ms-1 mt-1 ">
               {offerd ? (
                 <span class="badge bg-warning rounded-pill">
