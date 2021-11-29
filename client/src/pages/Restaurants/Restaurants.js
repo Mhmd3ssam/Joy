@@ -77,7 +77,7 @@ const Restaurants = () => {
 
   }
 
-  let comp = rent.map((res) => {
+  let comp = rent.map((res, i) => {
     const {
       imagePath,
       serviceName,
@@ -99,11 +99,47 @@ const Restaurants = () => {
       <div className="col-md-4 col-sm-6">
         <div class="card bg-light position-relative p-0 card-round">
           <div>
-            <img
+            {/* <img
               class="img-fluid w-100 hotel-img card-round"
               src={imagePath}
               alt="Sample"
-            />
+            /> */}
+                <div
+              id={`carouselExampleControls${i}`}
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+              <div class="carousel-item active">
+                        <img
+                          class="img-fluid w-100 hotel-img card-round d-block"
+                          src={imagePath[imagePath.length-1]}
+                          alt="Third slide"
+                        />
+                      </div>
+                {imagePath.map((img, i) => {
+                  return (
+                    <div key={i} class="carousel-item">
+                    <img class="img-fluid w-100 hotel-img card-round " src={img} alt="Sample" /> 
+
+                         {/* <img
+                          class="img-fluid w-100 hotel-img card-round d-block"
+                          src={img}
+                          alt="Third slide"
+                        /> */}
+                    </div>
+                  );
+                })}
+              </div>
+    <button class="carousel-control-prev" type="button" data-bs-target={`#carouselExampleControls${i}`} data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target={`#carouselExampleControls${i}`} data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+            </div>
             <div class="mb-0 pb-0 position-absolute top-0 start-0 ms-1 mt-1 ">
               {offerd ? (
                 <span class="badge bg-warning rounded-pill">

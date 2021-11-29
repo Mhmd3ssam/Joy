@@ -57,6 +57,7 @@ async function setUser(Collection,id,{englishUserName,userEmail,userPassword,use
       createdAt: new Date(),
       paid:false,
       displayServ: true
+      
     })
 }
 async function setAdman(Collection,id,{englishUserName,userEmail,userPassword,userPhone,imagePath,gender,}){

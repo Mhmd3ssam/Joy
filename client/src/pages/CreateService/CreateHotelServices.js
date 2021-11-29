@@ -174,7 +174,7 @@ function CreateHotelServices() {
   async function handelSubmit(e) {
     console.log(url);
     e.preventDefault();
-    if(userData.diaplayServ){
+    if(userData.displayServ){
       try {
         setError("");
         setLoading(true);

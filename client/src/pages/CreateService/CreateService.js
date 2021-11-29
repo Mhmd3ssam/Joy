@@ -162,7 +162,11 @@ function CreatRestaurantseService() {
   async function handelSubmit(e) {
     console.log(url);
     e.preventDefault();
-    if(userData.diaplayServ){
+    console.log(userData.displayServ)
+
+    if(userData.displayServ){
+
+      console.log(userData.displayServ)
       try {
         setError("");
         setLoading(true);
@@ -274,6 +278,7 @@ function CreatRestaurantseService() {
     })
     document.title = "Create Services";
   },[]);
+  console.log(userData)
   let progressComp = () => {
     return (
       <div class="progress">
