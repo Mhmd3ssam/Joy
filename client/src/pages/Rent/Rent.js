@@ -102,7 +102,7 @@ const Rent = () => {
       <div className="col-md-4 col-sm-6">
         <div class="card bg-light position-relative p-0 card-round">
           <div>
-            <img class="img-fluid w-100 hotel-img card-round " src={imagePath} alt="Sample" />
+            <img class="img-fluid w-100 hotel-img card-round " src={imagePath[0]} alt="Sample" />
             <div class="mb-0 pb-0 position-absolute top-0 start-0 ms-1 mt-1 ">
               {offerd ? (
                 <span class="badge bg-warning rounded-pill">

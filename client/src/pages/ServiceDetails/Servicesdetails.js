@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Link, useLocation, useHistory } from "react-ro
 import { useAuth } from '../../context/AuthContext';
 import { collection, getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import app from "../../Firebase";
+import "bootstrap/dist/js/bootstrap.bundle.js"
+
 
 export default function Servicesdetails() {
     const { search } = useLocation();
     const { editAllServicesFields, getSingleService } = useAuth();
 
     //state
-    const [imgPath, setImgPath] = useState("");
+    const [imagePath, setImgPath] = useState([]);
     const [descripition, setDescripition] = useState("");
     const [Name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -65,18 +67,62 @@ export default function Servicesdetails() {
                 <section class="mb-5">
                     <div class="row">
                         <div class="col-md-6 mb-4 mb-md-0">
-                            <div id="mdb-lightbox-ui"></div>
-                            <div class="mdb-lightbox">
+                            {/* <div id="mdb-lightbox-ui"></div> */}
+                            {/* <div class="mdb-lightbox">
                                 <div class="row product-gallery mx-1">
-                                    <div class="col-12 mb-0">
-                                        <figure class="view overlay rounded z-depth-1 main-img">
-                                            <img src={imgPath}
-                                                class="img-fluid z-depth-1" />
-                                        </figure>
+                                    <div class="col-12 mb-0"> */}
+                                            {/* <img src={imagePath}
+                                                class="img-fluid z-depth-1" /> */}
+
+<div class="row product-gallery mx-1">
+
+             <div
+              id="carouselExampleControls"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+              <div class="carousel-item active">
+                        <img
+                          class="img-fluid w-100 hotel-img card-round d-block"
+                          src={imagePath[imagePath.length-1]}
+                          alt="Third slide"
+                        />
+                      </div>
+                {imagePath.map((img, i) => {
+                  return (
+                    <div key={i} class="carousel-item">
+                    {/* <img class="img-fluid w-100 hotel-img card-round " src={img} alt="Sample" /> */}
+                    {/* <figure class="view overlay rounded z-depth-1 main-img"> */}
+
+                        <img
+                          class="img-fluid w-100 hotel-img card-round d-block"
+                          src={img}
+                          alt="Third slide"
+                        />
+                                                                {/* </figure> */}
+
+                    </div>
+                  );
+                })}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+              </div>
+
+              </div>
+
+
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                {/* </div>
+                           
+                        </div> */}
                         <div class="col-md-6">
                             <h2>
                                 {Name}
