@@ -365,7 +365,7 @@ function CreateRentServices() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Agency Name"
+                        placeholder="Agency or Building Name"
                         ref={brandNameRef}
                         onChange={(e) => {
                           handleInputChange(e);
@@ -384,7 +384,7 @@ function CreateRentServices() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Building Name"
+                        placeholder="Unit Name"
                         ref={serviceNameRef}
                         onChange={(e) => {
                           handleInputChange(e);

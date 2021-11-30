@@ -89,6 +89,7 @@ const Restaurants = () => {
       createdBy,
       serviceDescripition,
       createdAt,
+      brandName
     } = res;
     let sale = (Number(servicePrice) * Number(offerRatio)) / 100;
     let newprice = Number(servicePrice) - sale;
@@ -157,6 +158,8 @@ const Restaurants = () => {
           </div>
 
           <div class="card-body text-center">
+          <h3 className="text-primary">{brandName}</h3>
+
             <h5>{serviceName}</h5>
             <p class="small text-muted text-uppercase mb-1">
               <svg

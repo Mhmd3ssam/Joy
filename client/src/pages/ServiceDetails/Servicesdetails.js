@@ -21,6 +21,7 @@ export default function Servicesdetails() {
     const [created, setCreated] = useState("");
     const [time, setTime] = useState(null);
     const [deleteItem, setDeleteItem] = useState(false);
+    const [brandName, setBrandName] = useState("");
 
     let catgory = search.split('=')[2];
     let itemId = search.split('&')[0].split('=')[1];
@@ -34,7 +35,7 @@ export default function Servicesdetails() {
         getSingleService(catgory, itemId)
             .then((data) => {
                 console.log(data)
-                const { imagePath, serviceDescripition, serviceName, servicePhone, servicePrice, createdBy, offerRatio, offerd, createdAt } = data;
+                const { imagePath, serviceDescripition, serviceName, servicePhone, servicePrice, createdBy, offerRatio, offerd, createdAt , brandName} = data;
                 setImgPath(imagePath)
                 setDescripition(serviceDescripition)
                 setName(serviceName)
@@ -43,6 +44,8 @@ export default function Servicesdetails() {
                 setTheOfferRatio(offerRatio)
                 setOffer(offerd)
                 setCreated(createdBy)
+                setBrandName(brandName)
+
                 setTime(new Date(createdAt.seconds * 1000).toISOString().split('T')[0])
         
         })
@@ -124,6 +127,10 @@ export default function Servicesdetails() {
                            
                         </div> */}
                         <div class="col-md-6">
+                        <h1 className="text-primary">
+                                {brandName}
+                            
+                            </h1>
                             <h2>
                                 {Name}
                                 <span class="badge bg-warning rounded-pill d-inline-block ms-3 fs-6">
