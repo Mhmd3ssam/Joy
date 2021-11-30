@@ -14,10 +14,10 @@ function HomePage() {
         </h2>
       </div>
       {/* Hotels             */}
-      <div className="row text-center">
-        <div className="col-md-12">
+      <div className="row ">
+        <div className="col-md-12 text-center">
           <h4 className="fw-bold fs-3 my-5 text-left ms-5 mb-3">Hotels</h4>
-          <table class="table table-primary">
+          <table class="table table-dark">
             <thead>
               <tr>
                 <th scope="col">Field name</th>
@@ -53,7 +53,7 @@ function HomePage() {
                 <td>Available number of rooms</td>
                 <td>Clearify the real available number of the same Room</td>
               </tr>
-              <tr class="table-dark fw-bold">
+              <tr class="table-primary fw-bold">
                 <td>Upload images</td>
                 <td>
                   Upload every image hepls you express your service & its unique
@@ -68,7 +68,7 @@ function HomePage() {
          <div className="row text-center">
         <div className="col-md-12">
           <h4 className="fw-bold fs-3 my-5 text-left ms-5 mb-3">Restaurants</h4>
-          <table class="table table-primary">
+          <table class="table table-dark">
             <thead>
               <tr>
                 <th scope="col">Field name</th>
@@ -104,7 +104,7 @@ function HomePage() {
               <td>Restaurant number</td>
                 <td>Please make sure that's the right & available number</td>
               </tr>
-              <tr class="table-dark fw-bold">
+              <tr class="table-primary fw-bold">
                 <td>Upload images</td>
                 <td>
                   Upload every image hepls you express your service & its unique
@@ -119,7 +119,7 @@ function HomePage() {
        <div className="row text-center">
         <div className="col-md-12">
           <h4 className="fw-bold fs-3 my-5 text-left ms-5 mb-3">Rent</h4>
-          <table class="table table-primary">
+          <table class="table table-dark">
             <thead>
               <tr>
                 <th scope="col">Field name</th>
@@ -155,7 +155,7 @@ function HomePage() {
                 <td>Clearify the real available number of the same unit</td>
                 </tr>
 
-              <tr class="table-dark fw-bold">
+              <tr class="table-primary fw-bold">
                 <td>Upload images</td>
                 <td>
                   Upload every image hepls you express your service & its unique

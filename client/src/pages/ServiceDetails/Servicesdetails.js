@@ -102,6 +102,7 @@ export default function Servicesdetails() {
                           class="img-fluid w-100 hotel-img card-round d-block"
                           src={img}
                           alt="Third slide"
+                          style={{height:"fit-content"}}
                         />
                                                                 {/* </figure> */}
 
