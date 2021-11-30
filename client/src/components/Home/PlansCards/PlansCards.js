@@ -22,10 +22,10 @@ function PlansCards() {
                     <div class="pricing-content">
                         <ul>
                             <li><b>3 Months</b> membership</li>
-                            <li><b>50</b> Email Accounts</li>
-                            <li><b>50GB</b> Monthly Bandwidth</li>
-                            <li><b>10</b> subdomains</li>
-                            <li><b>15</b> Domains</li>
+                            <li><b>200 EGP</b> To save at first membership</li>
+                            <li><b>15-20%</b> more accessabile Users</li>
+                            <li><b>6%</b> discount</li>
+                            <li className="text-light"><b></b>---------</li>
                         </ul>
                     </div>
                     <div class="pricingTable-signup">
@@ -66,9 +66,9 @@ function PlansCards() {
                         <ul>
                             <li><b>6 Months</b> membership</li>
                             <li><b>1000 EGP</b> To save</li>
-                            <li><b>70GB</b> Monthly Bandwidth</li>
-                            <li><b>20</b> subdomains</li>
-                            <li><b>25</b> Domains</li>
+                            <li><b>20-30%</b> more accessabile Users</li>
+                            <li><b>15%</b> discount</li>
+                            <li><b>guaranteed</b> Marketing Plan</li>
                         </ul>
                     </div>
                     <div class="pricingTable-signup">
@@ -80,16 +80,16 @@ function PlansCards() {
                 <div class="pricingTable red">
                     <div class="pricingTable-header">
                         <i class="fa fa-cube"></i>
-                        <div class="price-value"> 9000 EGP <span class="month">per year</span> </div>
+                        <div class="price-value"> 8000 EGP <span class="month">per year</span> </div>
                     </div>
                     <h3 class="heading">Premium</h3>
                     <div class="pricing-content">
                         <ul>
                             <li><b>1 Year</b> membership</li>
-                            <li><b>1000 EGP</b> To save</li>
-                            <li><b>80GB</b> Monthly Bandwidth</li>
-                            <li><b>25</b> subdomains</li>
-                            <li><b>30</b> Domains</li>
+                            <li><b>4000 EGP</b> To save</li>
+                            <li><b>30-45%</b> more accessabile Users</li>
+                            <li><b>20%</b> discount</li>
+                            <li><b>guaranteed</b> Marketing Plan</li>
                         </ul>
                     </div>
                     <div class="pricingTable-signup">

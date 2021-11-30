@@ -423,7 +423,7 @@ function CreateRentServices() {
                           <input
                             type="number"
                             className="form-control"
-                            placeholder="Price per day"
+                            placeholder="Price per night"
                             ref={servicePriceRef}
                             value={servicePrice}
                             name="servicePrice"

@@ -409,7 +409,7 @@ function CreatRestaurantseService() {
                       value={mealCatgory}
                       onChange={(e)=>{setMealCatgory(e.target.value)}}
                     >
-                      <option unselectable>Chose Meal Catagory</option>
+                      <option unselectable>Choose Meal Category</option>
                       <option value="breakfast">Breakfast</option>
                       <option value="lunch">Lunch</option>
                       <option value="fastFood">Fast Food</option>
