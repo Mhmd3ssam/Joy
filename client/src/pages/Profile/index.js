@@ -6,8 +6,11 @@ import { useAuth } from "../../context/AuthContext";
 import { useHistory, Link } from "react-router-dom";
 import { auth } from "../../Firebase";
 import Loader from "../../components/Loader/Loader";
-import avatarBoy from "../../assets/images/1.png"
-import avatarGirl from "../../assets/images/2.png"
+import avatarBoy from "../../assets/images/1.png";
+import avatarGirl from "../../assets/images/2.png";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 
 export default function Profile() {
@@ -59,7 +62,8 @@ export default function Profile() {
                 : <div class="padding">
                     <div class="col-md-10">
                         <div class="card">
-                            <img class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="Card image cap"
+                            <LazyLoadImage class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="User Profile image" 
+
                               style={{
                                 borderTopLeftRadius: ".3rem",
                                 borderTopRightRadius: ".3rem",
@@ -67,7 +71,7 @@ export default function Profile() {
                               }} />
                             <div class="card-body little-profile text-center">
                                 <div class="pro-img">
-                                     <img src={user? user.imagePath? user.imagePath : user.gender === "Male"? avatarBoy: avatarGirl : ""} alt="user" /> 
+                                     <LazyLoadImage src={user? user.imagePath? user.imagePath : user.gender === "Male"? avatarBoy: avatarGirl : ""} alt="user" effect="blur" /> 
                                 </div>
                                 <h3 class="m-b-0">{user ? user.englishUserName : ""}</h3>
                                 <p>{user ? user.userEmail : ""}</p>

@@ -147,7 +147,7 @@ function AdminTable() {
                       <th scope="col">User email</th>
                       <th scope="col">Creation date</th>
                       <th scope="col">Renewing date</th>
-                      <th scope="col">Subcription Plan</th>
+                      {/* <th scope="col">Subcription Plan</th> */}
                       <th scope="col">Available free days</th>
                       <th scope="col">Pending days</th>
                       <th scope="col">Paid Status</th>
@@ -173,7 +173,7 @@ function AdminTable() {
                           <td>{user.userEmail}</td>
                           <td>{date.toString().split("GMT")[0]}</td>
                           <td>{creation.toString().split("GMT")[0]}</td>
-                          <td>{5}</td>
+                          {/* <td>{5}</td> */}
                           <td>{prem}</td>
                           <td>{pending}</td>
                           <td>

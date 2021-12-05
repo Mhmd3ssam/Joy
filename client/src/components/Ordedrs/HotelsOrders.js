@@ -81,7 +81,7 @@ export default function HotelsOrders() {
                           <th scope="row">{i + 1}</th>
                           <td>{userName}</td>
                           <td>{userPhone}</td>
-                          <td>@mdo</td>
+                          <td>غرفة بالاس فاخرة مع إطلالة على الحديقة</td>
                         </tr>
                       );
                     })

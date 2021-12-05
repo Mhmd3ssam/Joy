@@ -168,10 +168,11 @@ function CreateRentServices() {
             
     });
   }
-
+console.log(userData)
   async function handelSubmit(e) {
     console.log(url);
     e.preventDefault();
+    console.log(userData.displayServ)
     if(userData.displayServ){
       try {
         setError("");
@@ -205,7 +206,6 @@ function CreateRentServices() {
       }
     }else{
             alert("You Can't create Service Until paying")
-
     }
   
     setLoading(false);
@@ -278,11 +278,11 @@ function CreateRentServices() {
 
   useEffect(() => {
     document.title = "Create Services";
-    getUser("UserProvider", auth.currentUser.email)
+    getUser("UserProvider",auth.currentUser.email)
     .then((data) => {
       setUserData(data)
     })
-
+console.log(userData)
   },[]);
   let progressComp = () => {
     return (
