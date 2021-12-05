@@ -62,7 +62,7 @@ export default function Profile() {
                 : <div class="padding">
                     <div class="col-md-10">
                         <div class="card">
-                            <LazyLoadImage class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="User Profile image" 
+                            <LazyLoadImage class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="User Cover photo" effect="blur"
 
                               style={{
                                 borderTopLeftRadius: ".3rem",
@@ -71,7 +71,8 @@ export default function Profile() {
                               }} />
                             <div class="card-body little-profile text-center">
                                 <div class="pro-img">
-                                     <LazyLoadImage src={user? user.imagePath? user.imagePath : user.gender === "Male"? avatarBoy: avatarGirl : ""} alt="user" effect="blur" /> 
+                                     <LazyLoadImage placeholderSrc={avatarBoy}  alt="user"
+                                      src={user? user.imagePath? user.imagePath : user.gender === "Male"? avatarBoy: avatarGirl : ""} effect="blur" /> 
                                 </div>
                                 <h3 class="m-b-0">{user ? user.englishUserName : ""}</h3>
                                 <p>{user ? user.userEmail : ""}</p>
